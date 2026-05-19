@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,7 +13,6 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 
 import { logout, authSelector } from '../auth/authSlice';
 import { SideBarButton } from './SideBarButton';
-import { JobsModal } from '../dashboard/JobsModal';
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -24,7 +23,24 @@ const LightTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
+export const SIDEBAR_WIDTH = 76;
+
 const useStyles = makeStyles({
+  sidebar: {
+    flex: '0 0 76px',
+    width: 76,
+    minWidth: 76,
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+  },
+  paper: {
+    width: '100%',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
   link: {
     color: 'black',
   },
@@ -47,9 +63,8 @@ const useStyles = makeStyles({
 });
 
 const SideBar = (props) => {
-  const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const { userdata, addButtonVisible } = props;
+  const { userdata, addButtonVisible, onAddJobClick } = props;
   const { user } = useSelector(authSelector);
   const dispatch = useDispatch();
 
@@ -58,21 +73,14 @@ const SideBar = (props) => {
   };
 
   const handleClickOpen = () => {
-    if (!open) {
-      setOpen(true);
-    }
-  };
-
-  const handleClose = () => {
-    if (open) {
-      setOpen(false);
+    if (onAddJobClick) {
+      onAddJobClick();
     }
   };
 
   return (
-    <Box id="sidebar" display="flex" height="100vh" style={{ position: 'fixed' }}>
-      <JobsModal open={open} onClose={handleClose} />
-      <Paper elevation={1} square>
+    <Box id="sidebar" className={`dashboard-sidebar ${classes.sidebar}`} aria-label="Sidebar navigation">
+      <Paper elevation={1} square className={classes.paper}>
         <Box display="flex" flexGrow={1} flexDirection="column" height="100%" alignItems="center">
           <LightTooltip title="Dashboard" aria-label="Dashboard" placement="right">
             <Link to="/dashboard">
@@ -141,6 +149,7 @@ SideBar.propTypes = {
     email: PropTypes.string,
   }),
   addButtonVisible: PropTypes.bool,
+  onAddJobClick: PropTypes.func,
 };
 
 SideBar.defaultProps = {
@@ -150,6 +159,7 @@ SideBar.defaultProps = {
     email: 'dave.smith@email.com',
   },
   addButtonVisible: false,
+  onAddJobClick: undefined,
 };
 
 export default SideBar;

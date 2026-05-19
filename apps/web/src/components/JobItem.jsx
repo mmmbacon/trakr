@@ -162,17 +162,33 @@ const JobItem = (props) => {
     }
   }, [event_date]);
 
-  useEffect(async () => {
-    if (company.length > 0) {
+  useEffect(() => {
+    if (company.length === 0) {
+      return undefined;
+    }
+
+    let cancelled = false;
+
+    async function fetchCompanyLogo() {
       try {
         const result = await axios.get(
           `https://autocomplete.clearbit.com/v1/companies/suggest?query=${company}`,
         );
-        setLogo(result.data[0].logo);
+        if (!cancelled && result.data[0]?.logo) {
+          setLogo(result.data[0].logo);
+        }
       } catch (err) {
-        setLogo('../img/Logo2.png');
+        if (!cancelled) {
+          setLogo('../img/Logo2.png');
+        }
       }
     }
+
+    fetchCompanyLogo();
+
+    return () => {
+      cancelled = true;
+    };
   }, [company]);
 
   return (

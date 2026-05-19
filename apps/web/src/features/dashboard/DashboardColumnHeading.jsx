@@ -38,7 +38,7 @@ const DashboardColumnHeading = (props) => {
         <Box display="flex" alignContent="center" justifyContent="space-between">
 
           <Box position="absolute" style={{ marginTop: '-5px', marginLeft: '-5px' }}>
-            <img src={tickUrl} alt="tick" height="20em" />
+            <img src={tickUrl} alt="" height="20" />
           </Box>
 
           <Box display="flex" flexGrow={1} className={classes.heading} justifyContent="center" alignItems="center">

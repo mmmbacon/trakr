@@ -4,7 +4,7 @@ Trakr is a full-stack job application tracker. This repository is now a monorepo
 
 ## Apps
 
-- `apps/web` - React + Redux frontend, served by Vercel in production.
+- `apps/web` - React 18 + Vite + Redux frontend, served by Vercel in production.
 - `apps/api` - Ruby on Rails 7.2 API, served by Fly.io in production.
 - `docker-compose.yml` - Local PostgreSQL for development.
 
@@ -44,7 +44,7 @@ Run both apps from the repository root:
 npm run dev
 ```
 
-The frontend opens at http://localhost:8080. It proxies `/api` requests to the Rails API at http://localhost:3000 through `apps/web/src/setupProxy.js`. The root npm scripts explicitly prefer Homebrew Ruby at `/opt/homebrew/opt/ruby@3.3/bin` so they work from a fresh macOS shell.
+The frontend opens at http://localhost:8080. Vite proxies `/api` requests to the Rails API at http://localhost:3000 (see `apps/web/vite.config.ts`). The root npm scripts explicitly prefer Homebrew Ruby at `/opt/homebrew/opt/ruby@3.3/bin` so they work from a fresh macOS shell.
 
 `Procfile.dev` is also available if you prefer Foreman or Overmind, but `npm run dev` uses the npm-managed `concurrently` package by default.
 
@@ -81,8 +81,8 @@ Use `.env.example` as the source of truth for local and hosted environment varia
 
 Frontend values belong in `apps/web/.env.local` locally and in Vercel for production:
 
-- `REACT_APP_GOOGLE_API_KEY`
-- `REACT_APP_DEMO_MODE=true`
+- `VITE_GOOGLE_API_KEY`
+- `VITE_DEMO_MODE=true`
 
 Backend local values can be exported in your shell if you need to override the Docker defaults:
 
@@ -124,7 +124,7 @@ Create a Vercel project from this repository with:
 
 - Root Directory: `apps/web`
 - Build Command: `npm run build`
-- Output Directory: `build`
-- Framework: Create React App
+- Output Directory: `dist`
+- Framework: Vite
 
 Set Vercel environment variables for the frontend, then deploy. Vercel rewrites `/api/*` to the Fly API via `apps/web/vercel.json`, so browser requests stay same-origin.
