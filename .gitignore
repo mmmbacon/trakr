@@ -1,26 +1,49 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
-/node_modules
-/.pnp
+node_modules/
+apps/web/node_modules/
+.pnp
 .pnp.js
 
-# testing
-/coverage
+# frontend builds and test output
+coverage/
+apps/web/coverage/
+build/
+apps/web/build/
 
-# production
-/build
+# Rails runtime files
+apps/api/log/*
+apps/api/tmp/*
+!apps/api/log/.keep
+!apps/api/tmp/.keep
+apps/api/public/packs
+apps/api/public/packs-test
+apps/api/public/assets
+apps/api/public/system
+apps/api/storage/*
+!apps/api/storage/.keep
+apps/api/vendor/bundle
+apps/api/.bundle
+
+# secrets and local env
+.env
+.env.*
+!.env.example
+apps/web/.env
+apps/web/.env.*
+apps/api/.env
+apps/api/.env.*
+apps/api/config/master.key
+apps/api/config/initializers/secret_token.rb
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-.env
-package-lock.json
+apps/api/.byebug_history
+apps/api/*.rbc
+apps/api/capybara-*.html
+apps/api/.rspec
+apps/api/rerun.txt
+apps/api/pickle-email-*.html
+apps/api/*.orig
