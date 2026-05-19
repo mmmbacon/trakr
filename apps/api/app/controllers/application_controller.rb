@@ -36,10 +36,14 @@ class ApplicationController < ActionController::Base
 
   private
   def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to '/login'
-      end
+    return if logged_in?
+
+    store_location
+    if request.format.json? || request.path.start_with?('/api')
+      render json: { status: 401, errors: ['Please log in.'] }, status: :unauthorized
+    else
+      flash[:danger] = 'Please log in.'
+      redirect_to '/login'
+    end
   end
 end

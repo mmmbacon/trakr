@@ -52,7 +52,7 @@ class Api::JobsController < ApplicationController
           job: @job,
           event: @event
         }
-      elsif 
+      else
         render json: {
           job: @job
         }
@@ -67,7 +67,12 @@ class Api::JobsController < ApplicationController
 
   def destroy
     @job = Job.find_by(user_id: session[:user_id], id: params[:id])
-    @job.destroy
+    if @job
+      @job.destroy
+      head :no_content
+    else
+      head :not_found
+    end
   end
 
   def update
@@ -93,7 +98,7 @@ class Api::JobsController < ApplicationController
           job: @job,
           event: @event
         }
-      elsif 
+      else
         render json: {
           job: @job
         }

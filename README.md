@@ -56,6 +56,23 @@ npm run dev:web   # Start only the React app
 npm run dev:api   # Start only the Rails API
 npm run db:up     # Start local PostgreSQL
 npm run db:setup  # Start DB, load schema, and seed demo data
+npm run test:api  # Run Rails integration tests (requires Postgres)
+npm run build:web # Production build of the React app
+```
+
+## CI
+
+GitHub Actions runs on every push and pull request to `main` / `master`:
+
+- **API tests** — Rails test suite against Postgres 14
+- **Web build** — `npm ci` and production build in `apps/web`
+
+Run API tests locally (with Docker Postgres on port 55432):
+
+```sh
+npm run db:up
+npm run test:api:prepare
+npm run test:api
 ```
 
 ## Environment Variables
