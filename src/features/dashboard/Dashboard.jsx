@@ -29,6 +29,7 @@ import {
 import {
   authSelector,
 } from '../auth/authSlice';
+import isDemoMode from '../../config';
 import JobResources from './Drawer';
 
 const Dashboard = () => {
@@ -75,6 +76,11 @@ const Dashboard = () => {
 
   return (
     <Container id="dashboard-container" disableGutters style={{ margin: '0px' }} maxWidth={false}>
+      {isDemoMode && (
+        <Alert severity="info" style={{ borderRadius: 0 }}>
+          Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
+        </Alert>
+      )}
       <Box display="flex" flexDirection="row">
         <Switch>
           <Route exact path="/dashboard">

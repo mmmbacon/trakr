@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Switch, Route, Redirect,
+} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -11,10 +13,11 @@ import Signup from './features/auth/Signup';
 
 import PrivateRoute from './components/PrivateRoute';
 import { authSelector, fetchLoggedInStatus } from './features/auth/authSlice';
+import isDemoMode from './config';
 
 function App() {
   const dispatch = useDispatch();
-  const { status } = useSelector(authSelector);
+  const { status, user } = useSelector(authSelector);
 
   const theme = createMuiTheme({
     palette: {
@@ -125,8 +128,11 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-          <Route path={['/login', '/']}>
-            <Login />
+          <Route exact path="/">
+            {isDemoMode && user ? <Redirect to="/dashboard" /> : <Login />}
+          </Route>
+          <Route path="/login">
+            {isDemoMode && user ? <Redirect to="/dashboard" /> : <Login />}
           </Route>
         </Switch>
       </Router>

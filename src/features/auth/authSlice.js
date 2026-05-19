@@ -118,6 +118,9 @@ export const authSlice = createSlice({
           state.user = action.payload.user;
         }
       })
+      .addCase(fetchLoggedInStatus.rejected, (state) => {
+        state.status = 'idle';
+      })
       .addCase(login.pending, (state) => {
         state.loggingInStatus = 'loading';
       })
