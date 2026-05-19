@@ -4,8 +4,7 @@ require_relative '../config/environment'
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
-  # Disabled until Rails 7 upgrade: Minitest 6 breaks parallelize with Rails 6.1
-  # parallelize(workers: :number_of_processors)
+  parallelize(workers: :number_of_processors)
   fixtures :all
 end
 

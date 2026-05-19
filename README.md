@@ -5,7 +5,7 @@ Trakr is a full-stack job application tracker. This repository is now a monorepo
 ## Apps
 
 - `apps/web` - React + Redux frontend, served by Vercel in production.
-- `apps/api` - Ruby on Rails API, served by Fly.io in production.
+- `apps/api` - Ruby on Rails 7.2 API, served by Fly.io in production.
 - `docker-compose.yml` - Local PostgreSQL for development.
 
 ## Prerequisites
