@@ -16,13 +16,31 @@ To see the deployed version of Trakr, visit https://nostalgic-kalam-c12902.netli
 
 ## Setup
 
-Install Trakr's Dependencies
+### Backend (Rails API)
+
+See [trakr-backend](../trakr-backend/README.md). Requires Ruby 3.3 and PostgreSQL.
+
+```sh
+cd ../trakr-backend
+bundle install
+bin/rails db:create db:schema:load
+bin/rails server
+```
+
+Runs at http://localhost:3000
+
+### Frontend
+
 ```sh
 npm install
 ```
 
 ## Running Development Server
 
+Start the backend first, then:
+
 ```sh
 npm start
 ```
+
+Opens at http://localhost:8080 and proxies `/api` to the local Rails server.
