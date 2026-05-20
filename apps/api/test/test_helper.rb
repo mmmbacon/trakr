@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
-ENV['DEMO_MODE'] = 'false'
+ENV['DEMO_MODE'] ||= 'false'
 require_relative '../config/environment'
 require 'rails/test_help'
 
