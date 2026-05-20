@@ -44,7 +44,7 @@ Run both apps from the repository root:
 npm run dev
 ```
 
-The frontend opens at http://localhost:8080. It proxies `/api` requests to the Rails API at http://localhost:3000 through `apps/web/src/setupProxy.js`. The root npm scripts explicitly prefer Homebrew Ruby at `/opt/homebrew/opt/ruby@3.3/bin` so they work from a fresh macOS shell.
+The frontend opens at http://localhost:8080. It proxies `/api` requests to the Rails API at http://localhost:3000 through `apps/web/src/setupProxy.js`. API npm scripts use `bundle exec` with the Ruby version in `apps/api/.ruby-version` (install via rbenv, asdf, or your system Ruby manager).
 
 `Procfile.dev` is also available if you prefer Foreman or Overmind, but `npm run dev` uses the npm-managed `concurrently` package by default.
 
