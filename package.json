@@ -5,12 +5,20 @@
   "scripts": {
     "dev": "concurrently -n web,api -c blue,green \"npm run dev:web\" \"npm run dev:api\"",
     "dev:web": "npm start --prefix apps/web",
-    "dev:api": "cd apps/api && PATH=\"/opt/homebrew/opt/ruby@3.3/bin:$PATH\" bundle exec rails server",
+    "dev:api": "cd apps/api && bundle exec rails server",
     "db:up": "docker compose up -d db",
-    "db:setup": "docker compose up -d db && cd apps/api && PATH=\"/opt/homebrew/opt/ruby@3.3/bin:$PATH\" bundle exec rails db:create db:schema:load db:seed",
-    "build:web": "npm run build --prefix apps/web"
+    "db:setup": "docker compose up -d db && cd apps/api && bundle exec rails db:create db:schema:load db:seed",
+    "build:web": "npm run build --prefix apps/web",
+    "test:api": "cd apps/api && bundle exec rails test",
+    "test:api:prepare": "cd apps/api && bundle exec rails db:test:prepare"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "vue-router": "^5.0.7"
   }
 }

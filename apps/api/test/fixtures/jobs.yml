@@ -1,21 +1,23 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: MyString
-  company: MyString
-  description: MyString
-  notes: MyString
-  status: MyString
-  salary: 1
-  url: MyString
-  location: MyString
+  user: one
+  title: Assistant to the Regional Manager
+  company: Dunder Mifflin
+  status: 1
+  salary: 50000
+  location: Scranton
 
 two:
-  title: MyString
-  company: MyString
-  description: MyString
-  notes: MyString
-  status: MyString
-  salary: 1
-  url: MyString
-  location: MyString
+  user: one
+  title: Sales Representative
+  company: Dunder Mifflin
+  status: 2
+  salary: 60000
+  location: Scranton
+
+three:
+  user: two
+  title: Regional Manager
+  company: Dunder Mifflin
+  status: 3
+  salary: 75000
+  location: Scranton
