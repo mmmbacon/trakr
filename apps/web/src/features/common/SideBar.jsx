@@ -23,18 +23,7 @@ const LightTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
-export const SIDEBAR_WIDTH = 76;
-
 const useStyles = makeStyles({
-  sidebar: {
-    flex: '0 0 76px',
-    width: 76,
-    minWidth: 76,
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-  },
   paper: {
     width: '100%',
     flex: 1,
@@ -79,12 +68,12 @@ const SideBar = (props) => {
   };
 
   return (
-    <Box id="sidebar" className={`dashboard-sidebar ${classes.sidebar}`} aria-label="Sidebar navigation">
+    <Box id="sidebar" className="dashboard-sidebar" aria-label="Sidebar navigation">
       <Paper elevation={1} square className={classes.paper}>
         <Box display="flex" flexGrow={1} flexDirection="column" height="100%" alignItems="center">
           <LightTooltip title="Dashboard" aria-label="Dashboard" placement="right">
             <Link to="/dashboard">
-              <img src="../../img/Logo2-sm.png" alt="logo" width="45px" className={classes.imgicon} />
+              <img src="/img/Logo2-sm.png" alt="logo" width="45px" className={classes.imgicon} />
             </Link>
           </LightTooltip>
           <Box display="flex" flexGrow={1} flexDirection="column" justifyContent="space-between">

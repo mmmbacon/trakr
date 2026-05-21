@@ -172,14 +172,15 @@ const JobItem = (props) => {
     async function fetchCompanyLogo() {
       try {
         const result = await axios.get(
-          `https://autocomplete.clearbit.com/v1/companies/suggest?query=${company}`,
+          'https://autocomplete.clearbit.com/v1/companies/suggest',
+          { params: { query: company } },
         );
         if (!cancelled && result.data[0]?.logo) {
           setLogo(result.data[0].logo);
         }
       } catch (err) {
         if (!cancelled) {
-          setLogo('../img/Logo2.png');
+          setLogo('/img/Logo2.png');
         }
       }
     }

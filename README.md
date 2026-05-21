@@ -44,7 +44,7 @@ Run both apps from the repository root:
 npm run dev
 ```
 
-The frontend opens at http://localhost:8080. Vite proxies `/api` requests to the Rails API at http://localhost:3000 (see `apps/web/vite.config.ts`). The root npm scripts explicitly prefer Homebrew Ruby at `/opt/homebrew/opt/ruby@3.3/bin` so they work from a fresh macOS shell.
+The frontend opens at http://localhost:8080. Vite proxies `/api` requests to the Rails API at http://localhost:3000 (see `apps/web/vite.config.ts`). API scripts use the Ruby version in `apps/api/.ruby-version` via your shell PATH (rbenv, asdf, or system Ruby).
 
 `Procfile.dev` is also available if you prefer Foreman or Overmind, but `npm run dev` uses the npm-managed `concurrently` package by default.
 

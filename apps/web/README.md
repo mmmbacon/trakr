@@ -16,6 +16,8 @@ React 18 + Vite frontend for Trakr. See the repository root `README.md` for full
 npm install
 ```
 
+`.npmrc` sets `legacy-peer-deps=true` because Material UI v4 does not declare React 18 peer support yet.
+
 Copy environment variables from the repo root `.env.example` into `.env.local`:
 
 ```sh

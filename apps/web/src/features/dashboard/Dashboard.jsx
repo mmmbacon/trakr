@@ -35,26 +35,6 @@ import isDemoMode from '../../config';
 import JobResources from './Drawer';
 
 const useLayoutStyles = makeStyles({
-  shell: {
-    display: 'flex',
-    width: '100%',
-    minHeight: '100vh',
-    overflow: 'hidden',
-  },
-  main: {
-    flex: 1,
-    minWidth: 0,
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-  },
-  mainScroll: {
-    flex: 1,
-    minHeight: 0,
-    overflow: 'auto',
-    width: '100%',
-  },
   kanban: {
     width: '100%',
     overflowX: 'auto',
@@ -104,7 +84,7 @@ const Dashboard = () => {
     }
   }, [addJobStatus, editJobStatus, deleteJobStatus]);
 
-  const handleSnackClose = () => setSnack(false);
+  const handleSnackClose = () => setSnack('');
 
   if (status === 'loading') {
     return (
@@ -116,19 +96,19 @@ const Dashboard = () => {
 
   return (
     <>
-      <Box className={`dashboard-shell ${layoutClasses.shell}`}>
+      <Box className="dashboard-shell">
         <SideBar
           userdata={user}
           addButtonVisible={location.pathname === '/dashboard'}
           onAddJobClick={() => setAddJobOpen(true)}
         />
-        <Box component="main" className={`dashboard-main ${layoutClasses.main}`}>
+        <Box component="main" className="dashboard-main">
           {isDemoMode && (
             <Alert severity="info" style={{ borderRadius: 0, flexShrink: 0 }}>
               Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
             </Alert>
           )}
-          <Box className={`dashboard-main-scroll ${layoutClasses.mainScroll}`}>
+          <Box className="dashboard-main-scroll">
             <Switch>
               <Route exact path="/dashboard">
                 <Box className={layoutClasses.kanban} p={1}>
