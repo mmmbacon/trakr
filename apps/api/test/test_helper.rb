@@ -3,6 +3,8 @@ ENV['DEMO_MODE'] = 'false'
 require_relative '../config/environment'
 require 'rails/test_help'
 
+ActiveModel::SecurePassword.min_cost = true
+
 class ActiveSupport::TestCase
   parallelize(workers: :number_of_processors)
   fixtures :all
