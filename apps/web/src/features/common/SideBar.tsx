@@ -8,8 +8,9 @@ import EventIcon from '@mui/icons-material/Event';
 import SearchIcon from '@mui/icons-material/Search';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 
+import { lightTooltipSlotProps } from '../../theme/tooltip';
 import { logout } from '../auth/authSlice';
-import { SideBarButton } from './SideBarButton';
+import SideBarNavItem from './SideBarNavItem';
 import { useAppDispatch } from '../../app/hooks';
 
 export const SIDEBAR_WIDTH = 52;
@@ -18,17 +19,6 @@ const SIDEBAR_ICON_SIZE = 24;
 const SIDEBAR_LOGO_SIZE = 32;
 
 const navIconSx = { fontSize: SIDEBAR_ICON_SIZE, color: '#3b3b3b' };
-
-const lightTooltipSlotProps = {
-  tooltip: {
-    sx: {
-      backgroundColor: 'common.white',
-      color: 'rgba(0, 0, 0, 0.87)',
-      boxShadow: 1,
-      fontSize: 11,
-    },
-  },
-};
 
 interface SideBarUserData {
   first_name?: string;
@@ -59,12 +49,6 @@ const SideBar = ({
   const handleLogOut = async () => {
     await dispatch(logout());
     navigate('/login');
-  };
-
-  const handleClickOpen = () => {
-    if (onAddJobClick) {
-      onAddJobClick();
-    }
   };
 
   return (
@@ -111,91 +95,46 @@ const SideBar = ({
           </Tooltip>
           <Box display="flex" flexGrow={1} flexDirection="column" justifyContent="space-between">
             <Box display="flex" flexDirection="column">
-              <SideBarButton>
-                <Tooltip
-                  title="User Profile"
-                  aria-label="User Profile"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <Link to="/dashboard/user_profile" className="link">
-                    <Box
-                      component="img"
-                      src={`https://ui-avatars.com/api/?name=${userdata.first_name}+${userdata.last_name}&background=3b3b3b&color=fff&size=${SIDEBAR_ICON_SIZE}`}
-                      alt="initials"
-                      sx={{
-                        borderRadius: '50%',
-                        width: SIDEBAR_ICON_SIZE,
-                        height: SIDEBAR_ICON_SIZE,
-                        display: 'block',
-                      }}
-                    />
-                  </Link>
-                </Tooltip>
-              </SideBarButton>
-              <SideBarButton>
-                <Tooltip
-                  title="Statistics"
-                  aria-label="Statistics"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <Link to="/dashboard/job_stats" className="link">
-                    <AssessmentIcon sx={navIconSx} />
-                  </Link>
-                </Tooltip>
-              </SideBarButton>
-              <SideBarButton onClick={() => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); }}>
-                <Tooltip
-                  title="Open Calendar"
-                  aria-label="Open Calendar"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <EventIcon sx={navIconSx} />
-                </Tooltip>
-              </SideBarButton>
-              <SideBarButton>
-                <Tooltip
-                  title="Search Jobs"
-                  aria-label="Search Jobs"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <Link to="/dashboard/search" className="link">
-                    <SearchIcon sx={navIconSx} />
-                  </Link>
-                </Tooltip>
-              </SideBarButton>
+              <SideBarNavItem title="User Profile" to="/dashboard/user_profile">
+                <Box
+                  component="img"
+                  src={`https://ui-avatars.com/api/?name=${userdata.first_name}+${userdata.last_name}&background=3b3b3b&color=fff&size=${SIDEBAR_ICON_SIZE}`}
+                  alt="initials"
+                  sx={{
+                    borderRadius: '50%',
+                    width: SIDEBAR_ICON_SIZE,
+                    height: SIDEBAR_ICON_SIZE,
+                    display: 'block',
+                  }}
+                />
+              </SideBarNavItem>
+              <SideBarNavItem title="Statistics" to="/dashboard/job_stats">
+                <AssessmentIcon sx={navIconSx} />
+              </SideBarNavItem>
+              <SideBarNavItem
+                title="Open Calendar"
+                onClick={() => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); }}
+              >
+                <EventIcon sx={navIconSx} />
+              </SideBarNavItem>
+              <SideBarNavItem title="Search Jobs" to="/dashboard/search">
+                <SearchIcon sx={navIconSx} />
+              </SideBarNavItem>
               {addButtonVisible ? (
-                <SideBarButton onClick={handleClickOpen}>
-                  <Tooltip
-                    title="Add New Job"
-                    aria-label="Add New Job"
-                    placement="right"
-                    slotProps={lightTooltipSlotProps}
-                  >
-                    <AddIcon sx={navIconSx} />
-                  </Tooltip>
-                </SideBarButton>
+                <SideBarNavItem title="Add New Job" onClick={onAddJobClick}>
+                  <AddIcon sx={navIconSx} />
+                </SideBarNavItem>
               ) : null}
             </Box>
             <Box pb={2}>
-              <SideBarButton onClick={handleLogOut}>
-                <Tooltip
-                  title="Log Out"
-                  aria-label="Log Out"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <ExitToAppIcon
-                    sx={{
-                      ...navIconSx,
-                      transform: 'rotate(180deg)',
-                    }}
-                  />
-                </Tooltip>
-              </SideBarButton>
+              <SideBarNavItem title="Log Out" onClick={handleLogOut}>
+                <ExitToAppIcon
+                  sx={{
+                    ...navIconSx,
+                    transform: 'rotate(180deg)',
+                  }}
+                />
+              </SideBarNavItem>
             </Box>
           </Box>
         </Box>

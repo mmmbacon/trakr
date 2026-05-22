@@ -3,7 +3,6 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -11,8 +10,8 @@ import Search from './Search';
 import UserProfile from './UserProfile';
 import JobStats from './JobStats';
 import SideBar from '../common/SideBar';
-import DashboardColumn from './DashboardColumn';
-import { JobsModal } from './JobsModal';
+import KanbanBoard, { KANBAN_COLUMNS } from './KanbanBoard';
+import { JobsModal } from './jobs/JobsModal';
 import {
   jobsSelector,
   fetchJobs,
@@ -21,10 +20,8 @@ import {
   selectInterviewingJobs,
   selectOfferJobs,
   selectRejectedJobs,
-  resetAddJobStatus,
-  resetEditJobStatus,
-  resetDeleteJobStatus,
 } from './jobs/jobsSlice';
+import { useJobStatusSnackbar } from './jobs/useJobStatusSnackbar';
 import { authSelector } from '../auth/authSlice';
 import isDemoMode from '../../config';
 import JobResources from './Drawer';
@@ -53,59 +50,33 @@ const mainScrollSx = {
   width: '100%',
 };
 
-const kanbanSx = {
-  width: '100%',
-  overflowX: 'auto',
-};
-
-const kanbanColumnsSx = {
-  minWidth: 'max-content',
-};
-
-const columnSx = {
-  minWidth: 240,
-  flex: '0 0 240px',
-  maxWidth: 300,
-};
-
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { user } = useAppSelector(authSelector);
-  const {
-    status, addJobStatus, editJobStatus, deleteJobStatus,
-  } = useAppSelector(jobsSelector);
+  const { status } = useAppSelector(jobsSelector);
   const interestedJobs = useAppSelector(selectInterestedJobs);
   const appliedJobs = useAppSelector(selectAppliedJobs);
   const interviewingJobs = useAppSelector(selectInterviewingJobs);
   const offerJobs = useAppSelector(selectOfferJobs);
   const rejectedJobs = useAppSelector(selectRejectedJobs);
-  const [snack, setSnack] = useState('');
+  const { snack, handleSnackClose } = useJobStatusSnackbar();
   const [addJobOpen, setAddJobOpen] = useState(false);
 
   const isDashboardHome = location.pathname === '/dashboard'
     || location.pathname === '/dashboard/';
 
+  const jobColumns = [
+    interestedJobs,
+    appliedJobs,
+    interviewingJobs,
+    offerJobs,
+    rejectedJobs,
+  ];
+
   useEffect(() => {
     dispatch(fetchJobs());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (addJobStatus === 'succeeded') {
-      setSnack('Successfully Created!');
-      dispatch(resetAddJobStatus());
-    }
-    if (editJobStatus === 'succeeded') {
-      setSnack('Successfully Edited!');
-      dispatch(resetEditJobStatus());
-    }
-    if (deleteJobStatus === 'succeeded') {
-      setSnack('Successfully Deleted!');
-      dispatch(resetDeleteJobStatus());
-    }
-  }, [addJobStatus, deleteJobStatus, dispatch, editJobStatus]);
-
-  const handleSnackClose = () => setSnack('');
 
   if (status === 'loading') {
     return (
@@ -134,27 +105,16 @@ const Dashboard = () => {
               <Route
                 index
                 element={(
-                  <Box sx={kanbanSx} p={1}>
-                    <Grid
-                      container
-                      id="dashboard-columns"
-                      component="section"
-                      aria-label="Job application board"
-                      sx={kanbanColumnsSx}
-                      spacing={1}
-                      wrap="nowrap"
-                    >
-                      {status === 'failed' ? 'Something went wrong' : (
-                        <>
-                          <Grid item sx={columnSx}><Box display="flex"><DashboardColumn tickUrl="https://i.imgur.com/zOfNZr4.png" index={0} items={interestedJobs} title="Interested" color="#F9C74F" /></Box></Grid>
-                          <Grid item sx={columnSx}><Box display="flex"><DashboardColumn tickUrl="https://i.imgur.com/Ay2YdTb.png" index={1} items={appliedJobs} title="Applied" color="#f8961e" /></Box></Grid>
-                          <Grid item sx={columnSx}><Box display="flex"><DashboardColumn tickUrl="https://i.imgur.com/D54n1zR.png" index={2} items={interviewingJobs} title="Interviewing" color="#90be6d" /></Box></Grid>
-                          <Grid item sx={columnSx}><Box display="flex"><DashboardColumn tickUrl="https://i.imgur.com/rr4anU1.png" index={3} items={offerJobs} title="Offer" color="#43aa8b" /></Box></Grid>
-                          <Grid item sx={columnSx}><Box display="flex"><DashboardColumn tickUrl="https://i.imgur.com/36wyVZ1.png" index={4} items={rejectedJobs} title="Rejected" color="#f94144" /></Box></Grid>
-                        </>
-                      )}
-                    </Grid>
-                  </Box>
+                  status === 'failed' ? (
+                    <Box p={1}>Something went wrong</Box>
+                  ) : (
+                    <KanbanBoard
+                      columns={KANBAN_COLUMNS.map((column, index) => ({
+                        ...column,
+                        items: jobColumns[index] ?? [],
+                      }))}
+                    />
+                  )
                 )}
               />
               <Route path="search" element={<Search />} />
@@ -164,7 +124,7 @@ const Dashboard = () => {
           </Box>
         </Box>
       </Box>
-      <JobsModal open={addJobOpen} onClose={() => setAddJobOpen(false)} />
+      <JobsModal open={addJobOpen} onClose={() => setAddJobOpen(false)} mode="create" />
       <JobResources />
       <Snackbar open={!!snack} autoHideDuration={6000} onClose={handleSnackClose}>
         <Alert onClose={handleSnackClose} severity="success">
