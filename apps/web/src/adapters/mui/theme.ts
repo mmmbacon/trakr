@@ -24,6 +24,7 @@ const theme = createTheme({
     },
   },
   typography: {
+    htmlFontSize: 14,
     fontFamily: fonts.heading,
     h4: {
       color: colors.text,
