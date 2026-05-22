@@ -39,15 +39,16 @@ export default function UserMenu({ firstName, lastName, onLogout }: UserMenuProp
   return (
     <>
       <Button
+        size="small"
         color="inherit"
         onClick={(event) => setAnchorEl(event.currentTarget)}
         aria-controls={open ? menuId : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         aria-label={`Account menu for ${displayName || 'user'}`}
-        sx={{ textTransform: 'none', gap: 1, px: 1 }}
+        sx={{ textTransform: 'none', gap: 0.75, px: 0.75, py: 0.25, minHeight: 28 }}
       >
-        <Avatar sx={{ width: 32, height: 32, fontSize: 14 }}>
+        <Avatar sx={{ width: 24, height: 24, fontSize: 11 }}>
           {initials}
         </Avatar>
         <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>

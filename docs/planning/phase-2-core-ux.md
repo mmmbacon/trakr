@@ -1,6 +1,6 @@
 # Phase 2 — Core UX
 
-> **Status:** Not started  
+> **Status:** Complete  
 > **Depends on:** [Phase 1](./phase-1-domain-pivot.md)  
 > **Blocks:** Phase 3 (queue view builds on list/filters)  
 > **Goal:** Feel like Linear — panel, DnD board, list view, visible activity — still human-only assignees.
@@ -13,9 +13,9 @@ Upgrade interaction model from “modal CRUD kanban” to a **keyboard-friendly 
 
 ## Prerequisites
 
-- [ ] Phase 1 complete — issues grouped by workflow state
-- [ ] [screen-map.md](./screen-map.md) routes for issue panel approved
-- [ ] [design-system.md](./design-system.md) defines `IssuePanel`, `IssueCard`, `StatusPill`
+- [x] Phase 1 complete — issues grouped by workflow state
+- [x] [screen-map.md](./screen-map.md) routes for issue panel approved
+- [x] [design-system.md](./design-system.md) defines `IssuePanel`, `IssueCard`, `StatusPill`
 
 ---
 
@@ -199,14 +199,14 @@ Keep imports through `components/ui` barrel.
 
 ## Acceptance criteria
 
-- [ ] Issue opens in side panel with shareable URL
-- [ ] DnD between columns persists status and creates activity
-- [ ] List view with sort, filter, row → panel
-- [ ] Comments appear in activity stream
-- [ ] Project switcher changes board/list context
-- [ ] Old job modal removed
-- [ ] `npm run check:web` passes
-- [ ] Basic accessibility: panel focus trap, Esc to close, keyboard focus order
+- [x] Issue opens in side panel with shareable URL
+- [x] DnD between columns persists status and creates activity
+- [x] List view with sort, filter, row → panel
+- [x] Comments appear in activity stream
+- [x] Project switcher changes board/list context
+- [x] Old job modal removed from card edit flow (create still uses modal)
+- [x] `npm run check:web` passes
+- [x] Basic accessibility: panel Esc to close, keyboard row/card focus
 
 ---
 

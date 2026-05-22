@@ -10,13 +10,14 @@ export default function Fab({
 }: FabProps) {
   return (
     <MuiFab
+      size="small"
       onClick={onClick}
       aria-label={ariaLabel}
       className={className}
       sx={{
         position: 'fixed',
-        bottom: 24,
-        right: 24,
+        bottom: 16,
+        right: 16,
         bgcolor: 'background.paper',
         color: 'text.primary',
         border: 1,

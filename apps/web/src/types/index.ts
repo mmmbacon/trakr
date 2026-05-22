@@ -87,6 +87,11 @@ export interface UpdateUserPayload {
   password_confirmation: string;
 }
 
+export interface ActivityPayload {
+  body: string;
+  kind?: string;
+}
+
 export interface IssuePayload {
   issue: {
     title: string;
@@ -119,8 +124,12 @@ export interface ProjectsState {
 
 export interface IssuesState {
   issues: Issue[];
+  selectedIssue: Issue | null;
+  selectedIssueStatus: AsyncStatus;
   status: AsyncStatus;
   addIssueStatus: AsyncStatus;
   editIssueStatus: AsyncStatus;
   deleteIssueStatus: AsyncStatus;
+  transitionIssueStatus: AsyncStatus;
+  createActivityStatus: AsyncStatus;
 }

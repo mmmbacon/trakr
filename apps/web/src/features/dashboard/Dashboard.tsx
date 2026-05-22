@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
 
 import AppHeader from '../common/AppHeader';
 import UserProfile from './UserProfile';
 import SideBar from '../common/SideBar';
-import KanbanBoard from './KanbanBoard';
-import { IssuesModal } from '../issues/IssuesModal';
-import { fetchIssues, issuesSelector } from '../issues/issuesSlice';
+import ProjectLayout from '../projects/ProjectLayout';
+import ProjectWorkspace from '../projects/ProjectWorkspace';
 import { useIssueStatusSnackbar } from '../issues/useIssueStatusSnackbar';
 import { authSelector, logout } from '../auth/authSlice';
 import isDemoMode from '../../config';
-import {
-  fetchProjects,
-  fetchWorkflowStates,
-  projectsSelector,
-  selectActiveProject,
-} from '../projects/projectsSlice';
+import { fetchProjects, projectsSelector } from '../projects/projectsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   Alert,
@@ -24,45 +23,47 @@ import {
   Paper,
   Snackbar,
 } from '../../components/ui';
-import { getKanbanColumnsFromStates } from '../board/kanbanColumns';
+import { defaultDashboardPath, projectBoardPath } from '../projects/projectRoutes';
+
+function DashboardRedirect() {
+  const { projects, activeProjectKey, status } = useAppSelector(projectsSelector);
+
+  if (status === 'loading' && projects.length === 0) {
+    return <LoadingOverlay open />;
+  }
+
+  const key = activeProjectKey ?? projects[0]?.key;
+  if (!key) {
+    return <Box p={2}>No projects yet.</Box>;
+  }
+
+  return <Navigate to={defaultDashboardPath(key)} replace />;
+}
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAppSelector(authSelector);
-  const { status: projectsStatus, workflowStates, activeProjectKey } =
-    useAppSelector(projectsSelector);
-  const { status: issuesStatus, issues } = useAppSelector(issuesSelector);
-  const activeProject = useAppSelector(selectActiveProject);
+  const { projects, activeProjectKey, status: projectsStatus } = useAppSelector(projectsSelector);
   const { snack, handleSnackClose } = useIssueStatusSnackbar();
-  const [addIssueOpen, setAddIssueOpen] = useState(false);
 
-  const isLoading =
-    projectsStatus === 'loading' ||
-    (issuesStatus === 'loading' && !activeProject);
+  const activeProject = projects.find((project) => project.key === activeProjectKey) ?? null;
 
   useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (activeProjectKey) {
-      dispatch(fetchWorkflowStates(activeProjectKey));
-      dispatch(fetchIssues(activeProjectKey));
+    if (projects.length > 0) {
+      return;
     }
-  }, [dispatch, activeProjectKey]);
+    dispatch(fetchProjects());
+  }, [dispatch, projects.length]);
 
   const handleLogOut = async () => {
     await dispatch(logout());
     navigate('/login');
   };
 
-  const kanbanColumns = getKanbanColumnsFromStates(workflowStates).map((column) => ({
-    ...column,
-    items: issues.filter((issue) => issue.workflow_state.id === column.stateId),
-  }));
+  const isBootLoading = projectsStatus === 'loading' && projects.length === 0;
 
-  if (isLoading) {
+  if (isBootLoading) {
     return <LoadingOverlay open />;
   }
 
@@ -84,27 +85,18 @@ const Dashboard = () => {
             minHeight={0}
             display="flex"
             flexDirection="column"
-            overflow="auto"
+            overflow="hidden"
           >
             <Routes>
-              <Route
-                index
-                element={(
-                  projectsStatus === 'failed' || issuesStatus === 'failed' ? (
-                    <Box p={2}>Something went wrong</Box>
-                  ) : activeProject ? (
-                    <KanbanBoard
-                      columns={kanbanColumns}
-                      onAddIssueClick={() => setAddIssueOpen(true)}
-                      projectName={activeProject.name}
-                    />
-                  ) : (
-                    <Box p={2}>No projects yet.</Box>
-                  )
-                )}
-              />
+              <Route index element={<DashboardRedirect />} />
+              <Route path="projects/:projectKey/*" element={<ProjectLayout />}>
+                <Route path="*" element={<ProjectWorkspace />} />
+              </Route>
               <Route path="user_profile" element={<UserProfile />} />
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              <Route
+                path="*"
+                element={<Navigate to={projectBoardPath(activeProjectKey ?? projects[0]?.key ?? 'TRK')} replace />}
+              />
             </Routes>
           </Box>
         </Box>
@@ -118,7 +110,6 @@ const Dashboard = () => {
           </Paper>
         </Box>
       )}
-      <IssuesModal open={addIssueOpen} onClose={() => setAddIssueOpen(false)} mode="create" />
       <Snackbar open={!!snack} autoHideDuration={6000} onClose={handleSnackClose}>
         <Alert onClose={handleSnackClose} severity="success">
           {snack}

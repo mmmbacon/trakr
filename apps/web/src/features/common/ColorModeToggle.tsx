@@ -12,11 +12,12 @@ export default function ColorModeToggle() {
   return (
     <Tooltip title={isDark ? 'Light mode' : 'Dark mode'}>
       <IconButton
+        size="small"
         color="inherit"
         onClick={toggleColorMode}
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       >
-        {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
+        {isDark ? <Brightness7Icon fontSize="small" /> : <Brightness4Icon fontSize="small" />}
       </IconButton>
     </Tooltip>
   );

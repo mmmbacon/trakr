@@ -25,6 +25,7 @@ export default function Button({
 
   return (
     <MuiButton
+      size="small"
       variant={variant}
       color={mapped.muiColor}
       disableElevation={variant === 'contained'}

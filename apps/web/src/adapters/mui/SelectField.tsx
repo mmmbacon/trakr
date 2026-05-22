@@ -20,17 +20,19 @@ export default function SelectField({
     <FormControl
       variant="outlined"
       fullWidth
+      size="small"
+      margin="dense"
       className={className}
       sx={{
         ml: marginLeft,
         width,
         mb: marginBottom,
-        bgcolor: 'white',
       }}
     >
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <InputLabel htmlFor={id} size="small">{label}</InputLabel>
       <MuiSelect
         native
+        size="small"
         value={String(value)}
         onChange={(event) => onChange(event.target.value)}
         label={label}

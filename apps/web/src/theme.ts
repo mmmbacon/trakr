@@ -131,16 +131,83 @@ export function createAppTheme(mode: PaletteMode) {
         },
       },
       MuiButton: {
+        defaultProps: {
+          size: 'small',
+          disableElevation: true,
+        },
         styleOverrides: {
           root: {
             textTransform: 'none',
+            fontSize: '0.8125rem',
+            fontWeight: 500,
+            lineHeight: 1.35,
+            borderRadius: 4,
+            boxShadow: 'none',
+            '&:hover': {
+              boxShadow: 'none',
+            },
+          },
+          sizeSmall: {
+            minHeight: 26,
+            padding: '2px 8px',
+          },
+          containedSizeSmall: {
+            padding: '2px 8px',
+          },
+          outlinedSizeSmall: {
+            padding: '1px 7px',
+          },
+          textSizeSmall: {
+            padding: '2px 6px',
+          },
+          startIcon: {
+            marginRight: 4,
+            marginLeft: -2,
+            '& > *:nth-of-type(1)': {
+              fontSize: '1rem',
+            },
+          },
+          endIcon: {
+            marginLeft: 4,
           },
         },
       },
       MuiIconButton: {
+        defaultProps: {
+          size: 'small',
+        },
         styleOverrides: {
+          root: {
+            borderRadius: 4,
+          },
           sizeSmall: {
-            padding: 4,
+            padding: 3,
+          },
+        },
+      },
+      MuiFab: {
+        defaultProps: {
+          size: 'small',
+        },
+        styleOverrides: {
+          root: {
+            boxShadow: 'none',
+            '&:hover': {
+              boxShadow: 'none',
+            },
+          },
+          sizeSmall: {
+            width: 36,
+            height: 36,
+            minHeight: 36,
+          },
+        },
+      },
+      MuiDialogActions: {
+        styleOverrides: {
+          root: {
+            padding: '8px 12px',
+            gap: 8,
           },
         },
       },
@@ -149,6 +216,69 @@ export function createAppTheme(mode: PaletteMode) {
           sizeSmall: {
             height: 20,
             fontSize: '0.6875rem',
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            borderRadius: 4,
+            fontSize: '0.8125rem',
+            '&.MuiInputBase-sizeSmall': {
+              minHeight: 26,
+            },
+          },
+          input: {
+            padding: '6px 10px',
+          },
+          inputSizeSmall: {
+            padding: '2px 8px',
+          },
+          multiline: {
+            padding: 0,
+          },
+        },
+      },
+      MuiSelect: {
+        defaultProps: {
+          size: 'small',
+        },
+        styleOverrides: {
+          root: {
+            fontSize: '0.8125rem',
+          },
+          select: {
+            display: 'flex',
+            alignItems: 'center',
+            minHeight: 26,
+            paddingTop: '2px',
+            paddingBottom: '2px',
+            paddingLeft: '8px',
+            paddingRight: '22px !important',
+            boxSizing: 'border-box',
+            lineHeight: 1.35,
+          },
+          icon: {
+            fontSize: '1.125rem',
+            right: 4,
+          },
+        },
+      },
+      MuiNativeSelect: {
+        styleOverrides: {
+          select: {
+            fontSize: '0.8125rem',
+            paddingTop: 3,
+            paddingBottom: 3,
+          },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            fontSize: '0.8125rem',
+            minHeight: 30,
+            py: 0.5,
           },
         },
       },

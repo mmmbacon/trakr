@@ -9,10 +9,11 @@ interface NavButtonProps {
 }
 
 const navButtonSx = {
-  m: '4px',
-  width: 44,
-  height: 44,
-  minWidth: 44,
+  m: '2px',
+  width: 36,
+  height: 36,
+  minWidth: 36,
+  minHeight: 36,
   lineHeight: 0,
   p: 0,
 };

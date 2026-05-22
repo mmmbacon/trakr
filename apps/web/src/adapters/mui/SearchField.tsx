@@ -17,11 +17,12 @@ export default function SearchField({
   marginBottom,
 }: SearchFieldProps) {
   return (
-    <FormControl variant="outlined" className={className} sx={{ flexGrow: 1 }}>
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+    <FormControl variant="outlined" className={className} sx={{ flexGrow: 1 }} size="small" margin="dense">
+      <InputLabel htmlFor={id} size="small">{label}</InputLabel>
       <OutlinedInput
         id={id}
         fullWidth
+        size="small"
         label={label}
         value={value}
         onChange={(event) => onChange(event.target.value)}
@@ -29,6 +30,7 @@ export default function SearchField({
           <InputAdornment position="end">
             {value ? (
               <IconButton
+                size="small"
                 onClick={() => {
                   onChange('');
                   onClear?.();
@@ -45,7 +47,6 @@ export default function SearchField({
         )}
         sx={{
           mb: marginBottom,
-          bgcolor: 'white',
         }}
       />
     </FormControl>

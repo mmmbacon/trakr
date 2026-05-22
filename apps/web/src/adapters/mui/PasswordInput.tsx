@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
@@ -24,29 +23,31 @@ export default function PasswordInput({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <FormControl fullWidth className={className}>
-      <TextField
-        label={label}
-        type={showPassword ? 'text' : 'password'}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        sx={marginBottom !== undefined ? { mb: marginBottom } : undefined}
-        slotProps={{
-          input: {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  aria-pressed={showPassword}
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  <Icon name={showPassword ? 'visibility' : 'visibility-off'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
-      />
-    </FormControl>
+    <TextField
+      label={label}
+      type={showPassword ? 'text' : 'password'}
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
+      size="small"
+      margin="dense"
+      fullWidth
+      className={className}
+      sx={marginBottom !== undefined ? { mb: marginBottom } : undefined}
+      slotProps={{
+        input: {
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                aria-pressed={showPassword}
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <Icon name={showPassword ? 'visibility' : 'visibility-off'} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+    />
   );
 }

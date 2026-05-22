@@ -27,10 +27,14 @@ const idleProjectsState: ProjectsState = {
 
 const idleIssuesState: IssuesState = {
   issues: [],
+  selectedIssue: null,
+  selectedIssueStatus: 'idle',
   status: 'idle',
   addIssueStatus: 'idle',
   editIssueStatus: 'idle',
   deleteIssueStatus: 'idle',
+  transitionIssueStatus: 'idle',
+  createActivityStatus: 'idle',
 };
 
 function renderApp() {

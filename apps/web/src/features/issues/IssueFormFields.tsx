@@ -21,7 +21,7 @@ export default function IssueFormFields({
 
   return (
     <>
-      <Box display="flex" flexDirection="row" gap={1} mb={2}>
+      <Box display="flex" flexDirection="row" gap={1} mb={1}>
         <Box flex={1}>
           <TextInput
             required
@@ -54,7 +54,7 @@ export default function IssueFormFields({
           />
         </Box>
       </Box>
-      <Box mb={2}>
+      <Box mb={1}>
         <TextInput
           id="issue-description"
           multiline
