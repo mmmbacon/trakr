@@ -27,13 +27,17 @@ export default function Button({
     <MuiButton
       variant={variant}
       color={mapped.muiColor}
+      disableElevation={variant === 'contained'}
       onClick={onClick}
       type={type}
       disabled={disabled}
       fullWidth={fullWidth}
       startIcon={startIcon}
       className={className}
-      sx={mapped.sx}
+      sx={{
+        ...(variant === 'contained' ? { boxShadow: 'none', '&:hover': { boxShadow: 'none' } } : {}),
+        ...mapped.sx,
+      }}
     >
       {children}
     </MuiButton>

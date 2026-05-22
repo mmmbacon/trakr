@@ -50,7 +50,7 @@ function JobResourceDrawer() {
     <>
       <Tooltip title="Job Resources">
         <Fab onClick={() => setOpen(true)} aria-label="Job Resources">
-          <Icon name="work" className="fab-icon" />
+          <Icon name="work" />
         </Fab>
       </Tooltip>
       <Drawer open={open} onClose={handleClose}>

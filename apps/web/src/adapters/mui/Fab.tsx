@@ -1,6 +1,5 @@
 import MuiFab from '@mui/material/Fab';
 
-import { colors } from '../../tokens';
 import type { FabProps } from '../../components/ui/types';
 
 export default function Fab({
@@ -18,10 +17,18 @@ export default function Fab({
         position: 'fixed',
         bottom: 24,
         right: 24,
-        bgcolor: colors.secondary,
+        bgcolor: 'background.paper',
+        color: 'text.primary',
+        border: 1,
+        borderColor: 'divider',
+        boxShadow: 'none',
         zIndex: 1,
         '&:hover': {
-          bgcolor: '#3a9680',
+          bgcolor: 'action.hover',
+          boxShadow: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
         },
       }}
     >

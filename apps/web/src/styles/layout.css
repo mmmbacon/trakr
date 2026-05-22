@@ -263,10 +263,6 @@
   margin-right: 16px;
 }
 
-.fab-icon {
-  color: var(--color-white);
-}
-
 .job-form-section-heading {
   font-family: var(--font-heading);
   padding-top: 15px;

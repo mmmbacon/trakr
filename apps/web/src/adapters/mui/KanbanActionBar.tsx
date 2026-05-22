@@ -25,10 +25,21 @@ export default function KanbanActionBar({ onAddJobClick }: KanbanActionBarProps)
           Job Board
         </Typography>
         <Button
-          variant="contained"
-          color="secondary"
+          disableElevation
+          variant="outlined"
           startIcon={<AddIcon />}
           onClick={onAddJobClick}
+          sx={{
+            bgcolor: 'background.paper',
+            color: 'text.primary',
+            borderColor: 'divider',
+            boxShadow: 'none',
+            '&:hover': {
+              bgcolor: 'action.hover',
+              borderColor: 'divider',
+              boxShadow: 'none',
+            },
+          }}
         >
           Add New Job
         </Button>
