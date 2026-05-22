@@ -18,20 +18,21 @@ export default function KanbanActionBar({
       square
       elevation={0}
       sx={{
-        px: 2,
-        py: 1.5,
+        px: 1.5,
+        py: 0.75,
         borderBottom: 1,
         borderColor: 'divider',
       }}
     >
-      <Box display="flex" alignItems="center" justifyContent="space-between" gap={2}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" gap={1}>
         <Typography variant="h6" component="h1">
           {projectName ? `${projectName} Board` : 'Board'}
         </Typography>
         <Button
+          size="small"
           disableElevation
           variant="outlined"
-          startIcon={<AddIcon />}
+          startIcon={<AddIcon fontSize="small" />}
           onClick={onAddIssueClick}
           sx={{
             bgcolor: 'background.paper',

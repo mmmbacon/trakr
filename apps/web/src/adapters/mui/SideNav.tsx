@@ -20,7 +20,7 @@ import {
   setActiveProjectKey,
 } from '../../features/projects/projectsSlice';
 
-export const SIDEBAR_WIDTH = 240;
+export const SIDEBAR_WIDTH = 200;
 
 interface NavItem {
   label: string;
@@ -87,7 +87,7 @@ export default function SideNav() {
     >
       <Box display="flex" flexDirection="column" height="100%">
         {projects.length > 0 ? (
-          <Box px={2} pt={2} pb={1}>
+          <Box px={1.5} pt={1.25} pb={0.75}>
             <Select
               fullWidth
               size="small"
@@ -103,12 +103,12 @@ export default function SideNav() {
             </Select>
           </Box>
         ) : null}
-        <List component="nav" sx={{ flexGrow: 1, px: 1, pt: 1 }}>
+        <List component="nav" dense sx={{ flexGrow: 1, px: 0.75, pt: 0.5 }}>
           {navItems.map((item) => {
             const selected = isNavItemActive(location.pathname, item);
 
             return (
-              <ListItem key={item.label} disablePadding sx={{ mb: 0.5 }}>
+              <ListItem key={item.label} disablePadding sx={{ mb: 0.25 }}>
                 <ListItemButton
                   component={item.to ? Link : 'button'}
                   to={item.to}
@@ -116,8 +116,11 @@ export default function SideNav() {
                   onClick={item.onClick}
                   selected={selected}
                   aria-label={item.label}
+                  dense
                 >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemIcon sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}>
+                    {item.icon}
+                  </ListItemIcon>
                   <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>

@@ -18,9 +18,9 @@ export default function IssueItemCard({
 }: IssueItemCardProps) {
   return (
     <Box position="relative" width="100%">
-      <Box py={1} px={1.5}>
-        <Stack direction="row" alignItems="flex-start" spacing={1} width="100%">
-          <Stack flex={1} minWidth={0} spacing={0.25}>
+      <Box sx={{ py: 'var(--space-1)', px: 'var(--space-2)' }}>
+        <Stack direction="row" alignItems="flex-start" spacing={0.5} width="100%">
+          <Stack flex={1} minWidth={0} spacing={0}>
             <Typography
               variant="caption"
               color="text.secondary"

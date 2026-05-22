@@ -18,17 +18,17 @@ export default function DashboardColumnHeading({
   return (
     <Box
       sx={{
-        mb: 1.5,
-        px: 1.5,
-        py: 1.25,
-        borderRadius: 1,
-        borderLeft: 4,
+        mb: 0.75,
+        px: 1,
+        py: 0.75,
+        borderRadius: 'var(--radius-sm)',
+        borderLeft: 3,
         borderColor: color ?? 'divider',
-        bgcolor: color ? alpha(color, 0.14) : 'action.hover',
+        bgcolor: color ? alpha(color, 0.12) : 'action.hover',
       }}
     >
-      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-        <Typography variant="subtitle2" fontWeight={600} noWrap>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={0.5}>
+        <Typography variant="subtitle2" noWrap sx={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           {title}
         </Typography>
         <Chip
@@ -36,8 +36,7 @@ export default function DashboardColumnHeading({
           size="small"
           variant="outlined"
           sx={{
-            minWidth: 28,
-            height: 22,
+            minWidth: 22,
             fontWeight: 600,
             borderColor: color ? alpha(color, 0.5) : undefined,
             bgcolor: 'background.paper',

@@ -16,7 +16,7 @@ const DashboardColumn = ({
 }: DashboardColumnProps) => (
   <Box height="100%">
     <DashboardColumnHeading title={title} color={color} count={items.length} />
-    <Box display="flex" flexDirection="column" gap={1}>
+    <Box display="flex" flexDirection="column" gap={0.5}>
       {items.map((item) => (
         <IssueItem key={item.id} issue={item} />
       ))}

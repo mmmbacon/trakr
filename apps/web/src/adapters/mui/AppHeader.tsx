@@ -20,14 +20,14 @@ interface AppHeaderProps {
 
 export default function AppHeader({ userdata, onLogout, projectName }: AppHeaderProps) {
   return (
-    <AppBar position="static" color="default" elevation={1}>
-      <Toolbar>
+    <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Toolbar variant="dense" disableGutters sx={{ px: 1.5, minHeight: 44 }}>
         <Box
           component={Link}
           to="/dashboard"
           display="flex"
           alignItems="center"
-          gap={1.5}
+          gap={1}
           color="inherit"
           sx={{ textDecoration: 'none' }}
         >
@@ -35,13 +35,13 @@ export default function AppHeader({ userdata, onLogout, projectName }: AppHeader
             component="img"
             src="/img/Logo2-sm.png"
             alt=""
-            sx={{ width: 32, height: 32 }}
+            sx={{ width: 26, height: 26 }}
           />
-          <Typography variant="h6" component="span" color="inherit">
+          <Typography variant="h6" component="span" color="inherit" sx={{ fontSize: '0.9375rem' }}>
             trakr.
           </Typography>
           {projectName ? (
-            <Typography variant="body2" component="span" color="text.secondary" sx={{ ml: 1 }}>
+            <Typography variant="caption" component="span" color="text.secondary" sx={{ ml: 0.5 }}>
               / {projectName}
             </Typography>
           ) : null}

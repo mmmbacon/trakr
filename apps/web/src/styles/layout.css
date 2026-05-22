@@ -69,9 +69,9 @@
 }
 
 .kanban-column {
-  min-width: 240px;
-  flex: 0 0 240px;
-  max-width: 300px;
+  min-width: 216px;
+  flex: 0 0 216px;
+  max-width: 280px;
 }
 
 .dashboard-column {
@@ -112,10 +112,10 @@
 }
 
 .demo-mode-banner {
-  bottom: 24px;
-  left: 24px;
+  bottom: 12px;
+  left: 12px;
   z-index: 1400;
-  max-width: 360px;
+  max-width: 320px;
 }
 
 .auth-layout {

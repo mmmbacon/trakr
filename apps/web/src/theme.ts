@@ -58,9 +58,100 @@ const sharedPalette = {
 
 export function createAppTheme(mode: PaletteMode) {
   return createTheme({
+    spacing: 6,
     palette: {
       mode,
       ...sharedPalette,
+    },
+    typography: {
+      htmlFontSize: 14,
+      fontFamily: `'Source Sans Pro', system-ui, sans-serif`,
+      h6: {
+        fontSize: '0.9375rem',
+        fontWeight: 600,
+        lineHeight: 1.3,
+      },
+      subtitle2: {
+        fontSize: '0.75rem',
+        fontWeight: 600,
+        letterSpacing: '0.02em',
+        lineHeight: 1.3,
+      },
+      body2: {
+        fontSize: '0.8125rem',
+        lineHeight: 1.35,
+      },
+      caption: {
+        fontSize: '0.6875rem',
+        lineHeight: 1.3,
+      },
+    },
+    shape: {
+      borderRadius: 6,
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            fontSize: '0.8125rem',
+          },
+        },
+      },
+      MuiToolbar: {
+        defaultProps: {
+          variant: 'dense',
+        },
+        styleOverrides: {
+          dense: {
+            minHeight: 44,
+          },
+        },
+      },
+      MuiListItemButton: {
+        styleOverrides: {
+          root: {
+            paddingTop: 4,
+            paddingBottom: 4,
+            minHeight: 32,
+          },
+        },
+      },
+      MuiListItemIcon: {
+        styleOverrides: {
+          root: {
+            minWidth: 32,
+          },
+        },
+      },
+      MuiListItemText: {
+        styleOverrides: {
+          primary: {
+            fontSize: '0.8125rem',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: 'none',
+          },
+        },
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          sizeSmall: {
+            padding: 4,
+          },
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          sizeSmall: {
+            height: 20,
+            fontSize: '0.6875rem',
+          },
+        },
+      },
     },
   });
 }

@@ -23,13 +23,13 @@ export default function KanbanBoard({
   return (
     <Box display="flex" flexDirection="column" height="100%">
       <KanbanActionBar onAddIssueClick={onAddIssueClick} projectName={projectName} />
-      <Box flex={1} minHeight={0} p={2} overflow="auto">
+      <Box flex={1} minHeight={0} px={1.5} py={1} overflow="auto">
         <Grid
           container
           id="dashboard-columns"
           component="section"
           aria-label="Issue board"
-          spacing={2}
+          spacing={1}
           wrap="nowrap"
           className="kanban-columns"
         >
