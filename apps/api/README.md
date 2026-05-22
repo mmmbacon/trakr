@@ -1,6 +1,6 @@
 # Trakr Backend
 
-Rails API for the Trakr job application tracker. See the repository root `README.md` for full monorepo setup and deployment instructions.
+Rails 7.2 API for the Trakr job application tracker. See the repository root `README.md` for full monorepo setup and deployment instructions.
 
 ## Prerequisites
 

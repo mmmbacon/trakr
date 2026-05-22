@@ -1,17 +1,16 @@
 # Trakr Web
 
-React frontend for Trakr. See the repository root `README.md` for full monorepo setup and deployment instructions.
-
-## Final Product
-![“trakr dashboard”](https://github.com/courtamos/final-frontend/blob/master/docs/trakr_dashboard.png?raw=true)
-![“trakr job modal”](https://github.com/courtamos/final-frontend/blob/master/docs/trakr_job_modal.png?raw=true)
-![“trakr search feature”](https://github.com/courtamos/final-frontend/blob/master/docs/trakr_search.png?raw=true)
+React 18 + Vite frontend for Trakr. See the repository root `README.md` for full monorepo setup and deployment instructions.
 
 ## Tech Stack
-- PostgreSQL
-- Ruby on Rails
-- ReactJS
-- Redux
+
+- React 18
+- Vite 6
+- TypeScript
+- Redux Toolkit
+- Material UI 6 (`@mui/material`)
+- React Router 6
+- MUI X Charts & Date Pickers
 
 ## Setup
 
@@ -19,12 +18,37 @@ React frontend for Trakr. See the repository root `README.md` for full monorepo 
 npm install
 ```
 
-## Running Development Server
+Copy environment variables from the repo root `.env.example` into `.env.local`:
+
+```sh
+VITE_DEMO_MODE=true
+VITE_GOOGLE_API_KEY=api-key-here
+```
+
+## Development
 
 From this directory:
 
 ```sh
-npm start
+npm run dev
 ```
 
 Opens at http://localhost:8080 and proxies `/api` to the local Rails server at http://localhost:3000.
+
+From the repository root:
+
+```sh
+npm run dev
+```
+
+## Commands
+
+```sh
+npm run dev        # Vite dev server
+npm run lint       # ESLint
+npm run build      # Production build to dist/
+npm run typecheck  # TypeScript check
+npm run test       # Vitest watch mode
+npm run test:ci    # Vitest single run (CI)
+npm run preview    # Preview production build
+```

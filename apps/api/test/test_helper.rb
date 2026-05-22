@@ -1,13 +1,23 @@
 ENV['RAILS_ENV'] ||= 'test'
-require_relative "../config/environment"
-require "rails/test_help"
+ENV['DEMO_MODE'] = 'false'
+require_relative '../config/environment'
+require 'rails/test_help'
+
+ActiveModel::SecurePassword.min_cost = true
 
 class ActiveSupport::TestCase
-  # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
-
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
+end
 
-  # Add more helper methods to be used by all tests here...
+class ActionDispatch::IntegrationTest
+  def login_as(user, password: 'password')
+    post api_login_url, params: { user: { email: user.email, password: password } }, as: :json
+    assert_response :success, "Expected login to succeed for #{user.email}"
+  end
+
+  def logout
+    delete api_logout_url, as: :json
+    assert_response :success
+  end
 end

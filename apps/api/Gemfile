@@ -1,21 +1,22 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '~> 3.3.0'
 
-gem 'rails', '~> 6.1.7'
+gem 'rails', '~> 7.2.0'
 gem 'pg', '~> 1.5'
 gem 'puma', '~> 6.4'
 gem 'rack-cors'
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.13'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'sprockets-rails'
 gem 'logger'
 gem 'mutex_m'
 gem 'drb'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: [:mri, :windows]
+  gem 'minitest', '~> 5.25'
 end
 
 group :development do
@@ -25,8 +26,7 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
-  gem 'selenium-webdriver'
-  gem 'webdrivers'
+  gem 'selenium-webdriver', '>= 4.11'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: [:windows, :jruby]
