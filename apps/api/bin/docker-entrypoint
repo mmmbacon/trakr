@@ -4,7 +4,10 @@ set -e
 mkdir -p tmp/pids tmp/cache tmp/sockets log
 
 if [ "${RAILS_ENV}" = "production" ]; then
+  echo "Preparing database..."
   bundle exec rails db:prepare
+  echo "Database ready."
 fi
 
+echo "Starting application..."
 exec "$@"
