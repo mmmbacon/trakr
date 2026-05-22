@@ -15,7 +15,7 @@ const DashboardColumn = ({
   items = [],
 }: DashboardColumnProps) => (
   <Box height="100%">
-    <DashboardColumnHeading title={title} color={color} />
+    <DashboardColumnHeading title={title} color={color} count={items.length} />
     {items.map((item) => (
       <JobItem key={item.id} job={item} />
     ))}
