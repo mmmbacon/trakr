@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 
 import AuthLayout from '../../components/AuthLayout';
 import PasswordField from '../../components/PasswordField';
+import {
+  Alert,
+  Box,
+  Button,
+  Divider,
+  TextInput,
+  Typography,
+} from '../../components/ui';
 import { authSelector, login } from './authSlice';
 import { demoPresets, type DemoPreset } from './demoPresets';
 import isDemoMode from '../../config';
@@ -48,38 +49,34 @@ const Login = () => {
   return (
     <AuthLayout loading={loggingInStatus === 'loading'}>
       {error && (
-        <Alert severity="error" sx={{ width: '100%', mb: 1.25 }}>
+        <Alert severity="error" className="alert-full-width">
           {error}
         </Alert>
       )}
-      <FormControl fullWidth>
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          sx={{ mb: 1.25 }}
-        />
-      </FormControl>
+      <TextInput
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        marginBottom={1.25}
+      />
       <PasswordField
         label="Password"
         value={password}
         onChange={setPassword}
       />
-      <Box mt={5} mb={3}>
+      <Box className="login-button-wrap">
         <Button
-          variant="contained"
           color="secondary"
           onClick={() => handleLogin()}
           disabled={loggingInStatus === 'loading'}
           fullWidth
-          sx={{ color: 'white' }}
         >
           Login
         </Button>
       </Box>
       {isDemoMode && (
         <>
-          <Divider sx={{ mb: 2 }}>or try a demo account</Divider>
+          <Divider marginBottom={2}>or try a demo account</Divider>
           {demoPresets.map((preset) => (
             <Box key={preset.email} mb={1.5}>
               <Button
@@ -91,7 +88,11 @@ const Login = () => {
               >
                 {preset.label}
               </Button>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, textAlign: 'center' }}>
+              <Typography
+                variant="body2"
+                color="secondary"
+                className="demo-description"
+              >
                 {preset.description}
               </Typography>
             </Box>

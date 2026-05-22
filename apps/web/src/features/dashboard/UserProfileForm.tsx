@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import {
-  Alert,
-  Box,
-  Button,
-  FormControl,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material';
 
 import PasswordField from '../../components/PasswordField';
 import UpdateModal from '../../components/UpdateModal';
 import type { User } from '../../types';
+import {
+  Alert,
+  Box,
+  Button,
+  Snackbar,
+  TextInput,
+  Typography,
+} from '../../components/ui';
 
 interface UserProfileFormProps {
   user: User;
@@ -69,69 +68,50 @@ export default function UserProfileForm({ user, onUpdate }: UserProfileFormProps
   return (
     <Box display="flex" flexDirection="column" flexGrow={1} p={2}>
       {error && (
-        <Alert severity="error" sx={{ marginBottom: '10px', width: '100%' }}>
+        <Alert severity="error" className="alert-full-width">
           {error}
         </Alert>
       )}
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: '-5px',
-          marginBottom: '10px',
-        }}
-      >
+      <Typography variant="h4" className="section-heading-spacing">
         Personal Information
       </Typography>
-      <FormControl>
-        <TextField
-          label="First Name"
-          value={first_name}
-          onChange={(event) => setFirstName(event.target.value)}
-          sx={{ marginBottom: '10px' }}
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          label="Last Name"
-          value={last_name}
-          onChange={(event) => setLastName(event.target.value)}
-          sx={{ marginBottom: '10px' }}
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          sx={{ marginBottom: '10px' }}
-        />
-      </FormControl>
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: '20px',
-          marginBottom: '10px',
-        }}
-      >
+      <TextInput
+        label="First Name"
+        value={first_name}
+        onChange={setFirstName}
+        className="field-spacing"
+      />
+      <TextInput
+        label="Last Name"
+        value={last_name}
+        onChange={setLastName}
+        className="field-spacing"
+      />
+      <TextInput
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        className="field-spacing"
+      />
+      <Typography variant="h4" className="section-heading-spacing-lg">
         Password
       </Typography>
       <PasswordField
         label="Password"
         value={password}
         onChange={setPassword}
-        sx={{ marginBottom: '10px' }}
+        className="field-spacing"
       />
       <PasswordField
         label="Password Confirmation"
         value={password_confirmation}
         onChange={setPasswordConfirmation}
-        sx={{ marginBottom: '10px' }}
+        className="field-spacing"
       />
       <Button
-        variant="contained"
         color="secondary"
         onClick={() => { setModalOpen(true); }}
-        sx={{ marginTop: '25px', color: 'white' }}
+        className="confirm-button-spacing"
       >
         Confirm Changes
       </Button>

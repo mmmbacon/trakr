@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 
 import Search from './Search';
 import UserProfile from './UserProfile';
@@ -26,29 +21,12 @@ import { authSelector } from '../auth/authSlice';
 import isDemoMode from '../../config';
 import JobResources from './Drawer';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-
-const shellSx = {
-  display: 'flex',
-  width: '100%',
-  minHeight: '100vh',
-  overflow: 'hidden',
-};
-
-const mainSx = {
-  flex: 1,
-  minWidth: 0,
-  minHeight: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-};
-
-const mainScrollSx = {
-  flex: 1,
-  minHeight: 0,
-  overflow: 'auto',
-  width: '100%',
-};
+import {
+  Alert,
+  Box,
+  LoadingOverlay,
+  Snackbar,
+} from '../../components/ui';
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -79,28 +57,24 @@ const Dashboard = () => {
   }, [dispatch]);
 
   if (status === 'loading') {
-    return (
-      <Backdrop open>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    );
+    return <LoadingOverlay open />;
   }
 
   return (
     <>
-      <Box className="dashboard-shell" sx={shellSx}>
+      <Box className="dashboard-shell">
         <SideBar
           userdata={user ?? undefined}
           addButtonVisible={isDashboardHome}
           onAddJobClick={() => setAddJobOpen(true)}
         />
-        <Box component="main" className="dashboard-main" sx={mainSx}>
+        <Box component="main" className="dashboard-main">
           {isDemoMode && (
-            <Alert severity="info" sx={{ borderRadius: 0, flexShrink: 0 }}>
+            <Alert severity="info" square>
               Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
             </Alert>
           )}
-          <Box className="dashboard-main-scroll" sx={mainScrollSx}>
+          <Box className="dashboard-main-scroll">
             <Routes>
               <Route
                 index

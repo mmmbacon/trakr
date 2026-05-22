@@ -1,7 +1,7 @@
 import { format, isValid, parseISO } from 'date-fns';
-import { Box, Typography } from '@mui/material';
 
 import type { User } from '../../types';
+import { Box, Typography } from '../../components/ui';
 
 interface UserProfileSidebarProps {
   user: User;
@@ -18,35 +18,26 @@ function formatDate(value: string) {
 
 export default function UserProfileSidebar({ user, jobCount }: UserProfileSidebarProps) {
   return (
-    <Box display="flex" flexDirection="column" p={2}>
+    <Box className="profile-sidebar">
       <Box
         component="img"
         src={`https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}&background=3b3b3b&color=fff&size=256`}
         alt="user initials"
-        sx={{
-          width: '250px',
-          height: '250px',
-        }}
+        className="profile-avatar"
       />
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: '20px',
-          marginBottom: '10px',
-        }}
-      >
+      <Typography variant="h4" className="section-heading-spacing-lg">
         {`${user.first_name} ${user.last_name}`}
       </Typography>
-      <Typography variant="h5" sx={{ marginBottom: '10px', marginTop: 0 }}>
+      <Typography variant="h5" marginBottom={1.25}>
         Active Since
       </Typography>
-      <Typography variant="body1" sx={{ margin: 0 }}>
+      <Typography variant="body1">
         {formatDate(user.created_at ?? '')}
       </Typography>
-      <Typography variant="h5" sx={{ marginBottom: '10px', marginTop: '10px' }}>
+      <Typography variant="h5" marginBottom={1.25} marginTop={1.25}>
         Total Number of Jobs
       </Typography>
-      <Typography variant="body1" sx={{ margin: 0 }}>
+      <Typography variant="body1">
         {jobCount}
       </Typography>
     </Box>

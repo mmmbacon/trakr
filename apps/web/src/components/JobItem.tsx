@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Paper } from '@mui/material';
 
 import { useAppDispatch } from '../app/hooks';
 import ModalConfirm from './ModalConfirm';
@@ -7,6 +6,7 @@ import JobItemCard from './JobItemCard';
 import { useJobItemState } from './useJobItemState';
 import { JobsModal } from '../features/dashboard/jobs/JobsModal';
 import { deleteJob } from '../features/dashboard/jobs/jobsSlice';
+import { Paper } from './ui';
 import type { Job } from '../types';
 
 export interface JobItemProps {
@@ -28,17 +28,7 @@ const JobItem = ({ job }: JobItemProps) => {
     <Paper
       component="article"
       aria-label={`${job.company}, ${job.title}, ${job.location}`}
-      elevation={1}
-      sx={{
-        position: 'relative',
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginBottom: '5px',
-        padding: '10px',
-        '&:hover': {
-          backgroundColor: '#f6f6f6',
-        },
-      }}
+      className="job-item-paper"
     >
       <JobItemCard
         job={job}

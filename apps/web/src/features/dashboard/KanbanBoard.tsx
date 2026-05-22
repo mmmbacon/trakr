@@ -1,22 +1,6 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import type { Job } from '../../types';
+import { Box, Grid } from '../../components/ui';
 import DashboardColumn from './DashboardColumn';
-
-const kanbanSx = {
-  width: '100%',
-  overflowX: 'auto',
-};
-
-const kanbanColumnsSx = {
-  minWidth: 'max-content',
-};
-
-const columnSx = {
-  minWidth: 240,
-  flex: '0 0 240px',
-  maxWidth: 300,
-};
 
 interface KanbanColumnConfig {
   title: string;
@@ -31,18 +15,18 @@ interface KanbanBoardProps {
 
 export default function KanbanBoard({ columns }: KanbanBoardProps) {
   return (
-    <Box sx={kanbanSx} p={1}>
+    <Box className="kanban-board" p={1}>
       <Grid
         container
         id="dashboard-columns"
         component="section"
         aria-label="Job application board"
-        sx={kanbanColumnsSx}
+        className="kanban-columns"
         spacing={1}
         wrap="nowrap"
       >
         {columns.map((column, index) => (
-          <Grid item key={column.title} sx={columnSx}>
+          <Grid item key={column.title} className="kanban-column">
             <Box display="flex">
               <DashboardColumn
                 tickUrl={column.tickUrl}

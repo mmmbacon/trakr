@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import {
-  Alert,
-  Dialog,
-  DialogContent,
-  Grid,
-} from '@mui/material';
 
 import ModalConfirm from '../../../components/ModalConfirm';
 import type { Job } from '../../../types';
+import { Alert, Grid, Modal, ModalContent } from '../../../components/ui';
 import JobFormActions from './JobFormActions';
 import JobFormContact from './JobFormContact';
 import JobFormEvents from './JobFormEvents';
@@ -52,7 +47,7 @@ export const JobsModal = ({
   return (
     <div>
       <Grid container>
-        <Dialog
+        <Modal
           className="job-modal-background"
           onClose={onClose}
           onClick={(event) => {
@@ -64,9 +59,9 @@ export const JobsModal = ({
           maxWidth="md"
         >
           <form onSubmit={(event) => event.preventDefault()}>
-            <DialogContent dividers sx={{ p: 2.5 }}>
+            <ModalContent dividers>
               {error && (
-                <Alert severity="error" sx={{ width: '100%', mb: 1.25 }}>
+                <Alert severity="error" className="alert-full-width">
                   {error}
                 </Alert>
               )}
@@ -74,7 +69,7 @@ export const JobsModal = ({
               <JobFormEvents values={values} onFieldChange={setField} />
               <JobFormContact values={values} onFieldChange={setField} />
               <JobFormLinks values={values} onFieldChange={setField} />
-            </DialogContent>
+            </ModalContent>
             <JobFormActions
               isEditMode={isEditMode}
               onCancel={onClose}
@@ -83,7 +78,7 @@ export const JobsModal = ({
               onDeleteClick={() => setConfirmModalOpen(true)}
             />
           </form>
-        </Dialog>
+        </Modal>
       </Grid>
       <ModalConfirm
         id="modal-confirm-delete"

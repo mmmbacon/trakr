@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import Tooltip from '@mui/material/Tooltip';
 
-import { lightTooltipSlotProps } from '../../theme/tooltip';
-import { SideBarButton } from './SideBarButton';
+import { NavButton, Tooltip } from '../../components/ui';
 
 interface SideBarNavItemProps {
   title: string;
@@ -27,15 +25,10 @@ export default function SideBarNavItem({
   );
 
   return (
-    <SideBarButton onClick={onClick}>
-      <Tooltip
-        title={title}
-        aria-label={title}
-        placement="right"
-        slotProps={lightTooltipSlotProps}
-      >
+    <NavButton onClick={onClick}>
+      <Tooltip title={title}>
         <span className="sidebar-nav-item">{content}</span>
       </Tooltip>
-    </SideBarButton>
+    </NavButton>
   );
 }

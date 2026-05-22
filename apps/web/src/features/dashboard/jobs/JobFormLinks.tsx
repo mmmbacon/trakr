@@ -1,6 +1,5 @@
-import { Box } from '@mui/material';
-
 import LinkInput from '../../../components/LinkInput';
+import { Box } from '../../../components/ui';
 import JobFormSectionHeading from './JobFormSectionHeading';
 import type { JobFormValues } from './useJobForm';
 

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import Button from '@mui/material/Button';
+
+import { NavButton } from '../../components/ui';
 
 interface SideBarButtonProps {
   onClick?: () => void;
@@ -10,19 +11,9 @@ export const SideBarButton = ({
   onClick = () => {},
   children,
 }: SideBarButtonProps) => (
-  <Button
-    onClick={onClick}
-    sx={{
-      m: '4px',
-      width: 44,
-      height: 44,
-      minWidth: 44,
-      lineHeight: 0,
-      p: 0,
-    }}
-  >
+  <NavButton onClick={onClick}>
     {children}
-  </Button>
+  </NavButton>
 );
 
 export default SideBarButton;

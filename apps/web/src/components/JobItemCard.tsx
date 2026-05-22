@@ -1,13 +1,10 @@
 import {
   Box,
+  Icon,
   IconButton,
   Tooltip,
   Typography,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
-
+} from './ui';
 import { getFirstEvent } from '../features/dashboard/jobs/jobMappers';
 import { normalizeUrl } from '../utils/url';
 import type { Job } from '../types';
@@ -22,27 +19,18 @@ interface JobItemCardProps {
 
 function JobItemToolbar({ job, onEdit, onDelete }: Pick<JobItemCardProps, 'job' | 'onEdit' | 'onDelete'>) {
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      flexShrink={0}
-      alignItems="center"
-    >
+    <Box display="flex" flexDirection="row" flexShrink={0} alignItems="center">
       <IconButton
         aria-label={`Edit ${job.company} job`}
         onClick={onEdit}
-        size="small"
-        sx={{ color: '#d9d9d9', p: 0.25 }}
       >
-        <EditIcon sx={{ fontSize: 18 }} />
+        <Icon name="edit" size={18} />
       </IconButton>
       <IconButton
         aria-label={`Delete ${job.company} job`}
         onClick={onDelete}
-        size="small"
-        sx={{ color: '#d9d9d9', p: 0.25 }}
       >
-        <DeleteIcon sx={{ fontSize: 18 }} />
+        <Icon name="delete" size={18} />
       </IconButton>
     </Box>
   );
@@ -62,105 +50,39 @@ export default function JobItemCard({
     : 'Scheduled event has passed';
 
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="center"
-      width="100%"
-      gap={0.5}
-    >
+    <Box className="job-item-card">
       {eventExpired ? (
-        <Tooltip title={expiredEventLabel} arrow>
-          <Box
-            component="span"
-            sx={{
-              position: 'absolute',
-              top: 4,
-              left: 4,
-              display: 'flex',
-              lineHeight: 0,
-            }}
-          >
-            <NewReleasesIcon sx={{ color: '#f94144', fontSize: 16 }} aria-hidden />
+        <Tooltip title={expiredEventLabel}>
+          <Box className="job-item-expired-badge" component="span">
+            <Icon name="new-releases" size={16} color="#f94144" />
           </Box>
         </Tooltip>
       ) : null}
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        sx={{
-          flexShrink: 0,
-          width: 36,
-          minWidth: 36,
-          height: 36,
-        }}
-      >
+      <Box className="job-item-logo-wrap">
         <Box
           component="a"
           href={redirectUrl ?? undefined}
           target="_blank"
           rel="noreferrer"
           aria-label={redirectUrl ? `Open ${job.company} job posting` : undefined}
-          sx={{ lineHeight: 0 }}
+          className="job-item-logo-link"
         >
           <Box
             component="img"
             src={logo}
             alt=""
-            sx={{
-              width: 32,
-              height: 32,
-              borderRadius: '50%',
-              objectFit: 'contain',
-            }}
+            className="job-item-logo"
           />
         </Box>
       </Box>
-      <Box
-        display="flex"
-        flexDirection="column"
-        flex={1}
-        minWidth={0}
-        sx={{ overflow: 'hidden' }}
-      >
-        <Typography
-          variant="subtitle1"
-          align="left"
-          noWrap
-          sx={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontWeight: 600,
-            lineHeight: 1.2,
-          }}
-        >
+      <Box className="job-item-content">
+        <Typography variant="subtitle1" align="left" noWrap className="job-item-company">
           {job.company}
         </Typography>
-        <Typography
-          variant="body2"
-          align="left"
-          sx={{
-            fontFamily: 'Montserrat, sans-serif',
-            fontWeight: 500,
-            lineHeight: 1.2,
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}
-        >
+        <Typography variant="body2" align="left" className="job-item-title">
           {job.title}
         </Typography>
-        <Typography
-          variant="caption"
-          align="left"
-          noWrap
-          sx={{
-            fontFamily: 'Source Sans Pro, sans-serif',
-            lineHeight: 1.2,
-            pt: 0.25,
-          }}
-        >
+        <Typography variant="caption" align="left" noWrap className="job-item-location">
           {job.location}
         </Typography>
       </Box>

@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
-import Paper from '@mui/material/Paper';
+
+import { Box, Paper, ProgressBar } from './ui';
 
 interface AuthLayoutProps {
   loading?: boolean;
@@ -14,26 +13,18 @@ export default function AuthLayout({
   children,
   contentWidth = 340,
 }: AuthLayoutProps) {
+  const contentClassName = contentWidth === 300
+    ? 'auth-layout-content auth-layout-content--narrow'
+    : 'auth-layout-content auth-layout-content--default';
+
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-      <Paper
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'wrap',
-        }}
-      >
-        {loading && <LinearProgress />}
-        <Box display="flex" justifyContent="center" mt={5}>
+    <Box className="auth-layout">
+      <Paper className="auth-layout-paper">
+        {loading && <ProgressBar />}
+        <Box className="auth-layout-logo-wrap">
           <img src="/img/Logo2-lg.png" alt="logo" height="250px" />
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          p={5}
-          width={contentWidth}
-        >
+        <Box className={contentClassName}>
           {children}
         </Box>
       </Paper>

@@ -1,18 +1,15 @@
-import {
-  Box,
-  Button,
-  Grow,
-  TextField,
-  Typography,
-} from '@mui/material';
-import InsertInvitationSharpIcon from '@mui/icons-material/InsertInvitationSharp';
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { google } from 'calendar-link';
 
 import LinkInput from '../../../components/LinkInput';
+import {
+  Box,
+  Button,
+  DateField,
+  GrowTransition,
+  Icon,
+  TextInput,
+  Typography,
+} from '../../../components/ui';
 import JobFormSectionHeading from './JobFormSectionHeading';
 import type { JobFormValues } from './useJobForm';
 
@@ -35,25 +32,9 @@ export default function JobFormEvents({ values, onFieldChange }: JobFormEventsPr
   };
 
   const expiredBadge = values.eventExpired && values.selectedDate ? (
-    <Box
-      component="span"
-      display="inline-flex"
-      alignItems="center"
-      ml={1.25}
-      mb={0.5}
-    >
-      <NewReleasesIcon
-        sx={{
-          color: '#f94144',
-          zIndex: 10,
-          fontSize: '1em',
-        }}
-      />
-      <Typography
-        variant="caption"
-        component="span"
-        sx={{ mt: 0.375, ml: 0.375, color: '#f94144' }}
-      >
+    <Box className="expired-event-badge" component="span">
+      <Icon name="new-releases" size="1em" color="#f94144" />
+      <Typography variant="caption" component="span" className="expired-event-text">
         The date for this event has passed
       </Typography>
     </Box>
@@ -68,12 +49,11 @@ export default function JobFormEvents({ values, onFieldChange }: JobFormEventsPr
       <Box display="flex" flexDirection="column">
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Box flexGrow={1} mr={1} width="33.33%">
-            <TextField
-              fullWidth
+            <TextInput
               id="event-title"
               label="Upcoming Event"
               value={values.events}
-              onChange={(event) => onFieldChange('events', event.target.value)}
+              onChange={(value) => onFieldChange('events', value)}
             />
           </Box>
           <Box flexGrow={1} mr={1} width="33.33%">
@@ -88,26 +68,16 @@ export default function JobFormEvents({ values, onFieldChange }: JobFormEventsPr
             />
           </Box>
           <Box flexGrow={1} width="33.33%">
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Calendar"
-                value={values.selectedDate}
-                onChange={(date) => onFieldChange('selectedDate', date)}
-                slotProps={{
-                  textField: {
-                    fullWidth: true,
-                    margin: 'normal',
-                    id: 'date-picker-inline',
-                  },
-                }}
-              />
-            </LocalizationProvider>
+            <DateField
+              label="Calendar"
+              value={values.selectedDate}
+              onChange={(date) => onFieldChange('selectedDate', date)}
+            />
           </Box>
         </Box>
         <Box display="flex" flexDirection="row">
           <Box width="66.66%" pb={1.1}>
-            <TextField
-              fullWidth
+            <TextInput
               id="event-details"
               multiline
               maxRows={2}
@@ -115,28 +85,23 @@ export default function JobFormEvents({ values, onFieldChange }: JobFormEventsPr
               className="event-details"
               name="event-details"
               value={values.eventDetails}
-              onChange={(event) => onFieldChange('eventDetails', event.target.value)}
+              onChange={(value) => onFieldChange('eventDetails', value)}
             />
           </Box>
           <Box py={1} width="33.33%" display="flex" justifyContent="flex-end">
             {values.events ? (
-              <Grow in={Boolean(values.events)} timeout={500}>
+              <GrowTransition in={Boolean(values.events)}>
                 <Button
                   fullWidth
                   className="add-to-calendar"
-                  variant="contained"
                   onClick={handleCalendarClick}
                   color="secondary"
-                  sx={{
-                    ml: 1.25,
-                    color: !values.events ? 'rgba(0,0,0,0.2)' : 'white',
-                  }}
                   disabled={!values.events}
+                  startIcon={<Icon name="calendar" />}
                 >
-                  <InsertInvitationSharpIcon />
                   Add to Google Calendar
                 </Button>
-              </Grow>
+              </GrowTransition>
             ) : null}
           </Box>
         </Box>

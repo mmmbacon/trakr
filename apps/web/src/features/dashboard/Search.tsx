@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import type { SelectChangeEvent } from '@mui/material/Select';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+
 import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
 import JobItem from '../../components/JobItem';
 import JobSearchBar from './JobSearchBar';
+import { Box, Container } from '../../components/ui';
 import {
   jobsSelector,
   selectInterestedJobs,
@@ -64,20 +63,12 @@ const Search = () => {
     rejectedJobs,
   ]);
 
-  const handleSelectStatus = (event: SelectChangeEvent<string>) => {
-    const { value } = event.target;
+  const handleSelectStatus = (value: string) => {
     setFilterStatus(value === '' ? undefined : Number(value));
   };
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        width: '100%',
-        pt: '25px',
-        px: '25px',
-      }}
-    >
+    <Container maxWidth="md" className="search-container">
       <JobSearchBar
         searchValue={searchValue}
         filterStatus={filterStatus}

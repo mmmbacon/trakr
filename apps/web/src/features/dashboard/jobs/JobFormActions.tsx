@@ -1,8 +1,8 @@
-import { Box, Button } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RotateLeftIcon from '@mui/icons-material/RotateLeft';
-import SaveIcon from '@mui/icons-material/Save';
+import {
+  Box,
+  Button,
+  Icon,
+} from '../../../components/ui';
 
 interface JobFormActionsProps {
   isEditMode: boolean;
@@ -20,36 +20,33 @@ export default function JobFormActions({
   onDeleteClick,
 }: JobFormActionsProps) {
   return (
-    <Box display="flex" flexDirection="row" justifyContent="space-between" p={2}>
+    <Box className="form-actions">
       <Box>
         {isEditMode ? (
           <Button
-            variant="contained"
-            startIcon={<DeleteIcon />}
+            color="danger"
+            startIcon={<Icon name="delete" />}
             onClick={onDeleteClick}
-            sx={{ backgroundColor: '#F94144', color: 'white' }}
           >
             Delete
           </Button>
         ) : (
           <Button
-            variant="contained"
-            sx={{ backgroundColor: '#a9a9a9', color: 'white' }}
-            startIcon={<RotateLeftIcon />}
+            color="neutral"
+            startIcon={<Icon name="rotate-left" />}
             onClick={onReset}
           >
             Reset Form
           </Button>
         )}
       </Box>
-      <Box display="flex" flexGrow={1} justifyContent="flex-end">
-        <Box mr={2}>
+      <Box className="form-actions-end">
+        <Box className="form-actions-cancel">
           <Button
             type="button"
             onClick={onCancel}
-            variant="contained"
             color="primary"
-            startIcon={<CancelIcon />}
+            startIcon={<Icon name="cancel" />}
           >
             Cancel
           </Button>
@@ -59,10 +56,8 @@ export default function JobFormActions({
         <Button
           type="submit"
           onClick={onSubmit}
-          variant="contained"
           color="secondary"
-          sx={{ color: 'white' }}
-          startIcon={<SaveIcon />}
+          startIcon={<Icon name="save" />}
         >
           Save
         </Button>

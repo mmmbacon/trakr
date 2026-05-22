@@ -1,6 +1,5 @@
-import { Box, TextField } from '@mui/material';
-
 import LinkInput from '../../../components/LinkInput';
+import { Box, TextInput } from '../../../components/ui';
 import JobFormSectionHeading from './JobFormSectionHeading';
 import type { JobFormValues } from './useJobForm';
 
@@ -15,14 +14,13 @@ export default function JobFormContact({ values, onFieldChange }: JobFormContact
       <JobFormSectionHeading title="Contact" />
       <Box display="flex" flexDirection="row">
         <Box flexGrow={1} mr={1}>
-          <TextField
+          <TextInput
             id="contact-name"
             label="Contact Name"
             className="contact-name"
             name="contact_name"
             value={values.contact_name}
-            onChange={(event) => onFieldChange('contact_name', event.target.value)}
-            fullWidth
+            onChange={(value) => onFieldChange('contact_name', value)}
           />
         </Box>
         <Box flexGrow={1} mr={1}>

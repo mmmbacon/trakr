@@ -1,16 +1,14 @@
-import Button from '@mui/material/Button';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useAppDispatch } from '../../app/hooks';
 import { logout } from '../auth/authSlice';
+import { Button, Icon } from '../../components/ui';
 
 const Logout = () => {
   const dispatch = useAppDispatch();
 
   return (
     <Button
-      variant="contained"
       color="secondary"
-      startIcon={<ExitToAppIcon />}
+      startIcon={<Icon name="exit" />}
       onClick={() => dispatch(logout())}
     >
       Logout
