@@ -54,6 +54,13 @@ Rails.application.configure do
   config.hosts << ENV.fetch("FLY_APP_NAME", "trakr-api") + ".fly.dev"
   config.hosts << /.*\.fly\.dev/
   config.hosts << /.*\.internal/
+  config.hosts << /.*\.vercel\.app/
+  # Fly health checks use the machine's private IP as the Host header.
+  config.hosts << /10\.\d{1,3}\.\d{1,3}\.\d{1,3}/
+  config.hosts << /172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}/
+  config.host_authorization = {
+    exclude: ->(request) { request.path == "/api/logged_in" },
+  }
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
