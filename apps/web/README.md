@@ -6,17 +6,17 @@ React 18 + Vite frontend for Trakr. See the repository root `README.md` for full
 
 - React 18
 - Vite 6
-- TypeScript (scaffold; app sources are migrating from JSX)
+- TypeScript
 - Redux Toolkit
-- Material UI v4 (MUI 6 migration planned)
+- Material UI 6 (`@mui/material`)
+- React Router 6
+- MUI X Charts & Date Pickers
 
 ## Setup
 
 ```sh
 npm install
 ```
-
-`.npmrc` sets `legacy-peer-deps=true` because Material UI v4 does not declare React 18 peer support yet.
 
 Copy environment variables from the repo root `.env.example` into `.env.local`:
 
@@ -47,5 +47,7 @@ npm run dev
 npm run dev        # Vite dev server
 npm run build      # Production build to dist/
 npm run typecheck  # TypeScript check
+npm run test       # Vitest watch mode
+npm run test:ci    # Vitest single run (CI)
 npm run preview    # Preview production build
 ```

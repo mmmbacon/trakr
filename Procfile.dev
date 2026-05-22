@@ -1,2 +1,2 @@
 web: cd apps/web && npm run dev
-api: cd apps/api && bundle exec rails server
+api: cd apps/api && bash ../../scripts/with-ruby.sh bundle exec rails server

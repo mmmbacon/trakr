@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "concurrently -n web,api -c blue,green \"npm run dev:web\" \"npm run dev:api\"",
     "dev:web": "npm run dev --prefix apps/web",
-    "dev:api": "cd apps/api && bundle exec rails server",
+    "dev:api": "bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails server'",
     "db:up": "docker compose up -d db",
-    "db:setup": "docker compose up -d db && cd apps/api && bundle exec rails db:create db:schema:load db:seed",
+    "db:setup": "docker compose up -d db && bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails db:create db:schema:load db:seed'",
     "build:web": "npm run build --prefix apps/web",
-    "test:api": "cd apps/api && bundle exec rails test",
-    "test:api:prepare": "cd apps/api && bundle exec rails db:test:prepare"
+    "test:api": "bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails test'",
+    "test:api:prepare": "bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails db:test:prepare'"
   },
   "engines": {
     "node": ">=22"
