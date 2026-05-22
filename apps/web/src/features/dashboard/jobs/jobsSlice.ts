@@ -34,7 +34,7 @@ export const addJob = createAsyncThunk<Job, JobPayload, { rejectValue: unknown }
   'jobs/addJob',
   async ({ job, event }, { rejectWithValue }) => {
     try {
-      const response = await axios.post<{ job: Job }>('api/jobs', { job, event });
+      const response = await axios.post<{ job: Job }>('/api/jobs', { job, event });
       return response.data.job;
     } catch (error) {
       return rejectWithValue(getErrorPayload(error));
@@ -50,7 +50,7 @@ export const editJob = createAsyncThunk<
   'jobs/editJob',
   async ({ jobId, job, event }, { rejectWithValue }) => {
     try {
-      const response = await axios.patch<{ job: Job }>(`api/jobs/${jobId}`, { job, event });
+      const response = await axios.patch<{ job: Job }>(`/api/jobs/${jobId}`, { job, event });
       return response.data.job;
     } catch (error) {
       return rejectWithValue(getErrorPayload(error));

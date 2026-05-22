@@ -79,7 +79,10 @@ const UserProfile = () => {
 
   const formatDate = (string: string) => {
     const date = new Date(string);
-    return `${date.getMonth()}-${date.getDay()}-${date.getFullYear()}`;
+    if (Number.isNaN(date.getTime())) {
+      return '';
+    }
+    return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
   };
 
   return (

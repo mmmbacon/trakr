@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
@@ -8,9 +8,9 @@ import EventIcon from '@mui/icons-material/Event';
 import SearchIcon from '@mui/icons-material/Search';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 
-import { logout, authSelector } from '../auth/authSlice';
+import { logout } from '../auth/authSlice';
 import { SideBarButton } from './SideBarButton';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 
 export const SIDEBAR_WIDTH = 76;
 
@@ -48,11 +48,12 @@ const SideBar = ({
   addButtonVisible = false,
   onAddJobClick,
 }: SideBarProps) => {
-  const { user } = useAppSelector(authSelector);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleLogOut = () => {
-    dispatch(logout());
+  const handleLogOut = async () => {
+    await dispatch(logout());
+    navigate('/login');
   };
 
   const handleClickOpen = () => {
@@ -181,15 +182,13 @@ const SideBar = ({
                   placement="right"
                   slotProps={lightTooltipSlotProps}
                 >
-                  <Link to={`/users/${user?.id ?? ''}`}>
-                    <ExitToAppIcon
-                      sx={{
-                        fontSize: '45px',
-                        color: '#3b3b3b',
-                        transform: 'rotate(180deg)',
-                      }}
-                    />
-                  </Link>
+                  <ExitToAppIcon
+                    sx={{
+                      fontSize: '45px',
+                      color: '#3b3b3b',
+                      transform: 'rotate(180deg)',
+                    }}
+                  />
                 </Tooltip>
               </SideBarButton>
             </Box>

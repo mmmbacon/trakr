@@ -170,8 +170,8 @@ export const JobsModal = ({
       return;
     }
 
-    if (salary === undefined) {
-      setError('Salary Must be a Number');
+    if (!Number.isFinite(salary)) {
+      setError('Salary must be a number');
       return;
     }
 
@@ -283,7 +283,8 @@ export const JobsModal = ({
     async function fetchCompanyLogo() {
       try {
         const result = await axios.get<ClearbitSuggestion[]>(
-          `https://autocomplete.clearbit.com/v1/companies/suggest?query=${company}`,
+          'https://autocomplete.clearbit.com/v1/companies/suggest',
+          { params: { query: company } },
         );
         if (!cancelled && result.data[0]?.logo) {
           setLogo(result.data[0].logo);
@@ -315,10 +316,8 @@ export const JobsModal = ({
   };
 
   const clickLink = (link: string) => {
-    if (link.substring(0, 4) !== 'http') {
-      window.open(`http://${link}`);
-    }
-    return window.open(link);
+    const url = link.substring(0, 4) !== 'http' ? `http://${link}` : link;
+    window.open(url);
   };
 
   const locationRender = () => {
@@ -493,12 +492,14 @@ export const JobsModal = ({
                         <InputLabel htmlFor="salary-input">Salary</InputLabel>
                         <OutlinedInput
                           id="salary-input"
+                          type="number"
+                          inputProps={{ inputMode: 'numeric', min: 0 }}
                           value={salary > 0 ? salary : ''}
                           label="Salary"
                           name="salary"
                           onChange={(event) => {
                             const val = event.target.value;
-                            setSalary(val === '' ? 0 : parseInt(val, 10));
+                            setSalary(val === '' ? 0 : Number.parseInt(val, 10));
                           }}
                           startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         />
