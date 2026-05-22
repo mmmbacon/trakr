@@ -1,12 +1,5 @@
-import {
-  Box,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@mui/material';
-
 import LinkInput from '../../../components/LinkInput';
+import { Box, TextInput } from '../../../components/ui';
 import type { JobFormValues } from './useJobForm';
 
 interface JobFormDetailsProps {
@@ -49,22 +42,19 @@ export default function JobFormDetails({
         />
       </Box>
       <Box width="33.33%">
-        <FormControl fullWidth variant="outlined">
-          <InputLabel htmlFor="salary-input">Salary</InputLabel>
-          <OutlinedInput
-            id="salary-input"
-            type="number"
-            inputProps={{ inputMode: 'numeric', min: 0 }}
-            value={values.salary > 0 ? values.salary : ''}
-            label="Salary"
-            name="salary"
-            onChange={(event) => {
-              const val = event.target.value;
-              onFieldChange('salary', val === '' ? 0 : Number.parseInt(val, 10));
-            }}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          />
-        </FormControl>
+        <TextInput
+          id="salary-input"
+          label="Salary"
+          name="salary"
+          type="number"
+          inputMode="numeric"
+          min={0}
+          value={values.salary > 0 ? values.salary : ''}
+          onChange={(value) => {
+            onFieldChange('salary', value === '' ? 0 : Number.parseInt(value, 10));
+          }}
+          startAdornment="$"
+        />
       </Box>
     </Box>
   );

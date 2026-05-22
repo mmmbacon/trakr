@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import type { SelectChangeEvent } from '@mui/material/Select';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+
 import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
 import JobItem from '../../components/JobItem';
 import JobSearchBar from './JobSearchBar';
+import { Container, Typography } from '../../components/ui';
 import {
   jobsSelector,
   selectInterestedJobs,
@@ -64,13 +63,12 @@ const Search = () => {
     rejectedJobs,
   ]);
 
-  const handleSelectStatus = (event: SelectChangeEvent<string>) => {
-    const { value } = event.target;
+  const handleSelectStatus = (value: string) => {
     setFilterStatus(value === '' ? undefined : Number(value));
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 3 }}>
+    <Container maxWidth="md" className="search-container">
       <JobSearchBar
         searchValue={searchValue}
         filterStatus={filterStatus}
@@ -83,7 +81,7 @@ const Search = () => {
           <JobItem key={job.id} job={job} />
         ))
       ) : (
-        <Typography variant="h6" color="text.secondary" align="center" mt={4}>
+        <Typography variant="h5" color="secondary" align="center" marginTop={4}>
           No Results Found
         </Typography>
       )}

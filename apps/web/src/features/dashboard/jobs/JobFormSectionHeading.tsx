@@ -1,5 +1,6 @@
-import { Typography } from '@mui/material';
 import type { ReactNode } from 'react';
+
+import { Typography } from '../../../components/ui';
 
 interface JobFormSectionHeadingProps {
   title: string;
@@ -11,7 +12,10 @@ export default function JobFormSectionHeading({
   accessory,
 }: JobFormSectionHeadingProps) {
   return (
-    <Typography variant="h6" gutterBottom>
+    <Typography
+      variant="h5"
+      className="heading job-form-section-heading"
+    >
       {title}
       {accessory}
     </Typography>

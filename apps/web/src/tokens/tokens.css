@@ -1,0 +1,19 @@
+:root {
+  --color-primary: #577590;
+  --color-secondary: #43aa8b;
+  --color-error: #f94144;
+  --color-warning: #f3722c;
+  --color-info: #43aa8b;
+  --color-success: #90be6d;
+  --color-neutral: #a9a9a9;
+  --color-text: #2e2e2e;
+  --color-text-secondary: rgba(0, 0, 0, 0.6);
+  --color-icon-muted: #d9d9d9;
+  --color-sidebar-icon: #3b3b3b;
+  --color-white: #ffffff;
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Source Sans Pro', sans-serif;
+
+  --spacing-unit: 8px;
+}

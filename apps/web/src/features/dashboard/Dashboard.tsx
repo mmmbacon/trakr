@@ -1,12 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import Paper from '@mui/material/Paper';
-import Snackbar from '@mui/material/Snackbar';
-import { useTheme } from '@mui/material/styles';
 
 import AppHeader from '../common/AppHeader';
 import Search from './Search';
@@ -30,6 +23,14 @@ import { authSelector, logout } from '../auth/authSlice';
 import isDemoMode from '../../config';
 import JobResources from './Drawer';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  Alert,
+  Box,
+  LoadingOverlay,
+  Paper,
+  Snackbar,
+  useTheme,
+} from '../../components/ui';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -64,11 +65,7 @@ const Dashboard = () => {
   };
 
   if (status === 'loading') {
-    return (
-      <Backdrop open>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    );
+    return <LoadingOverlay open />;
   }
 
   return (
@@ -85,7 +82,7 @@ const Dashboard = () => {
             minHeight={0}
             display="flex"
             flexDirection="column"
-            sx={{ overflowX: 'hidden', overflowY: 'auto' }}
+            overflow="auto"
           >
             <Routes>
               <Route
@@ -112,20 +109,13 @@ const Dashboard = () => {
         </Box>
       </Box>
       {isDemoMode && (
-        <Paper
-          elevation={6}
-          sx={{
-            position: 'fixed',
-            bottom: 24,
-            left: 24,
-            zIndex: (theme) => theme.zIndex.snackbar,
-            maxWidth: 360,
-          }}
-        >
-          <Alert severity="info">
-            Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
-          </Alert>
-        </Paper>
+        <Box position="fixed" className="demo-mode-banner">
+          <Paper elevation={6}>
+            <Alert severity="info">
+              Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
+            </Alert>
+          </Paper>
+        </Box>
       )}
       <JobsModal open={addJobOpen} onClose={() => setAddJobOpen(false)} mode="create" />
       <JobResources />

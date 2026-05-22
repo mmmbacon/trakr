@@ -5,8 +5,7 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import Dashboard from './features/dashboard/Dashboard';
 import Login from './features/auth/Login';
 import Signup from './features/auth/Signup';
@@ -16,6 +15,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { authSelector } from './features/auth/authSlice';
 import isDemoMode from './config';
 import ColorModeProvider from './features/common/ColorModeProvider';
+import { LoadingOverlay } from './components/ui';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -28,9 +28,7 @@ function App() {
   if (status === 'loading') {
     return (
       <ColorModeProvider>
-        <Backdrop open>
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <LoadingOverlay open />
       </ColorModeProvider>
     );
   }

@@ -1,10 +1,7 @@
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { authSelector, updateUser } from '../auth/authSlice';
 import { jobsSelector } from './jobs/jobsSlice';
+import { Container, Paper } from '../../components/ui';
 import UserProfileForm from './UserProfileForm';
 import UserProfileSidebar from './UserProfileSidebar';
 
@@ -33,16 +30,12 @@ const UserProfile = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 3 }}>
-      <Paper sx={{ p: 3 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <UserProfileSidebar user={user} jobCount={jobs.length} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <UserProfileForm user={user} onUpdate={handleUpdate} />
-          </Grid>
-        </Grid>
+    <Container maxWidth="md" className="profile-container">
+      <Paper className="profile-paper">
+        <div className="profile-layout">
+          <UserProfileSidebar user={user} jobCount={jobs.length} />
+          <UserProfileForm user={user} onUpdate={handleUpdate} />
+        </div>
       </Paper>
     </Container>
   );

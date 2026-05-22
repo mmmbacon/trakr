@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import {
-  Alert,
-  Button,
-  Snackbar,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
 
 import PasswordField from '../../components/PasswordField';
 import UpdateModal from '../../components/UpdateModal';
 import type { User } from '../../types';
+import {
+  Alert,
+  Box,
+  Button,
+  Snackbar,
+  TextInput,
+  Typography,
+} from '../../components/ui';
 
 interface UserProfileFormProps {
   user: User;
@@ -66,51 +66,52 @@ export default function UserProfileForm({ user, onUpdate }: UserProfileFormProps
   };
 
   return (
-    <Stack spacing={2}>
+    <Box display="flex" flexDirection="column" flexGrow={1} p={2}>
       {error && (
-        <Alert severity="error">
+        <Alert severity="error" className="alert-full-width">
           {error}
         </Alert>
       )}
-      <Typography variant="h6">
+      <Typography variant="h4" className="section-heading-spacing">
         Personal Information
       </Typography>
-      <TextField
+      <TextInput
         label="First Name"
         value={first_name}
-        onChange={(event) => setFirstName(event.target.value)}
-        fullWidth
+        onChange={setFirstName}
+        className="field-spacing"
       />
-      <TextField
+      <TextInput
         label="Last Name"
         value={last_name}
-        onChange={(event) => setLastName(event.target.value)}
-        fullWidth
+        onChange={setLastName}
+        className="field-spacing"
       />
-      <TextField
+      <TextInput
         label="Email"
         value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        fullWidth
+        onChange={setEmail}
+        className="field-spacing"
       />
-      <Typography variant="h6">
+      <Typography variant="h4" className="section-heading-spacing-lg">
         Password
       </Typography>
       <PasswordField
         label="Password"
         value={password}
         onChange={setPassword}
+        className="field-spacing"
       />
       <PasswordField
         label="Password Confirmation"
         value={password_confirmation}
         onChange={setPasswordConfirmation}
+        className="field-spacing"
       />
       <Button
-        variant="contained"
         color="secondary"
         onClick={() => { setModalOpen(true); }}
-        sx={{ alignSelf: 'flex-start' }}
+        className="confirm-button-spacing"
       >
         Confirm Changes
       </Button>
@@ -128,6 +129,6 @@ export default function UserProfileForm({ user, onUpdate }: UserProfileFormProps
           {snack}
         </Alert>
       </Snackbar>
-    </Stack>
+    </Box>
   );
 }

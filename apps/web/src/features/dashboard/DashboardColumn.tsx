@@ -1,6 +1,6 @@
-import Box from '@mui/material/Box';
 import type { Job } from '../../types';
 import JobItem from '../../components/JobItem';
+import { Box } from '../../components/ui';
 import DashboardColumnHeading from './DashboardColumnHeading';
 
 export interface DashboardColumnProps {
