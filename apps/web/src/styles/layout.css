@@ -190,6 +190,13 @@
   padding-top: 2px;
 }
 
+.demo-mode-banner {
+  bottom: 24px;
+  left: 24px;
+  z-index: 1400;
+  max-width: 360px;
+}
+
 .auth-layout {
   display: flex;
   justify-content: center;

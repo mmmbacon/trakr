@@ -7,18 +7,15 @@ export interface DashboardColumnProps {
   title?: string;
   color?: string;
   items?: Job[];
-  index?: number;
-  tickUrl?: string;
 }
 
 const DashboardColumn = ({
   title = 'Category',
-  color = '#ee6a7c',
+  color,
   items = [],
-  tickUrl = 'https://i.imgur.com/rr4anU1.png',
 }: DashboardColumnProps) => (
-  <Box className="dashboard-column">
-    <DashboardColumnHeading title={title} color={color} tickUrl={tickUrl} />
+  <Box height="100%">
+    <DashboardColumnHeading title={title} color={color} count={items.length} />
     {items.map((item) => (
       <JobItem key={item.id} job={item} />
     ))}
