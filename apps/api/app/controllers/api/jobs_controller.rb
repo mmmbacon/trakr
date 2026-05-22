@@ -38,30 +38,24 @@ class Api::JobsController < ApplicationController
     @user = User.find(session[:user_id])
     @job = Job.new(job_params)
     @job.user_id = @user.id
-    @job.save!
-    
+
+    unless @job.save
+      return render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
+    end
+
+    @event = nil
     if params[:event]
       @event = Event.new(event_params)
       @event.job_id = @job.id
-      @event.save!
+      unless @event.save
+        return render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity
+      end
     end
 
-    if @job
-      if @event
-        render json: {
-          job: @job,
-          event: @event
-        }
-      else
-        render json: {
-          job: @job
-        }
-      end
-    else 
-      render json: {
-        status: 500,
-        errors: ['Job or Event could not be created']
-      }
+    if @event
+      render json: { job: @job, event: @event }
+    else
+      render json: { job: @job }
     end
   end
 
@@ -77,49 +71,33 @@ class Api::JobsController < ApplicationController
 
   def update
     @job = Job.find_by(user_id: session[:user_id], id: params[:id])
+    return head :not_found unless @job
 
+    @event = nil
     if params[:event]
       @event = Event.find_by(job_id: params[:id])
-      #If event exists, update it
-      if @event 
-        @event.update(event_params)
+      if @event
+        unless @event.update(event_params)
+          return render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity
+        end
       else
-        #Otherwise, create a new event
         @event = Event.new(event_params)
-        @event.save!
+        @event.job_id = @job.id
+        unless @event.save
+          return render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity
+        end
       end
     end
 
-    @job.update(job_params)
-  
-    if @job
+    if @job.update(job_params)
       if @event
-        render json: {
-          job: @job,
-          event: @event
-        }
+        render json: { job: @job, event: @event }
       else
-        render json: {
-          job: @job
-        }
+        render json: { job: @job }
       end
-    else 
-      render json: {
-        status: 500,
-        errors: ['Job or Event could not be created']
-      }
+    else
+      render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
     end
-    # if @job
-    #   render json: {
-    #     status: 200,
-    #     job: @job
-    #   }
-    # else 
-    #   render json: {
-    #     status: 500,
-    #     errors: ['Job or Event could not be updated']
-    #   }
-    # end
   end
 
   private

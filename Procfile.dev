@@ -1,2 +1,2 @@
 web: cd apps/web && npm run dev
-api: cd apps/api && PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH" bundle exec rails server
+api: cd apps/api && bash ../../scripts/with-ruby.sh bundle exec rails server

@@ -28,25 +28,25 @@ function countSalaryBuckets(categories: Job[][]): ChartDatum[] {
 
   const salaryCount = (category: Job[]) => {
     category.forEach((data) => {
-      if (data.salary === null) {
-        salariesNone.push(data.salary);
-      }
-      if (data.salary !== null && data.salary > 0 && data.salary < 25000) {
-        salaries0.push(data.salary);
-      } else if (data.salary !== null && data.salary >= 25000 && data.salary < 50000) {
-        salaries1.push(data.salary);
-      } else if (data.salary !== null && data.salary >= 50000 && data.salary < 75000) {
-        salaries2.push(data.salary);
-      } else if (data.salary !== null && data.salary >= 75000 && data.salary < 100000) {
-        salaries3.push(data.salary);
-      } else if (data.salary !== null && data.salary >= 100000 && data.salary < 125000) {
-        salaries4.push(data.salary);
-      } else if (data.salary !== null && data.salary >= 125000 && data.salary < 150000) {
-        salaries5.push(data.salary);
-      } else if (data.salary !== null && data.salary > 150000 && data.salary < 175000) {
-        salaries6.push(data.salary);
-      } else if (data.salary !== null && data.salary > 175000) {
-        salaries7.push(data.salary);
+      const salary = data.salary;
+      if (salary === null || salary === 0) {
+        salariesNone.push(salary ?? 0);
+      } else if (salary < 25000) {
+        salaries0.push(salary);
+      } else if (salary < 50000) {
+        salaries1.push(salary);
+      } else if (salary < 75000) {
+        salaries2.push(salary);
+      } else if (salary < 100000) {
+        salaries3.push(salary);
+      } else if (salary < 125000) {
+        salaries4.push(salary);
+      } else if (salary < 150000) {
+        salaries5.push(salary);
+      } else if (salary < 175000) {
+        salaries6.push(salary);
+      } else {
+        salaries7.push(salary);
       }
     });
   };

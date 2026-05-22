@@ -23,7 +23,7 @@ In production, the Vite app is served from Vercel. Browser requests to `/api/*` 
 ## Apps
 
 - `apps/web` — React 18, Vite 6, TypeScript, MUI 6, Redux Toolkit
-- `apps/api` — Ruby on Rails 7.2 API
+- `apps/api` — Ruby on Rails 7.2 API, served by Fly.io in production
 - `docker-compose.yml` — Local PostgreSQL for development
 
 ## Prerequisites
@@ -65,7 +65,7 @@ Run both apps from the repository root:
 npm run dev
 ```
 
-The frontend opens at http://localhost:8080. Vite proxies `/api` requests to the Rails API at http://localhost:3000 (see `apps/web/vite.config.ts`). Root npm scripts prefer Homebrew Ruby at `/opt/homebrew/opt/ruby@3.3/bin` on macOS.
+The frontend opens at http://localhost:8080. Vite proxies `/api` requests to the Rails API at http://localhost:3000 (see `apps/web/vite.config.ts`). Root npm scripts use `scripts/with-ruby.sh` to prefer Homebrew `ruby@3.3` when available (Apple Silicon or Intel), or your existing PATH via rbenv/asdf. Override with `TRAKR_RUBY_BIN=/path/to/ruby/bin` if needed.
 
 `Procfile.dev` is available if you prefer Foreman or Overmind; `npm run dev` uses `concurrently` by default.
 

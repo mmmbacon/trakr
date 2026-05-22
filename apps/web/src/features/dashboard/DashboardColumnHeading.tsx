@@ -22,6 +22,7 @@ const titleSx = {
 const DashboardColumnHeading = ({
   title = 'Heading',
   tickUrl = 'https://i.imgur.com/rr4anU1.png',
+  color = '#3b3b3b',
 }: DashboardColumnHeadingProps) => (
   <Box
     sx={{
@@ -53,7 +54,7 @@ const DashboardColumnHeading = ({
             alignItems: 'center',
           }}
         >
-          <Typography variant="h5" sx={titleSx}>
+          <Typography variant="h5" sx={{ ...titleSx, color }}>
             {title}
           </Typography>
         </Box>
