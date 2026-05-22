@@ -19,11 +19,8 @@ const lightTooltipSlotProps = {
 
 const fabSx = {
   position: 'fixed',
-  bottom: 30,
-  right: 30,
-  height: 70,
-  width: 70,
-  borderRadius: '50%',
+  bottom: 24,
+  right: 24,
   bgcolor: '#43aa8b',
   zIndex: 1,
   '&:hover': {
@@ -84,11 +81,11 @@ function JobResources() {
     <div>
       <Tooltip title="Job Resources" aria-label="Job Resources">
         <Fab
-          variant="extended"
           onClick={() => setOpen(true)}
           sx={fabSx}
+          aria-label="Job Resources"
         >
-          <WorkOutlineIcon fontSize="medium" sx={{ color: '#FFFFFF' }} />
+          <WorkOutlineIcon sx={{ color: '#FFFFFF' }} />
         </Fab>
       </Tooltip>
       <Drawer anchor="right" open={open} onClose={handleClose}>

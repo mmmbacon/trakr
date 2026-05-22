@@ -4,6 +4,8 @@
 
 Trakr is a full-stack job application tracker. This repository is a monorepo with a React frontend, a Rails API, and deployment config for Vercel + Fly.io.
 
+**Live app:** [trakr-lemon.vercel.app](https://trakr-lemon.vercel.app/login)
+
 ## Architecture
 
 ```mermaid

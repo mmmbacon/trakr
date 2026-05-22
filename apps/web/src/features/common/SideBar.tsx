@@ -12,7 +12,12 @@ import { logout } from '../auth/authSlice';
 import { SideBarButton } from './SideBarButton';
 import { useAppDispatch } from '../../app/hooks';
 
-export const SIDEBAR_WIDTH = 76;
+export const SIDEBAR_WIDTH = 52;
+
+const SIDEBAR_ICON_SIZE = 24;
+const SIDEBAR_LOGO_SIZE = 32;
+
+const navIconSx = { fontSize: SIDEBAR_ICON_SIZE, color: '#3b3b3b' };
 
 const lightTooltipSlotProps = {
   tooltip: {
@@ -99,8 +104,8 @@ const SideBar = ({
                 component="img"
                 src="/img/Logo2-sm.png"
                 alt="logo"
-                width="45px"
-                sx={{ p: '10px', mt: '5px' }}
+                width={SIDEBAR_LOGO_SIZE}
+                sx={{ p: '6px', mt: '4px' }}
               />
             </Link>
           </Tooltip>
@@ -116,12 +121,13 @@ const SideBar = ({
                   <Link to="/dashboard/user_profile" className="link">
                     <Box
                       component="img"
-                      src={`https://ui-avatars.com/api/?name=${userdata.first_name}+${userdata.last_name}&background=3b3b3b&color=fff`}
+                      src={`https://ui-avatars.com/api/?name=${userdata.first_name}+${userdata.last_name}&background=3b3b3b&color=fff&size=${SIDEBAR_ICON_SIZE}`}
                       alt="initials"
                       sx={{
                         borderRadius: '50%',
-                        width: '45px',
-                        height: '45px',
+                        width: SIDEBAR_ICON_SIZE,
+                        height: SIDEBAR_ICON_SIZE,
+                        display: 'block',
                       }}
                     />
                   </Link>
@@ -135,7 +141,7 @@ const SideBar = ({
                   slotProps={lightTooltipSlotProps}
                 >
                   <Link to="/dashboard/job_stats" className="link">
-                    <AssessmentIcon sx={{ fontSize: '45px', color: '#3b3b3b' }} />
+                    <AssessmentIcon sx={navIconSx} />
                   </Link>
                 </Tooltip>
               </SideBarButton>
@@ -146,7 +152,7 @@ const SideBar = ({
                   placement="right"
                   slotProps={lightTooltipSlotProps}
                 >
-                  <EventIcon sx={{ fontSize: '45px', color: '#3b3b3b' }} />
+                  <EventIcon sx={navIconSx} />
                 </Tooltip>
               </SideBarButton>
               <SideBarButton>
@@ -157,7 +163,7 @@ const SideBar = ({
                   slotProps={lightTooltipSlotProps}
                 >
                   <Link to="/dashboard/search" className="link">
-                    <SearchIcon sx={{ fontSize: '45px', color: '#3b3b3b' }} />
+                    <SearchIcon sx={navIconSx} />
                   </Link>
                 </Tooltip>
               </SideBarButton>
@@ -169,7 +175,7 @@ const SideBar = ({
                     placement="right"
                     slotProps={lightTooltipSlotProps}
                   >
-                    <AddIcon sx={{ fontSize: '45px', color: '#3b3b3b' }} />
+                    <AddIcon sx={navIconSx} />
                   </Tooltip>
                 </SideBarButton>
               ) : null}
@@ -184,8 +190,7 @@ const SideBar = ({
                 >
                   <ExitToAppIcon
                     sx={{
-                      fontSize: '45px',
-                      color: '#3b3b3b',
+                      ...navIconSx,
                       transform: 'rotate(180deg)',
                     }}
                   />

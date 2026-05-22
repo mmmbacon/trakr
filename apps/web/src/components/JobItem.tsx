@@ -188,7 +188,7 @@ const JobItem = ({
               lineHeight: 0,
             }}
           >
-            <NewReleasesIcon sx={{ color: '#f94144', fontSize: '1.25rem' }} aria-hidden />
+            <NewReleasesIcon sx={{ color: '#f94144', fontSize: 16 }} aria-hidden />
           </Box>
         </Tooltip>
       ) : null}
@@ -205,9 +205,9 @@ const JobItem = ({
           justifyContent="center"
           sx={{
             flexShrink: 0,
-            width: 44,
-            minWidth: 44,
-            height: 44,
+            width: 36,
+            minWidth: 36,
+            height: 36,
           }}
         >
           <Box
@@ -223,8 +223,8 @@ const JobItem = ({
               src={logo}
               alt=""
               sx={{
-                width: 40,
-                height: 40,
+                width: 32,
+                height: 32,
                 borderRadius: '50%',
                 objectFit: 'contain',
               }}
@@ -288,17 +288,17 @@ const JobItem = ({
             aria-label={`Edit ${company} job`}
             onClick={openModal}
             size="small"
-            sx={{ color: '#d9d9d9' }}
+            sx={{ color: '#d9d9d9', p: 0.25 }}
           >
-            <EditIcon fontSize="small" />
+            <EditIcon sx={{ fontSize: 18 }} />
           </IconButton>
           <IconButton
             aria-label={`Delete ${company} job`}
             onClick={() => { setModalOpen(true); }}
             size="small"
-            sx={{ color: '#d9d9d9' }}
+            sx={{ color: '#d9d9d9', p: 0.25 }}
           >
-            <DeleteIcon fontSize="small" />
+            <DeleteIcon sx={{ fontSize: 18 }} />
           </IconButton>
         </Box>
       </Box>
