@@ -20,7 +20,12 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
   return (
     <Box display="flex" flexDirection="column" height="100%">
       <KanbanActionBar onAddJobClick={onAddJobClick} />
-      <Box overflow="auto" flex={1} p={2}>
+      <Box
+        flex={1}
+        minHeight={0}
+        p={2}
+        sx={{ overflowX: 'auto', overflowY: 'auto' }}
+      >
         <Grid
           container
           id="dashboard-columns"
@@ -28,10 +33,10 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
           aria-label="Job application board"
           spacing={2}
           wrap="nowrap"
-          sx={{ minWidth: 'max-content' }}
+          sx={{ width: 'max-content', minWidth: '100%' }}
         >
           {columns.map((column) => (
-            <Grid item key={column.title} sx={{ minWidth: 280, maxWidth: 320 }}>
+            <Grid item key={column.title} sx={{ minWidth: 280, maxWidth: 320, flexShrink: 0 }}>
               <DashboardColumn
                 items={column.items}
                 title={column.title}

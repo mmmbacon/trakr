@@ -74,7 +74,15 @@ const Dashboard = () => {
 
         <Box display="flex" flex={1} minHeight={0} overflow="hidden">
           <SideBar />
-          <Box component="main" flex={1} minWidth={0} overflow="auto">
+          <Box
+            component="main"
+            flex={1}
+            minWidth={0}
+            minHeight={0}
+            display="flex"
+            flexDirection="column"
+            sx={{ overflowX: 'hidden', overflowY: 'auto' }}
+          >
             <Routes>
               <Route
                 index
