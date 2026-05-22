@@ -196,7 +196,7 @@ Postgres
 
 ## 7. Data Model (Outline)
 
-> Detailed ERD and migrations: *TODO — `data-model.md`*
+> Detailed ERD and migrations: [data-model.md](./data-model.md)
 
 ### 7.1 New / renamed entities
 
@@ -239,7 +239,7 @@ comments           optional: fold into activities with type=comment
 
 ## 8. UI & Information Architecture (Outline)
 
-> Screen map and routes: *TODO — `screen-map.md`*
+> Screen map and routes: [screen-map.md](./screen-map.md)
 
 ### 8.1 App shell
 
@@ -288,58 +288,33 @@ comments           optional: fold into activities with type=comment
 
 ## 10. Phased Delivery
 
-### Phase 0 — Planning & design (current)
+Detailed specs: [README](./README.md#phases)
 
-- [ ] Finalize pivot outline (this doc)
-- [ ] Data model spec + migration plan
-- [ ] MCP tool contract
-- [ ] Screen map + wireframes (board, panel, queue)
-- [ ] Design tokens pass (Linear-like density)
+| Phase | Doc | Status |
+|-------|-----|--------|
+| 0 — Planning & design | [phase-0-planning-design.md](./phase-0-planning-design.md) | In progress |
+| 1 — Domain pivot | [phase-1-domain-pivot.md](./phase-1-domain-pivot.md) | Not started |
+| 2 — Core UX | [phase-2-core-ux.md](./phase-2-core-ux.md) | Not started |
+| 3 — Agent coordination | [phase-3-agent-coordination.md](./phase-3-agent-coordination.md) | Not started |
+| 4 — MCP v1 | [phase-4-mcp-v1.md](./phase-4-mcp-v1.md) | Not started |
+| 5 — Polish & portfolio | [phase-5-polish-portfolio.md](./phase-5-polish-portfolio.md) | Not started |
+| 6 — Later | [phase-6-later.md](./phase-6-later.md) | Backlog |
 
-### Phase 1 — Domain pivot
+### Phase checklist (summary)
 
-- [ ] Rename jobs → issues; add projects + workflow_states
-- [ ] API + Redux slice refactor
-- [ ] Reseed demo data (projects, issues, activities)
-- [ ] Remove job-specific UI (salary stats, job resources, etc.)
+**Phase 0:** pivot outline, [data-model](./data-model.md), [migration plan](./migration-from-jobs.md), [MCP contract](./mcp-contract.md), [screen map](./screen-map.md), [design system](./design-system.md)
 
-### Phase 2 — Core UX
+**Phase 1:** jobs → issues, projects, API + Redux, reseed, remove job UI
 
-- [ ] Issue panel (replace modal); URL routing
-- [ ] Board drag-and-drop + optimistic updates
-- [ ] List view + filters (status, label, project)
-- [ ] Activity stream on issue panel
+**Phase 2:** issue panel, DnD board, list view, activity stream
 
-### Phase 3 — Agent coordination
+**Phase 3:** agent profiles, assignees, claims, guards, queue view
 
-- [ ] Agent profiles (config)
-- [ ] Assignee model (human / agent / unassigned)
-- [ ] Claim + transition guards in API
-- [ ] Queue view
-- [ ] Agent vs human badges in UI
+**Phase 4:** MCP server, API tokens, v1 tools, Cursor demo
 
-### Phase 4 — MCP v1
+**Phase 5:** command palette, shortcuts, README/blog, token UI
 
-- [ ] MCP server package in monorepo
-- [ ] API token auth for agents
-- [ ] Implement v1 tools (list, search, get, create, update, transition, claim, comment)
-- [ ] Cursor config + demo script
-
-### Phase 5 — Polish & portfolio
-
-- [ ] Command palette
-- [ ] Keyboard shortcuts (`g` `b`, `g` `i`, etc.)
-- [ ] Update README, demo mode banner, portfolio blog post
-- [ ] Optional: GitHub PR linking
-
-### Phase 6 — Later (explicitly out of MVP)
-
-- Multi-user / teams
-- Real-time sync (ActionCable / SSE)
-- Cycles / personal sprints
-- Roadmaps
-- Notifications (email/push)
-- Custom fields per project
+**Phase 6:** teams, real-time, cycles, integrations — see [phase-6-later.md](./phase-6-later.md)
 
 ---
 
@@ -390,15 +365,18 @@ comments           optional: fold into activities with type=comment
 
 ---
 
-## 14. Follow-up Documents
+## 14. Planning Documents
+
+All docs live in [`docs/planning/`](./README.md).
 
 | Document | Contents |
 |----------|----------|
-| `data-model.md` | ERD, migrations, API serializers, TypeScript types |
-| `mcp-contract.md` | Tool schemas, auth, error codes, example Cursor session |
-| `screen-map.md` | Routes, components, keyboard shortcuts |
-| `design-system.md` | Tokens, typography, component inventory |
-| `migration-from-jobs.md` | Step-by-step rename and data migration |
+| [phase-0-planning-design.md](./phase-0-planning-design.md) through [phase-6-later.md](./phase-6-later.md) | Per-phase goals, tasks, acceptance criteria |
+| [data-model.md](./data-model.md) | ERD, tables, API JSON, TypeScript types |
+| [migration-from-jobs.md](./migration-from-jobs.md) | Step-by-step rename and data migration |
+| [mcp-contract.md](./mcp-contract.md) | Tool schemas, auth, guard matrix, Cursor session |
+| [screen-map.md](./screen-map.md) | Routes, components, layout |
+| [design-system.md](./design-system.md) | Tokens, typography, component inventory |
 
 ---
 
