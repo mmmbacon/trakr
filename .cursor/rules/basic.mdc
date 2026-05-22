@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+Always lint, typecheck, and format after completing a task. Run `npm run check:web` and `npm run format:web` from the repo root, or the equivalent scripts in `apps/web`.
