@@ -28,7 +28,24 @@ export default tseslint.config(
     },
   },
   {
-    files: ['vite.config.ts', 'vitest.config.ts', 'eslint.config.js', 'scripts/**/*.mjs'],
+    files: ['**/*.{ts,tsx}'],
+    ignores: [
+      'src/adapters/**/*',
+      'src/theme.ts',
+      'src/features/common/ColorModeProvider.tsx',
+      'src/features/common/ColorModeToggle.tsx',
+      'src/features/common/colorModeContext.ts',
+    ],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['@mui/*', '@mui/**'],
+          message: 'Import MUI only from src/adapters/mui. Use components/ui in feature and app code.',
+        }],
+      }],
+    },
+  },
+  {
     languageOptions: {
       globals: globals.node,
     },
