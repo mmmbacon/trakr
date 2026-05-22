@@ -14,7 +14,8 @@ import { fetchLoggedInStatus } from './features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { authSelector } from './features/auth/authSlice';
 import isDemoMode from './config';
-import { LoadingOverlay, ThemeProvider } from './components/ui';
+import ColorModeProvider from './features/common/ColorModeProvider';
+import { LoadingOverlay } from './components/ui';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,11 +26,15 @@ function App() {
   }, [dispatch]);
 
   if (status === 'loading') {
-    return <LoadingOverlay open />;
+    return (
+      <ColorModeProvider>
+        <LoadingOverlay open />
+      </ColorModeProvider>
+    );
   }
 
   return (
-    <ThemeProvider>
+    <ColorModeProvider>
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route element={<PrivateRoute />}>
@@ -43,7 +48,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
-    </ThemeProvider>
+    </ColorModeProvider>
   );
 }
 

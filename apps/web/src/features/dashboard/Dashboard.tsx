@@ -6,7 +6,8 @@ import Search from './Search';
 import UserProfile from './UserProfile';
 import JobStats from './JobStats';
 import SideBar from '../common/SideBar';
-import KanbanBoard, { KANBAN_COLUMNS } from './KanbanBoard';
+import KanbanBoard from './KanbanBoard';
+import { getKanbanColumns } from '../../theme';
 import { JobsModal } from './jobs/JobsModal';
 import {
   jobsSelector,
@@ -28,11 +29,14 @@ import {
   LoadingOverlay,
   Paper,
   Snackbar,
+  useTheme,
 } from '../../components/ui';
 
 const Dashboard = () => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const kanbanColumns = getKanbanColumns(theme);
   const { user } = useAppSelector(authSelector);
   const { status } = useAppSelector(jobsSelector);
   const interestedJobs = useAppSelector(selectInterestedJobs);
@@ -88,7 +92,7 @@ const Dashboard = () => {
                     <Box p={2}>Something went wrong</Box>
                   ) : (
                     <KanbanBoard
-                      columns={KANBAN_COLUMNS.map((column, index) => ({
+                      columns={kanbanColumns.map((column, index) => ({
                         ...column,
                         items: jobColumns[index] ?? [],
                       }))}

@@ -1,7 +1,7 @@
 import { useState, type KeyboardEvent } from 'react';
 
 import { JOB_RESOURCE_LINKS } from './jobResourceLinks';
-import { Drawer, Fab, Icon, Tooltip } from '../../components/ui';
+import { Box, Drawer, Fab, Icon, Tooltip } from '../../components/ui';
 import '../../styles/JobsResources.scss';
 
 function JobResourceDrawer() {
@@ -17,16 +17,23 @@ function JobResourceDrawer() {
   };
 
   const drawerContent = (
-    <div
-      className="jobResources-sidebar"
+    <Box
       role="presentation"
       onClick={handleClose}
       onKeyDown={handleKeyDown}
+      width={100}
+      height="100%"
+      py={3}
     >
       <div className="jobResources">
         {JOB_RESOURCE_LINKS.map((link) => (
           <Tooltip key={link.title} title={link.title} placement="left">
-            <a href={link.href} target="_blank" rel="noreferrer">
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={link.title}
+            >
               <img
                 src={link.imageSrc}
                 alt={`${link.title} logo`}
@@ -36,11 +43,11 @@ function JobResourceDrawer() {
           </Tooltip>
         ))}
       </div>
-    </div>
+    </Box>
   );
 
   return (
-    <div>
+    <>
       <Tooltip title="Job Resources">
         <Fab onClick={() => setOpen(true)} aria-label="Job Resources">
           <Icon name="work" className="fab-icon" />
@@ -49,7 +56,7 @@ function JobResourceDrawer() {
       <Drawer open={open} onClose={handleClose}>
         {drawerContent}
       </Drawer>
-    </div>
+    </>
   );
 }
 

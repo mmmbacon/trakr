@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import ColorModeToggle from '../../features/common/ColorModeToggle';
 import UserMenu from './UserMenu';
 
 interface AppHeaderUserData {
@@ -42,6 +43,7 @@ export default function AppHeader({ userdata, onLogout }: AppHeaderProps) {
 
         <Box flexGrow={1} />
 
+        <ColorModeToggle />
         <UserMenu
           firstName={userdata?.first_name}
           lastName={userdata?.last_name}

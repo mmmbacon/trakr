@@ -1,5 +1,4 @@
 import type { Job } from '../../types';
-import { kanbanColors } from '../../tokens';
 import { Box, Grid } from '../../components/ui';
 import DashboardColumn from './DashboardColumn';
 import KanbanActionBar from './KanbanActionBar';
@@ -43,11 +42,3 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
     </Box>
   );
 }
-
-export const KANBAN_COLUMNS = [
-  { title: 'Interested', color: kanbanColors.interested },
-  { title: 'Applied', color: kanbanColors.applied },
-  { title: 'Interviewing', color: kanbanColors.interviewing },
-  { title: 'Offer', color: kanbanColors.offer },
-  { title: 'Rejected', color: kanbanColors.rejected },
-] as const;

@@ -4,7 +4,7 @@ import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
 import JobItem from '../../components/JobItem';
 import JobSearchBar from './JobSearchBar';
-import { Box, Container } from '../../components/ui';
+import { Container, Typography } from '../../components/ui';
 import {
   jobsSelector,
   selectInterestedJobs,
@@ -81,9 +81,9 @@ const Search = () => {
           <JobItem key={job.id} job={job} />
         ))
       ) : (
-        <Box>
-          <h3>No Results Found</h3>
-        </Box>
+        <Typography variant="h5" color="secondary" align="center" marginTop={4}>
+          No Results Found
+        </Typography>
       )}
     </Container>
   );

@@ -29,7 +29,13 @@ export default tseslint.config(
   },
   {
     files: ['**/*.{ts,tsx}'],
-    ignores: ['src/adapters/**/*'],
+    ignores: [
+      'src/adapters/**/*',
+      'src/theme.ts',
+      'src/features/common/ColorModeProvider.tsx',
+      'src/features/common/ColorModeToggle.tsx',
+      'src/features/common/colorModeContext.ts',
+    ],
     rules: {
       'no-restricted-imports': ['error', {
         patterns: [{

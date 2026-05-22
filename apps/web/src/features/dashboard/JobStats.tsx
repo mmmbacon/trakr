@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../app/hooks';
-import { jobStatusChartPalette } from '../../tokens';
+import { getJobStatusColors } from '../../theme';
 import SalaryStats from './SalaryStats';
 import {
   Box,
@@ -7,6 +7,7 @@ import {
   Paper,
   StatusPieChart,
   Typography,
+  useTheme,
 } from '../../components/ui';
 import {
   selectInterestedJobs,
@@ -17,6 +18,7 @@ import {
 } from './jobs/jobsSlice';
 
 const JobStats = () => {
+  const theme = useTheme();
   const interestedJobs = useAppSelector(selectInterestedJobs);
   const appliedJobs = useAppSelector(selectAppliedJobs);
   const interviewingJobs = useAppSelector(selectInterviewingJobs);
@@ -55,7 +57,7 @@ const JobStats = () => {
               value: item.val,
               label: item.status,
             }))}
-            colors={jobStatusChartPalette}
+            colors={[...getJobStatusColors(theme)]}
             ariaLabel={`Job application status chart. ${statusSummary}`}
           />
         </Box>
@@ -63,9 +65,9 @@ const JobStats = () => {
           <Typography id="salary-overview-heading" variant="h4" fontWeight={600}>
             Salary Overview
           </Typography>
-        </Box>
-        <Box role="img" aria-labelledby="salary-overview-heading">
-          <SalaryStats />
+          <Box role="img" aria-labelledby="salary-overview-heading">
+            <SalaryStats color={theme.palette.primary.main} />
+          </Box>
         </Box>
       </Paper>
     </Container>

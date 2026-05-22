@@ -37,6 +37,7 @@ export { default as Snackbar } from '../../adapters/mui/Snackbar';
 export { default as StatusPieChart } from '../../adapters/mui/StatusPieChart';
 export { default as TextInput } from '../../adapters/mui/TextInput';
 export { default as ThemeProvider } from '../../adapters/mui/ThemeProvider';
+export { useTheme } from '../../adapters/mui/useTheme';
 export { default as Tooltip } from '../../adapters/mui/UiTooltip';
 export { default as Typography } from '../../adapters/mui/Typography';
 
