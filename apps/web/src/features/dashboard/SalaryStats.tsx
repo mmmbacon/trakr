@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
-import { BarChart } from '@mui/x-charts/BarChart';
+
 import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
+import { SalaryBarChart } from '../../components/ui';
 import {
   selectInterestedJobs,
   selectAppliedJobs,
@@ -81,24 +82,11 @@ const SalaryStats = () => {
   }
 
   return (
-    <BarChart
-      height={380}
-      margin={{ bottom: 80 }}
-      aria-label="Salary overview bar chart"
-      xAxis={[{
-        scaleType: 'band',
-        data: chartData.map((d) => d.status),
-        tickLabelStyle: {
-          angle: -35,
-          textAnchor: 'end',
-          fontSize: 11,
-        },
-      }]}
-      series={[{
-        data: chartData.map((d) => d.val),
-        color: '#577590',
-        label: 'Jobs',
-      }]}
+    <SalaryBarChart
+      data={chartData.map((item) => ({
+        label: item.status,
+        value: item.val,
+      }))}
     />
   );
 };

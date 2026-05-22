@@ -1,34 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Tooltip from '@mui/material/Tooltip';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import AddIcon from '@mui/icons-material/Add';
-import EventIcon from '@mui/icons-material/Event';
-import SearchIcon from '@mui/icons-material/Search';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 
 import { logout } from '../auth/authSlice';
-import { SideBarButton } from './SideBarButton';
+import SideBarNavItem from './SideBarNavItem';
 import { useAppDispatch } from '../../app/hooks';
+import { Box, Icon, Paper, Tooltip } from '../../components/ui';
+import { buildAvatarUrl, openUrl } from '../../utils/url';
 
 export const SIDEBAR_WIDTH = 52;
 
 const SIDEBAR_ICON_SIZE = 24;
 const SIDEBAR_LOGO_SIZE = 32;
-
-const navIconSx = { fontSize: SIDEBAR_ICON_SIZE, color: '#3b3b3b' };
-
-const lightTooltipSlotProps = {
-  tooltip: {
-    sx: {
-      backgroundColor: 'common.white',
-      color: 'rgba(0, 0, 0, 0.87)',
-      boxShadow: 1,
-      fontSize: 11,
-    },
-  },
-};
 
 interface SideBarUserData {
   first_name?: string;
@@ -61,141 +42,57 @@ const SideBar = ({
     navigate('/login');
   };
 
-  const handleClickOpen = () => {
-    if (onAddJobClick) {
-      onAddJobClick();
-    }
-  };
-
   return (
     <Box
       id="sidebar"
       className="dashboard-sidebar"
       aria-label="Sidebar navigation"
-      sx={{
-        flex: `0 0 ${SIDEBAR_WIDTH}px`,
-        width: SIDEBAR_WIDTH,
-        minWidth: SIDEBAR_WIDTH,
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-      }}
     >
-      <Paper
-        elevation={1}
-        square
-        sx={{
-          width: '100%',
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <Paper elevation={1} square className="dashboard-sidebar-paper">
         <Box display="flex" flexGrow={1} flexDirection="column" height="100%" alignItems="center">
-          <Tooltip
-            title="Dashboard"
-            aria-label="Dashboard"
-            placement="right"
-            slotProps={lightTooltipSlotProps}
-          >
+          <Tooltip title="Dashboard">
             <Link to="/dashboard">
               <Box
                 component="img"
                 src="/img/Logo2-sm.png"
                 alt="logo"
                 width={SIDEBAR_LOGO_SIZE}
-                sx={{ p: '6px', mt: '4px' }}
+                className="dashboard-sidebar-logo"
               />
             </Link>
           </Tooltip>
           <Box display="flex" flexGrow={1} flexDirection="column" justifyContent="space-between">
             <Box display="flex" flexDirection="column">
-              <SideBarButton>
-                <Tooltip
-                  title="User Profile"
-                  aria-label="User Profile"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <Link to="/dashboard/user_profile" className="link">
-                    <Box
-                      component="img"
-                      src={`https://ui-avatars.com/api/?name=${userdata.first_name}+${userdata.last_name}&background=3b3b3b&color=fff&size=${SIDEBAR_ICON_SIZE}`}
-                      alt="initials"
-                      sx={{
-                        borderRadius: '50%',
-                        width: SIDEBAR_ICON_SIZE,
-                        height: SIDEBAR_ICON_SIZE,
-                        display: 'block',
-                      }}
-                    />
-                  </Link>
-                </Tooltip>
-              </SideBarButton>
-              <SideBarButton>
-                <Tooltip
-                  title="Statistics"
-                  aria-label="Statistics"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <Link to="/dashboard/job_stats" className="link">
-                    <AssessmentIcon sx={navIconSx} />
-                  </Link>
-                </Tooltip>
-              </SideBarButton>
-              <SideBarButton onClick={() => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); }}>
-                <Tooltip
-                  title="Open Calendar"
-                  aria-label="Open Calendar"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <EventIcon sx={navIconSx} />
-                </Tooltip>
-              </SideBarButton>
-              <SideBarButton>
-                <Tooltip
-                  title="Search Jobs"
-                  aria-label="Search Jobs"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <Link to="/dashboard/search" className="link">
-                    <SearchIcon sx={navIconSx} />
-                  </Link>
-                </Tooltip>
-              </SideBarButton>
+              <SideBarNavItem title="User Profile" to="/dashboard/user_profile">
+                <Box
+                  component="img"
+                  src={buildAvatarUrl(`${userdata.first_name} ${userdata.last_name}`, SIDEBAR_ICON_SIZE)}
+                  alt="initials"
+                  className="dashboard-sidebar-avatar"
+                />
+              </SideBarNavItem>
+              <SideBarNavItem title="Statistics" to="/dashboard/job_stats">
+                <Icon name="assessment" className="sidebar-nav-icon" />
+              </SideBarNavItem>
+              <SideBarNavItem
+                title="Open Calendar"
+                onClick={() => { openUrl('https://calendar.google.com/calendar/u/0/r'); }}
+              >
+                <Icon name="event" className="sidebar-nav-icon" />
+              </SideBarNavItem>
+              <SideBarNavItem title="Search Jobs" to="/dashboard/search">
+                <Icon name="search" className="sidebar-nav-icon" />
+              </SideBarNavItem>
               {addButtonVisible ? (
-                <SideBarButton onClick={handleClickOpen}>
-                  <Tooltip
-                    title="Add New Job"
-                    aria-label="Add New Job"
-                    placement="right"
-                    slotProps={lightTooltipSlotProps}
-                  >
-                    <AddIcon sx={navIconSx} />
-                  </Tooltip>
-                </SideBarButton>
+                <SideBarNavItem title="Add New Job" onClick={onAddJobClick}>
+                  <Icon name="add" className="sidebar-nav-icon" />
+                </SideBarNavItem>
               ) : null}
             </Box>
             <Box pb={2}>
-              <SideBarButton onClick={handleLogOut}>
-                <Tooltip
-                  title="Log Out"
-                  aria-label="Log Out"
-                  placement="right"
-                  slotProps={lightTooltipSlotProps}
-                >
-                  <ExitToAppIcon
-                    sx={{
-                      ...navIconSx,
-                      transform: 'rotate(180deg)',
-                    }}
-                  />
-                </Tooltip>
-              </SideBarButton>
+              <SideBarNavItem title="Log Out" onClick={handleLogOut}>
+                <Icon name="exit" className="sidebar-nav-icon sidebar-nav-icon--exit" />
+              </SideBarNavItem>
             </Box>
           </Box>
         </Box>
