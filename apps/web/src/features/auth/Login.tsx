@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { Navigate, Link as RouterLink } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import { Navigate, Link } from 'react-router-dom';
 
 import AuthLayout from '../../components/AuthLayout';
 import PasswordField from '../../components/PasswordField';
+import {
+  Alert,
+  Box,
+  Button,
+  Divider,
+  TextInput,
+  Typography,
+} from '../../components/ui';
 import { authSelector, login } from './authSlice';
 import { demoPresets, type DemoPreset } from './demoPresets';
 import isDemoMode from '../../config';
@@ -48,36 +49,36 @@ const Login = () => {
   return (
     <AuthLayout loading={loggingInStatus === 'loading'}>
       {error && (
-        <Alert severity="error">
+        <Alert severity="error" className="alert-full-width">
           {error}
         </Alert>
       )}
-      <TextField
+      <TextInput
         label="Email"
         value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        fullWidth
+        onChange={setEmail}
+        marginBottom={1.25}
       />
       <PasswordField
         label="Password"
         value={password}
         onChange={setPassword}
       />
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => handleLogin()}
-        disabled={loggingInStatus === 'loading'}
-        fullWidth
-        size="large"
-      >
-        Login
-      </Button>
+      <Box className="login-button-wrap">
+        <Button
+          color="secondary"
+          onClick={() => handleLogin()}
+          disabled={loggingInStatus === 'loading'}
+          fullWidth
+        >
+          Login
+        </Button>
+      </Box>
       {isDemoMode && (
         <>
-          <Divider>or try a demo account</Divider>
+          <Divider marginBottom={2}>or try a demo account</Divider>
           {demoPresets.map((preset) => (
-            <Box key={preset.email}>
+            <Box key={preset.email} mb={1.5}>
               <Button
                 variant="outlined"
                 color="primary"
@@ -87,7 +88,11 @@ const Login = () => {
               >
                 {preset.label}
               </Button>
-              <Typography variant="body2" color="text.secondary" align="center" mt={0.5}>
+              <Typography
+                variant="body2"
+                color="secondary"
+                className="demo-description"
+              >
                 {preset.description}
               </Typography>
             </Box>
@@ -95,7 +100,7 @@ const Login = () => {
         </>
       )}
       {!isDemoMode && (
-        <Link component={RouterLink} to="/signup" align="center" display="block">
+        <Link to="/signup" style={{ textAlign: 'center', color: '#577590' }}>
           Don&apos;t have an account? Sign Up!
         </Link>
       )}

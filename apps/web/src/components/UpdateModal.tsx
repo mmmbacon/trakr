@@ -1,11 +1,11 @@
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
+  Modal,
+  ModalActions,
+  ModalContent,
+  ModalText,
+  ModalTitle,
+} from './ui';
 
 export interface UpdateModalProps {
   open?: boolean;
@@ -18,26 +18,26 @@ const UpdateModal = ({
   onConfirm = () => {},
   onDecline = () => {},
 }: UpdateModalProps) => (
-  <Dialog
+  <Modal
     open={open}
     aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
   >
-    <DialogTitle id="alert-dialog-title">Warning</DialogTitle>
-    <DialogContent>
-      <DialogContentText id="alert-dialog-description">
+    <ModalTitle id="alert-dialog-title">Warning</ModalTitle>
+    <ModalContent>
+      <ModalText id="alert-dialog-description">
         Are you sure you want to update your account information?
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button variant="outlined" onClick={onDecline}>
+      </ModalText>
+    </ModalContent>
+    <ModalActions>
+      <Button color="primary" onClick={onDecline}>
         Cancel
       </Button>
-      <Button variant="contained" color="secondary" onClick={onConfirm}>
-        Confirm
+      <Button color="secondary" onClick={onConfirm}>
+        CONFIRM
       </Button>
-    </DialogActions>
-  </Dialog>
+    </ModalActions>
+  </Modal>
 );
 
 export default UpdateModal;

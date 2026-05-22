@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
-import { BarChart } from '@mui/x-charts/BarChart';
+
 import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
+import { SalaryBarChart } from '../../components/ui';
 import {
   selectInterestedJobs,
   selectAppliedJobs,
@@ -13,10 +14,6 @@ import {
 interface ChartDatum {
   status: string;
   val: number;
-}
-
-interface SalaryStatsProps {
-  color: string;
 }
 
 const SALARY_BUCKETS: Array<{ label: string; min: number | null; max: number | null }> = [
@@ -62,7 +59,7 @@ function countSalaryBuckets(categories: Job[][]): ChartDatum[] {
     .filter((bucket) => bucket.val > 0);
 }
 
-const SalaryStats = ({ color }: SalaryStatsProps) => {
+const SalaryStats = () => {
   const interestedJobs = useAppSelector(selectInterestedJobs);
   const appliedJobs = useAppSelector(selectAppliedJobs);
   const interviewingJobs = useAppSelector(selectInterviewingJobs);
@@ -85,24 +82,11 @@ const SalaryStats = ({ color }: SalaryStatsProps) => {
   }
 
   return (
-    <BarChart
-      height={380}
-      margin={{ bottom: 80 }}
-      aria-label="Salary overview bar chart"
-      xAxis={[{
-        scaleType: 'band',
-        data: chartData.map((d) => d.status),
-        tickLabelStyle: {
-          angle: -35,
-          textAnchor: 'end',
-          fontSize: 11,
-        },
-      }]}
-      series={[{
-        data: chartData.map((d) => d.val),
-        color,
-        label: 'Jobs',
-      }]}
+    <SalaryBarChart
+      data={chartData.map((item) => ({
+        label: item.status,
+        value: item.val,
+      }))}
     />
   );
 };

@@ -1,7 +1,6 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import type { Job } from '../../types';
-import theme from '../../theme';
+import { kanbanColors } from '../../tokens';
+import { Box, Grid } from '../../components/ui';
 import DashboardColumn from './DashboardColumn';
 import KanbanActionBar from './KanbanActionBar';
 
@@ -20,12 +19,7 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
   return (
     <Box display="flex" flexDirection="column" height="100%">
       <KanbanActionBar onAddJobClick={onAddJobClick} />
-      <Box
-        flex={1}
-        minHeight={0}
-        p={2}
-        sx={{ overflowX: 'auto', overflowY: 'auto' }}
-      >
+      <Box flex={1} minHeight={0} p={2} overflow="auto">
         <Grid
           container
           id="dashboard-columns"
@@ -33,10 +27,10 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
           aria-label="Job application board"
           spacing={2}
           wrap="nowrap"
-          sx={{ width: 'max-content', minWidth: '100%' }}
+          className="kanban-columns"
         >
           {columns.map((column) => (
-            <Grid item key={column.title} sx={{ minWidth: 280, maxWidth: 320, flexShrink: 0 }}>
+            <Grid item key={column.title} className="kanban-column">
               <DashboardColumn
                 items={column.items}
                 title={column.title}
@@ -51,9 +45,9 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
 }
 
 export const KANBAN_COLUMNS = [
-  { title: 'Interested', color: theme.palette.jobStatus.interested },
-  { title: 'Applied', color: theme.palette.jobStatus.applied },
-  { title: 'Interviewing', color: theme.palette.jobStatus.interviewing },
-  { title: 'Offer', color: theme.palette.jobStatus.offer },
-  { title: 'Rejected', color: theme.palette.jobStatus.rejected },
+  { title: 'Interested', color: kanbanColors.interested },
+  { title: 'Applied', color: kanbanColors.applied },
+  { title: 'Interviewing', color: kanbanColors.interviewing },
+  { title: 'Offer', color: kanbanColors.offer },
+  { title: 'Rejected', color: kanbanColors.rejected },
 ] as const;

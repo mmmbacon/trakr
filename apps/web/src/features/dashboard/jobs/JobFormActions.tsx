@@ -1,8 +1,8 @@
-import { Box, Button, Stack } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RotateLeftIcon from '@mui/icons-material/RotateLeft';
-import SaveIcon from '@mui/icons-material/Save';
+import {
+  Box,
+  Button,
+  Icon,
+} from '../../../components/ui';
 
 interface JobFormActionsProps {
   isEditMode: boolean;
@@ -20,47 +20,48 @@ export default function JobFormActions({
   onDeleteClick,
 }: JobFormActionsProps) {
   return (
-    <Stack direction="row" justifyContent="space-between" p={2} spacing={2}>
+    <Box className="form-actions">
       <Box>
         {isEditMode ? (
           <Button
-            variant="contained"
-            color="error"
-            startIcon={<DeleteIcon />}
+            color="danger"
+            startIcon={<Icon name="delete" />}
             onClick={onDeleteClick}
           >
             Delete
           </Button>
         ) : (
           <Button
-            variant="outlined"
-            color="inherit"
-            startIcon={<RotateLeftIcon />}
+            color="neutral"
+            startIcon={<Icon name="rotate-left" />}
             onClick={onReset}
           >
             Reset Form
           </Button>
         )}
       </Box>
-      <Stack direction="row" spacing={2}>
-        <Button
-          type="button"
-          onClick={onCancel}
-          variant="outlined"
-          startIcon={<CancelIcon />}
-        >
-          Cancel
-        </Button>
+      <Box className="form-actions-end">
+        <Box className="form-actions-cancel">
+          <Button
+            type="button"
+            onClick={onCancel}
+            color="primary"
+            startIcon={<Icon name="cancel" />}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Box>
+      <Box>
         <Button
           type="submit"
           onClick={onSubmit}
-          variant="contained"
           color="secondary"
-          startIcon={<SaveIcon />}
+          startIcon={<Icon name="save" />}
         >
           Save
         </Button>
-      </Stack>
-    </Stack>
+      </Box>
+    </Box>
   );
 }

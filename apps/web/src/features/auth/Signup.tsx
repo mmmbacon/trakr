@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Navigate, Link as RouterLink } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
+import { Navigate, Link } from 'react-router-dom';
 
 import AuthLayout from '../../components/AuthLayout';
 import PasswordField from '../../components/PasswordField';
+import {
+  Alert,
+  Box,
+  Button,
+  TextInput,
+} from '../../components/ui';
 import { authSelector, signup } from './authSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
@@ -36,6 +37,7 @@ const Signup = () => {
       return;
     }
 
+    setError('');
     const actionResult = await dispatch(signup({
       first_name,
       last_name,
@@ -45,59 +47,59 @@ const Signup = () => {
     }));
 
     if (signup.rejected.match(actionResult)) {
-      setError('Sign Up failed, try again');
+      setError('Signup failed, try again');
     }
   };
 
   return (
-    <AuthLayout loading={signUpStatus === 'loading'} maxWidth={360}>
-      <Stack spacing={2}>
-        {error && (
-          <Alert severity="error">
-            {error}
-          </Alert>
-        )}
-        <TextField
-          label="First Name"
-          value={first_name}
-          onChange={(event) => setFirstName(event.target.value)}
-          fullWidth
-        />
-        <TextField
-          label="Last Name"
-          value={last_name}
-          onChange={(event) => setLastName(event.target.value)}
-          fullWidth
-        />
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          fullWidth
-        />
-        <PasswordField
-          label="Password"
-          value={password}
-          onChange={setPassword}
-        />
-        <PasswordField
-          label="Password Confirmation"
-          value={password_confirmation}
-          onChange={setPasswordConfirmation}
-        />
+    <AuthLayout loading={signUpStatus === 'loading'} contentWidth={300}>
+      {error && (
+        <Alert severity="error" className="alert-full-width">
+          {error}
+        </Alert>
+      )}
+      <TextInput
+        label="First Name"
+        value={first_name}
+        onChange={setFirstName}
+        marginBottom={1.25}
+      />
+      <TextInput
+        label="Last Name"
+        value={last_name}
+        onChange={setLastName}
+        marginBottom={1.25}
+      />
+      <TextInput
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        marginBottom={1.25}
+      />
+      <PasswordField
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        marginBottom={1.25}
+      />
+      <PasswordField
+        label="Password Confirmation"
+        value={password_confirmation}
+        onChange={setPasswordConfirmation}
+      />
+      <Box className="login-button-wrap">
         <Button
-          variant="contained"
           color="secondary"
           onClick={handleSignup}
+          disabled={signUpStatus === 'loading'}
           fullWidth
-          size="large"
         >
           Sign Up
         </Button>
-        <Link component={RouterLink} to="/login" align="center" display="block">
-          Already have an account? Login!
-        </Link>
-      </Stack>
+      </Box>
+      <Link to="/login" style={{ textAlign: 'center', color: '#577590' }}>
+        Already have an account? Login!
+      </Link>
     </AuthLayout>
   );
 };

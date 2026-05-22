@@ -8,7 +8,7 @@ export interface JobResourceLink {
 export const JOB_RESOURCE_LINKS: JobResourceLink[] = [
   {
     title: 'LinkedIn',
-    href: 'http://linkedin.com',
+    href: 'https://linkedin.com',
     imageSrc: 'https://content.stocktrak.com/wp-content/uploads/2016/10/linkedin-logo.png',
     imageWidth: 50,
   },

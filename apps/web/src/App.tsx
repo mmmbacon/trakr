@@ -5,10 +5,6 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
 
 import Dashboard from './features/dashboard/Dashboard';
 import Login from './features/auth/Login';
@@ -18,7 +14,7 @@ import { fetchLoggedInStatus } from './features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { authSelector } from './features/auth/authSlice';
 import isDemoMode from './config';
-import theme from './theme';
+import { LoadingOverlay, ThemeProvider } from './components/ui';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -29,19 +25,11 @@ function App() {
   }, [dispatch]);
 
   if (status === 'loading') {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Backdrop open>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </ThemeProvider>
-    );
+    return <LoadingOverlay open />;
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ThemeProvider>
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route element={<PrivateRoute />}>

@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './app/store';
 import './index.css';
+import './tokens/tokens.css';
+import './styles/layout.css';
 
 axios.defaults.withCredentials = true;
 
