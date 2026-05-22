@@ -34,7 +34,8 @@ FROM base
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-RUN chmod +x /rails/bin/docker-entrypoint && \
+RUN mkdir -p tmp/pids tmp/cache tmp/sockets log && \
+    chmod +x /rails/bin/docker-entrypoint && \
     useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails /rails
 
