@@ -45,6 +45,7 @@ npm run dev
 
 ```sh
 npm run dev        # Vite dev server
+npm run lint       # ESLint
 npm run build      # Production build to dist/
 npm run typecheck  # TypeScript check
 npm run test       # Vitest watch mode

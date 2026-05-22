@@ -1,20 +1,41 @@
 # Trakr
 
-Trakr is a full-stack job application tracker. This repository is now a monorepo with a React frontend, a Rails API, and deployment config for Vercel + Fly.io.
+[![CI](https://github.com/mmmbacon/trakr/actions/workflows/ci.yml/badge.svg)](https://github.com/mmmbacon/trakr/actions/workflows/ci.yml)
+
+Trakr is a full-stack job application tracker. This repository is a monorepo with a React frontend, a Rails API, and deployment config for Vercel + Fly.io.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  browser[Browser]
+  vercel[Vercel - apps/web]
+  fly[Fly.io - apps/api]
+  pg[(Fly Postgres)]
+
+  browser --> vercel
+  vercel -->|"/api/* rewrite"| fly
+  fly --> pg
+```
+
+In production, the Vite app is served from Vercel. Browser requests to `/api/*` are rewritten to the Rails API on Fly.io, so the frontend stays same-origin. Locally, Vite proxies `/api` to Rails on port 3000.
 
 ## Apps
 
-- `apps/web` - React 18 + Vite + Redux frontend, served by Vercel in production.
-- `apps/api` - Ruby on Rails 7.2 API, served by Fly.io in production.
-- `docker-compose.yml` - Local PostgreSQL for development.
+- `apps/web` — React 18, Vite 6, TypeScript, MUI 6, Redux Toolkit
+- `apps/api` — Ruby on Rails 7.2 API, served by Fly.io in production
+- `docker-compose.yml` — Local PostgreSQL for development
 
 ## Prerequisites
 
-- Node.js and npm
-- Ruby 3.3.11
+- Node.js **22** (see `apps/web/.nvmrc`)
+- npm
+- Ruby **3.3.11**
 - Bundler
 - Docker Desktop
-- Fly CLI for production API deploys
+- Fly CLI (production API deploys)
+
+No OpenSSL legacy provider or CRA workarounds are required.
 
 ## Local Setup
 
@@ -46,28 +67,42 @@ npm run dev
 
 The frontend opens at http://localhost:8080. Vite proxies `/api` requests to the Rails API at http://localhost:3000 (see `apps/web/vite.config.ts`). Root npm scripts use `scripts/with-ruby.sh` to prefer Homebrew `ruby@3.3` when available (Apple Silicon or Intel), or your existing PATH via rbenv/asdf. Override with `TRAKR_RUBY_BIN=/path/to/ruby/bin` if needed.
 
-`Procfile.dev` is also available if you prefer Foreman or Overmind, but `npm run dev` uses the npm-managed `concurrently` package by default.
+`Procfile.dev` is available if you prefer Foreman or Overmind; `npm run dev` uses `concurrently` by default.
 
 ## Useful Commands
 
 ```sh
-npm run dev       # Start React and Rails together
-npm run dev:web   # Start only the React app
-npm run dev:api   # Start only the Rails API
-npm run db:up     # Start local PostgreSQL
-npm run db:setup  # Start DB, load schema, and seed demo data
-npm run test:api  # Run Rails integration tests (requires Postgres)
-npm run build:web # Production build of the React app
+npm run dev            # Start React and Rails together
+npm run dev:web        # Start only the React app
+npm run dev:api        # Start only the Rails API
+npm run db:up          # Start local PostgreSQL
+npm run db:setup       # Start DB, load schema, and seed demo data
+npm run lint:web       # ESLint in apps/web
+npm run typecheck:web  # TypeScript check in apps/web
+npm run test:web       # Vitest in apps/web
+npm run test:api       # Rails test suite (requires Postgres)
+npm run build:web      # Production build of the React app
 ```
 
 ## CI
 
 GitHub Actions runs on every push and pull request to `main` / `master`:
 
-- **API tests** — Rails test suite against Postgres 14
-- **Web build** — `npm ci` and production build in `apps/web`
+| Job | What it runs |
+|-----|----------------|
+| **API tests** | Rails test suite against Postgres 14 |
+| **Web CI** | `npm ci` → lint → typecheck → test → build in `apps/web` |
 
-Run API tests locally (with Docker Postgres on port 55432):
+Run the web checks locally:
+
+```sh
+npm run lint:web
+npm run typecheck:web
+npm run test:web
+npm run build:web
+```
+
+Run API tests locally (Docker Postgres on port **55432**; CI uses **5432**):
 
 ```sh
 npm run db:up
@@ -77,31 +112,59 @@ npm run test:api
 
 ## Environment Variables
 
-Use `.env.example` as the source of truth for local and hosted environment variables.
+Use `.env.example` as the source of truth.
 
-Frontend values belong in `apps/web/.env.local` locally and in Vercel for production:
+### Frontend (`apps/web/.env.local` or Vercel)
 
-- `VITE_GOOGLE_API_KEY`
-- `VITE_DEMO_MODE=true`
+| Variable | Purpose |
+|----------|---------|
+| `VITE_DEMO_MODE` | `true` enables demo mode (auto-login with sample data) |
+| `VITE_GOOGLE_API_KEY` | Google Places API key for location autocomplete |
 
-Backend local values can be exported in your shell if you need to override the Docker defaults:
+### Backend (local shell overrides)
 
-- `DB_HOST=127.0.0.1`
-- `DB_USERNAME=postgres`
-- `DB_PASSWORD=postgres`
-- `DB_PORT=55432`
-- `DEMO_MODE=true`
-- `DEMO_USER_EMAIL=beetman@shrutefarms.com`
+| Variable | Default (Docker) |
+|----------|------------------|
+| `DB_HOST` | `127.0.0.1` |
+| `DB_USERNAME` | `postgres` |
+| `DB_PASSWORD` | `postgres` |
+| `DB_PORT` | `55432` |
+| `DEMO_MODE` | `true` |
+| `DEMO_USER_EMAIL` | `beetman@shrutefarms.com` |
 
-Backend production values should be set as Fly.io secrets:
+### Backend (Fly.io secrets)
 
-- `DATABASE_URL` (created by `fly postgres attach`)
-- `RAILS_MASTER_KEY`
-- `SECRET_KEY_BASE`
-- `DEMO_MODE=true`
-- `DEMO_USER_EMAIL=beetman@shrutefarms.com`
+| Variable | Purpose |
+|----------|---------|
+| `DATABASE_URL` | Created by `fly postgres attach` |
+| `RAILS_MASTER_KEY` | Rails credentials key |
+| `SECRET_KEY_BASE` | Session signing secret |
+| `DEMO_MODE` | `true` for portfolio demo |
+| `DEMO_USER_EMAIL` | Demo user email |
 
 ## Production Deploy
+
+### Checklist
+
+**Frontend (Vercel)**
+
+1. Create project with Root Directory `apps/web`
+2. Framework: Vite; Build Command: `npm run build`; Output Directory: `dist`
+3. Set `VITE_DEMO_MODE` and `VITE_GOOGLE_API_KEY`
+4. Deploy — `apps/web/vercel.json` rewrites `/api/*` to Fly
+
+**API (Fly.io)**
+
+1. From `apps/api`: `fly deploy`
+2. Ensure Postgres is attached and secrets are set
+3. Run `fly ssh console -C "bin/rails db:seed"` if seed data is needed
+4. Confirm health check hits `/api/logged_in`
+
+**Smoke test**
+
+1. Open the Vercel URL — demo banner should appear when `VITE_DEMO_MODE=true`
+2. Dashboard loads sample jobs
+3. API calls succeed via same-origin `/api` proxy
 
 ### API: Fly.io + Fly Postgres
 

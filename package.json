@@ -9,6 +9,9 @@
     "db:up": "docker compose up -d db",
     "db:setup": "docker compose up -d db && bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails db:create db:schema:load db:seed'",
     "build:web": "npm run build --prefix apps/web",
+    "lint:web": "npm run lint --prefix apps/web",
+    "typecheck:web": "npm run typecheck --prefix apps/web",
+    "test:web": "npm run test:ci --prefix apps/web",
     "test:api": "bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails test'",
     "test:api:prepare": "bash scripts/with-ruby.sh bash -c 'cd apps/api && bundle exec rails db:test:prepare'"
   },
