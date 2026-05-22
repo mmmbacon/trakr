@@ -22,7 +22,7 @@ export default function AuthLayout({
       <Paper className="auth-layout-paper">
         {loading && <ProgressBar />}
         <Box className="auth-layout-logo-wrap">
-          <img src="/img/Logo2-lg.png" alt="logo" height="250px" />
+          <img src="/img/Logo2-lg.png" alt="logo" height="125px" />
         </Box>
         <Box className={contentClassName}>
           {children}
