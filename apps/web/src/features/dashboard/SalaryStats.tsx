@@ -15,6 +15,10 @@ interface ChartDatum {
   val: number;
 }
 
+interface SalaryStatsProps {
+  color: string;
+}
+
 const SALARY_BUCKETS: Array<{ label: string; min: number | null; max: number | null }> = [
   { label: 'No Salary Data', min: null, max: null },
   { label: '< $25k', min: 1, max: 25000 },
@@ -58,7 +62,7 @@ function countSalaryBuckets(categories: Job[][]): ChartDatum[] {
     .filter((bucket) => bucket.val > 0);
 }
 
-const SalaryStats = () => {
+const SalaryStats = ({ color }: SalaryStatsProps) => {
   const interestedJobs = useAppSelector(selectInterestedJobs);
   const appliedJobs = useAppSelector(selectAppliedJobs);
   const interviewingJobs = useAppSelector(selectInterviewingJobs);
@@ -96,7 +100,7 @@ const SalaryStats = () => {
       }]}
       series={[{
         data: chartData.map((d) => d.val),
-        color: '#577590',
+        color,
         label: 'Jobs',
       }]}
     />

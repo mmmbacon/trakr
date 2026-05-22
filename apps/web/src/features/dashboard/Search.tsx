@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { SelectChangeEvent } from '@mui/material/Select';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
 import JobItem from '../../components/JobItem';
@@ -70,14 +70,7 @@ const Search = () => {
   };
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        width: '100%',
-        pt: '25px',
-        px: '25px',
-      }}
-    >
+    <Container maxWidth="md" sx={{ py: 3 }}>
       <JobSearchBar
         searchValue={searchValue}
         filterStatus={filterStatus}
@@ -90,9 +83,9 @@ const Search = () => {
           <JobItem key={job.id} job={job} />
         ))
       ) : (
-        <Box>
-          <h3>No Results Found</h3>
-        </Box>
+        <Typography variant="h6" color="text.secondary" align="center" mt={4}>
+          No Results Found
+        </Typography>
       )}
     </Container>
   );

@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
@@ -20,21 +20,21 @@ export default function JobFormActions({
   onDeleteClick,
 }: JobFormActionsProps) {
   return (
-    <Box display="flex" flexDirection="row" justifyContent="space-between" p={2}>
+    <Stack direction="row" justifyContent="space-between" p={2} spacing={2}>
       <Box>
         {isEditMode ? (
           <Button
             variant="contained"
+            color="error"
             startIcon={<DeleteIcon />}
             onClick={onDeleteClick}
-            sx={{ backgroundColor: '#F94144', color: 'white' }}
           >
             Delete
           </Button>
         ) : (
           <Button
-            variant="contained"
-            sx={{ backgroundColor: '#a9a9a9', color: 'white' }}
+            variant="outlined"
+            color="inherit"
             startIcon={<RotateLeftIcon />}
             onClick={onReset}
           >
@@ -42,31 +42,25 @@ export default function JobFormActions({
           </Button>
         )}
       </Box>
-      <Box display="flex" flexGrow={1} justifyContent="flex-end">
-        <Box mr={2}>
-          <Button
-            type="button"
-            onClick={onCancel}
-            variant="contained"
-            color="primary"
-            startIcon={<CancelIcon />}
-          >
-            Cancel
-          </Button>
-        </Box>
-      </Box>
-      <Box>
+      <Stack direction="row" spacing={2}>
+        <Button
+          type="button"
+          onClick={onCancel}
+          variant="outlined"
+          startIcon={<CancelIcon />}
+        >
+          Cancel
+        </Button>
         <Button
           type="submit"
           onClick={onSubmit}
           variant="contained"
           color="secondary"
-          sx={{ color: 'white' }}
           startIcon={<SaveIcon />}
         >
           Save
         </Button>
-      </Box>
-    </Box>
+      </Stack>
+    </Stack>
   );
 }

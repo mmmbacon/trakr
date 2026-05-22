@@ -1,23 +1,12 @@
 import { useState, type KeyboardEvent } from 'react';
+import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Fab from '@mui/material/Fab';
+import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 
-import { lightTooltipSlotProps } from '../../theme/tooltip';
 import { JOB_RESOURCE_LINKS } from './jobResourceLinks';
-import '../../styles/JobsResources.scss';
-
-const fabSx = {
-  position: 'fixed',
-  bottom: 24,
-  right: 24,
-  bgcolor: '#43aa8b',
-  zIndex: 1,
-  '&:hover': {
-    bgcolor: '#3a9680',
-  },
-};
 
 function JobResourceDrawer() {
   const [open, setOpen] = useState(false);
@@ -32,49 +21,51 @@ function JobResourceDrawer() {
   };
 
   const drawerContent = (
-    <div
-      className="jobResources-sidebar"
+    <Box
       role="presentation"
       onClick={handleClose}
       onKeyDown={handleKeyDown}
+      sx={{ width: 100, height: '100%', py: 3 }}
     >
-      <div className="jobResources">
+      <Stack spacing={3} alignItems="center" justifyContent="center" height="60%">
         {JOB_RESOURCE_LINKS.map((link) => (
-          <Tooltip
-            key={link.title}
-            title={link.title}
-            aria-label={link.title}
-            placement="left"
-            slotProps={lightTooltipSlotProps}
-          >
-            <a href={link.href} target="_blank" rel="noreferrer">
-              <img
+          <Tooltip key={link.title} title={link.title} placement="left">
+            <Box
+              component="a"
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={link.title}
+            >
+              <Box
+                component="img"
                 src={link.imageSrc}
                 alt={`${link.title} logo`}
                 width={link.imageWidth ?? 50}
               />
-            </a>
+            </Box>
           </Tooltip>
         ))}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 
   return (
-    <div>
-      <Tooltip title="Job Resources" aria-label="Job Resources">
+    <>
+      <Tooltip title="Job Resources">
         <Fab
+          color="secondary"
           onClick={() => setOpen(true)}
-          sx={fabSx}
           aria-label="Job Resources"
+          sx={{ position: 'fixed', bottom: 24, right: 24 }}
         >
-          <WorkOutlineIcon sx={{ color: '#FFFFFF' }} />
+          <WorkOutlineIcon />
         </Fab>
       </Tooltip>
       <Drawer anchor="right" open={open} onClose={handleClose}>
         {drawerContent}
       </Drawer>
-    </div>
+    </>
   );
 }
 

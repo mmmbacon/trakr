@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Paper } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 import { useAppDispatch } from '../app/hooks';
 import ModalConfirm from './ModalConfirm';
@@ -25,28 +26,21 @@ const JobItem = ({ job }: JobItemProps) => {
   };
 
   return (
-    <Paper
+    <Card
       component="article"
       aria-label={`${job.company}, ${job.title}, ${job.location}`}
-      elevation={1}
-      sx={{
-        position: 'relative',
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginBottom: '5px',
-        padding: '10px',
-        '&:hover': {
-          backgroundColor: '#f6f6f6',
-        },
-      }}
+      variant="outlined"
+      sx={{ mb: 1, position: 'relative' }}
     >
-      <JobItemCard
-        job={job}
-        logo={logo}
-        eventExpired={eventExpired}
-        onEdit={() => setEditModalOpen(true)}
-        onDelete={() => setModalOpen(true)}
-      />
+      <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
+        <JobItemCard
+          job={job}
+          logo={logo}
+          eventExpired={eventExpired}
+          onEdit={() => setEditModalOpen(true)}
+          onDelete={() => setModalOpen(true)}
+        />
+      </CardContent>
       <JobsModal
         open={editModalOpen}
         onClose={() => setEditModalOpen(false)}
@@ -58,7 +52,7 @@ const JobItem = ({ job }: JobItemProps) => {
         onConfirm={handleConfirmDelete}
         onDecline={() => setModalOpen(false)}
       />
-    </Paper>
+    </Card>
   );
 };
 

@@ -30,16 +30,11 @@ const UpdateModal = ({
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button variant="contained" color="primary" onClick={onDecline}>
+      <Button variant="outlined" onClick={onDecline}>
         Cancel
       </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={onConfirm}
-        sx={{ color: 'white' }}
-      >
-        CONFIRM
+      <Button variant="contained" color="secondary" onClick={onConfirm}>
+        Confirm
       </Button>
     </DialogActions>
   </Dialog>

@@ -94,7 +94,6 @@ export default function JobFormHeader({ values, onFieldChange }: JobFormHeaderPr
           id="job-details"
           multiline
           label="Details"
-          className="modal-middle-details"
           name="details"
           value={values.details}
           onChange={(event) => onFieldChange('details', event.target.value)}

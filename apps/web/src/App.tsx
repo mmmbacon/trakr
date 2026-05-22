@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import Dashboard from './features/dashboard/Dashboard';
@@ -29,14 +30,18 @@ function App() {
 
   if (status === 'loading') {
     return (
-      <Backdrop open>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Backdrop open>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </ThemeProvider>
     );
   }
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route element={<PrivateRoute />}>

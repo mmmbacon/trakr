@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { Navigate, Link as RouterLink } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import AuthLayout from '../../components/AuthLayout';
@@ -48,40 +48,36 @@ const Login = () => {
   return (
     <AuthLayout loading={loggingInStatus === 'loading'}>
       {error && (
-        <Alert severity="error" sx={{ width: '100%', mb: 1.25 }}>
+        <Alert severity="error">
           {error}
         </Alert>
       )}
-      <FormControl fullWidth>
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          sx={{ mb: 1.25 }}
-        />
-      </FormControl>
+      <TextField
+        label="Email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        fullWidth
+      />
       <PasswordField
         label="Password"
         value={password}
         onChange={setPassword}
       />
-      <Box mt={5} mb={3}>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleLogin()}
-          disabled={loggingInStatus === 'loading'}
-          fullWidth
-          sx={{ color: 'white' }}
-        >
-          Login
-        </Button>
-      </Box>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => handleLogin()}
+        disabled={loggingInStatus === 'loading'}
+        fullWidth
+        size="large"
+      >
+        Login
+      </Button>
       {isDemoMode && (
         <>
-          <Divider sx={{ mb: 2 }}>or try a demo account</Divider>
+          <Divider>or try a demo account</Divider>
           {demoPresets.map((preset) => (
-            <Box key={preset.email} mb={1.5}>
+            <Box key={preset.email}>
               <Button
                 variant="outlined"
                 color="primary"
@@ -91,7 +87,7 @@ const Login = () => {
               >
                 {preset.label}
               </Button>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, textAlign: 'center' }}>
+              <Typography variant="body2" color="text.secondary" align="center" mt={0.5}>
                 {preset.description}
               </Typography>
             </Box>
@@ -99,7 +95,7 @@ const Login = () => {
         </>
       )}
       {!isDemoMode && (
-        <Link to="/signup" style={{ textAlign: 'center', color: '#577590' }}>
+        <Link component={RouterLink} to="/signup" align="center" display="block">
           Don&apos;t have an account? Sign Up!
         </Link>
       )}

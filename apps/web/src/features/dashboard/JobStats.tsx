@@ -1,9 +1,12 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { PieChart } from '@mui/x-charts/PieChart';
+import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from '../../app/hooks';
+import { JOB_STATUS_COLORS } from '../../theme';
 import SalaryStats from './SalaryStats';
 import {
   selectInterestedJobs,
@@ -13,9 +16,8 @@ import {
   selectRejectedJobs,
 } from './jobs/jobsSlice';
 
-const jobPalette = ['#F9C74F', '#F8961E', '#90BE6D', '#43AA8B', '#F94144'];
-
 const JobStats = () => {
+  const theme = useTheme();
   const interestedJobs = useAppSelector(selectInterestedJobs);
   const appliedJobs = useAppSelector(selectAppliedJobs);
   const interviewingJobs = useAppSelector(selectInterviewingJobs);
@@ -35,63 +37,39 @@ const JobStats = () => {
     .join(', ');
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        width: '100%',
-        py: '25px',
-      }}
-    >
-      <Paper sx={{ width: '100%', p: '25px' }}>
-        <Box
-          mb={4}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignContent: 'center',
-          }}
-        >
-          <Typography id="job-status-heading" sx={{ fontWeight: 600 }} variant="h4">
+    <Container maxWidth="lg" sx={{ py: 3 }}>
+      <Paper sx={{ p: 3 }}>
+        <Stack spacing={4}>
+          <Typography id="job-status-heading" variant="h5" align="center">
             Job Application Status
           </Typography>
-        </Box>
-        <Box
-          mb={5}
-          role="img"
-          aria-labelledby="job-status-heading"
-          aria-label={`Job application status chart. ${statusSummary}`}
-        >
-          <PieChart
-            height={320}
-            colors={jobPalette}
-            series={[
-              {
-                data: chartData.map((item, index) => ({
-                  id: index,
-                  value: item.val,
-                  label: item.status,
-                })),
-                innerRadius: '60%',
-              },
-            ]}
-          />
-        </Box>
-        <Box
-          mb={4}
-          mt={2}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignContent: 'center',
-          }}
-        >
-          <Typography id="salary-overview-heading" sx={{ fontWeight: 600 }} variant="h4">
+          <Box
+            role="img"
+            aria-labelledby="job-status-heading"
+            aria-label={`Job application status chart. ${statusSummary}`}
+          >
+            <PieChart
+              height={320}
+              colors={[...JOB_STATUS_COLORS]}
+              series={[
+                {
+                  data: chartData.map((item, index) => ({
+                    id: index,
+                    value: item.val,
+                    label: item.status,
+                  })),
+                  innerRadius: '60%',
+                },
+              ]}
+            />
+          </Box>
+          <Typography id="salary-overview-heading" variant="h5" align="center">
             Salary Overview
           </Typography>
-        </Box>
-        <Box role="img" aria-labelledby="salary-overview-heading">
-          <SalaryStats />
-        </Box>
+          <Box role="img" aria-labelledby="salary-overview-heading">
+            <SalaryStats color={theme.palette.primary.main} />
+          </Box>
+        </Stack>
       </Paper>
     </Container>
   );

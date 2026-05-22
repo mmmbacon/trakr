@@ -31,15 +31,10 @@ const ModalConfirm = ({
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={onDecline} color="primary" variant="contained">
+      <Button onClick={onDecline} color="primary">
         Cancel
       </Button>
-      <Button
-        onClick={onConfirm}
-        variant="contained"
-        autoFocus
-        sx={{ backgroundColor: '#F94144', color: 'white' }}
-      >
+      <Button onClick={onConfirm} color="error" variant="contained" autoFocus>
         Delete
       </Button>
     </DialogActions>

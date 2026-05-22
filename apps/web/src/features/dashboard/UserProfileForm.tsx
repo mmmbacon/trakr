@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import {
   Alert,
-  Box,
   Button,
-  FormControl,
   Snackbar,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -67,71 +66,51 @@ export default function UserProfileForm({ user, onUpdate }: UserProfileFormProps
   };
 
   return (
-    <Box display="flex" flexDirection="column" flexGrow={1} p={2}>
+    <Stack spacing={2}>
       {error && (
-        <Alert severity="error" sx={{ marginBottom: '10px', width: '100%' }}>
+        <Alert severity="error">
           {error}
         </Alert>
       )}
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: '-5px',
-          marginBottom: '10px',
-        }}
-      >
+      <Typography variant="h6">
         Personal Information
       </Typography>
-      <FormControl>
-        <TextField
-          label="First Name"
-          value={first_name}
-          onChange={(event) => setFirstName(event.target.value)}
-          sx={{ marginBottom: '10px' }}
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          label="Last Name"
-          value={last_name}
-          onChange={(event) => setLastName(event.target.value)}
-          sx={{ marginBottom: '10px' }}
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          sx={{ marginBottom: '10px' }}
-        />
-      </FormControl>
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: '20px',
-          marginBottom: '10px',
-        }}
-      >
+      <TextField
+        label="First Name"
+        value={first_name}
+        onChange={(event) => setFirstName(event.target.value)}
+        fullWidth
+      />
+      <TextField
+        label="Last Name"
+        value={last_name}
+        onChange={(event) => setLastName(event.target.value)}
+        fullWidth
+      />
+      <TextField
+        label="Email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        fullWidth
+      />
+      <Typography variant="h6">
         Password
       </Typography>
       <PasswordField
         label="Password"
         value={password}
         onChange={setPassword}
-        sx={{ marginBottom: '10px' }}
       />
       <PasswordField
         label="Password Confirmation"
         value={password_confirmation}
         onChange={setPasswordConfirmation}
-        sx={{ marginBottom: '10px' }}
       />
       <Button
         variant="contained"
         color="secondary"
         onClick={() => { setModalOpen(true); }}
-        sx={{ marginTop: '25px', color: 'white' }}
+        sx={{ alignSelf: 'flex-start' }}
       >
         Confirm Changes
       </Button>
@@ -149,6 +128,6 @@ export default function UserProfileForm({ user, onUpdate }: UserProfileFormProps
           {snack}
         </Alert>
       </Snackbar>
-    </Box>
+    </Stack>
   );
 }

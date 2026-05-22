@@ -1,5 +1,7 @@
 import { format, isValid, parseISO } from 'date-fns';
-import { Box, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import type { User } from '../../types';
 
@@ -17,38 +19,32 @@ function formatDate(value: string) {
 }
 
 export default function UserProfileSidebar({ user, jobCount }: UserProfileSidebarProps) {
+  const initials = `${user.first_name?.[0] ?? ''}${user.last_name?.[0] ?? ''}`;
+
   return (
-    <Box display="flex" flexDirection="column" p={2}>
-      <Box
-        component="img"
-        src={`https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}&background=3b3b3b&color=fff&size=256`}
-        alt="user initials"
-        sx={{
-          width: '250px',
-          height: '250px',
-        }}
-      />
-      <Typography
-        variant="h4"
-        sx={{
-          marginTop: '20px',
-          marginBottom: '10px',
-        }}
-      >
+    <Stack spacing={2} alignItems={{ xs: 'center', md: 'flex-start' }}>
+      <Avatar sx={{ width: 160, height: 160, fontSize: 48 }}>
+        {initials}
+      </Avatar>
+      <Typography variant="h5">
         {`${user.first_name} ${user.last_name}`}
       </Typography>
-      <Typography variant="h5" sx={{ marginBottom: '10px', marginTop: 0 }}>
-        Active Since
-      </Typography>
-      <Typography variant="body1" sx={{ margin: 0 }}>
-        {formatDate(user.created_at ?? '')}
-      </Typography>
-      <Typography variant="h5" sx={{ marginBottom: '10px', marginTop: '10px' }}>
-        Total Number of Jobs
-      </Typography>
-      <Typography variant="body1" sx={{ margin: 0 }}>
-        {jobCount}
-      </Typography>
-    </Box>
+      <Stack spacing={0.5}>
+        <Typography variant="subtitle1">
+          Active Since
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {formatDate(user.created_at ?? '')}
+        </Typography>
+      </Stack>
+      <Stack spacing={0.5}>
+        <Typography variant="subtitle1">
+          Total Number of Jobs
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {jobCount}
+        </Typography>
+      </Stack>
+    </Stack>
   );
 }

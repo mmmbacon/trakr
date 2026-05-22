@@ -3,7 +3,6 @@ import {
   Alert,
   Dialog,
   DialogContent,
-  Grid,
 } from '@mui/material';
 
 import ModalConfirm from '../../../components/ModalConfirm';
@@ -50,48 +49,45 @@ export const JobsModal = ({
   };
 
   return (
-    <div>
-      <Grid container>
-        <Dialog
-          className="job-modal-background"
-          onClose={onClose}
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          aria-labelledby="customized-dialog-title"
-          open={open}
-          fullWidth
-          maxWidth="md"
-        >
-          <form onSubmit={(event) => event.preventDefault()}>
-            <DialogContent dividers sx={{ p: 2.5 }}>
-              {error && (
-                <Alert severity="error" sx={{ width: '100%', mb: 1.25 }}>
-                  {error}
-                </Alert>
-              )}
-              <JobFormHeader values={values} onFieldChange={setField} />
-              <JobFormEvents values={values} onFieldChange={setField} />
-              <JobFormContact values={values} onFieldChange={setField} />
-              <JobFormLinks values={values} onFieldChange={setField} />
-            </DialogContent>
-            <JobFormActions
-              isEditMode={isEditMode}
-              onCancel={onClose}
-              onSubmit={handleSubmit}
-              onReset={reset}
-              onDeleteClick={() => setConfirmModalOpen(true)}
-            />
-          </form>
-        </Dialog>
-      </Grid>
+    <>
+      <Dialog
+        onClose={onClose}
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+        fullWidth
+        maxWidth="md"
+      >
+        <form onSubmit={(event) => event.preventDefault()}>
+          <DialogContent dividers>
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+            <JobFormHeader values={values} onFieldChange={setField} />
+            <JobFormEvents values={values} onFieldChange={setField} />
+            <JobFormContact values={values} onFieldChange={setField} />
+            <JobFormLinks values={values} onFieldChange={setField} />
+          </DialogContent>
+          <JobFormActions
+            isEditMode={isEditMode}
+            onCancel={onClose}
+            onSubmit={handleSubmit}
+            onReset={reset}
+            onDeleteClick={() => setConfirmModalOpen(true)}
+          />
+        </form>
+      </Dialog>
       <ModalConfirm
         id="modal-confirm-delete"
         open={confirmModalOpen}
         onConfirm={onConfirmDelete}
         onDecline={() => setConfirmModalOpen(false)}
       />
-    </div>
+    </>
   );
 };
 
