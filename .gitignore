@@ -9,6 +9,8 @@ coverage/
 apps/web/coverage/
 build/
 apps/web/build/
+dist/
+apps/*/dist/
 
 # Rails runtime files
 apps/api/log/*
