@@ -1,8 +1,9 @@
 # Phase 0 — Planning & Design
 
-> **Status:** In progress  
+> **Status:** Complete  
+> **Completed:** 2026-05-22  
 > **Depends on:** —  
-> **Blocks:** Phase 1  
+> **Blocks:** [Phase 1](./phase-1-domain-pivot.md)  
 > **Goal:** Nail specs before code so the domain pivot doesn’t thrash.
 
 ## Objective
@@ -16,108 +17,88 @@ Produce enough design and technical specification that Phase 1 can execute witho
 | Deliverable | Document | Status |
 |-------------|----------|--------|
 | Master pivot outline | [pivot-outline.md](./pivot-outline.md) | Done |
-| Data model + ERD | [data-model.md](./data-model.md) | TODO |
-| Jobs → issues migration plan | [migration-from-jobs.md](./migration-from-jobs.md) | TODO |
-| MCP tool contract | [mcp-contract.md](./mcp-contract.md) | TODO |
-| Screen map + routes | [screen-map.md](./screen-map.md) | TODO |
-| Design system spec | [design-system.md](./design-system.md) | TODO |
-| Phase specs (this folder) | `phase-*.md` | In progress |
+| Locked decisions | [decisions.md](./decisions.md) | Done |
+| Data model + ERD | [data-model.md](./data-model.md) | Done |
+| Jobs → issues migration plan | [migration-from-jobs.md](./migration-from-jobs.md) | Done |
+| MCP tool contract | [mcp-contract.md](./mcp-contract.md) | Done |
+| Screen map + routes | [screen-map.md](./screen-map.md) | Done |
+| Design system spec | [design-system.md](./design-system.md) | Done |
+| Design tokens (code) | `apps/web/src/tokens/` | Done |
+| Phase specs | `phase-*.md` | Done |
 
 ---
 
 ## Tasks
 
-### 0.1 Resolve open questions
+### 0.1 Resolve open questions — Done
 
-Decisions needed before Phase 1 migrations:
+All decisions recorded in [decisions.md](./decisions.md) and [pivot-outline.md](./pivot-outline.md) §13.
 
-| Question | Recommendation | Decision |
-|----------|----------------|----------|
-| Keep name **Trakr**? | Yes for now; rebrand later if needed | TBD |
-| Workflow states | Per-project with global template seed | TBD |
-| Comments storage | Single `activities` table with `kind: comment` | TBD |
-| Issue numbers | Per-project sequence (`TRK-142`) | TBD |
-| MCP server location | `packages/mcp` (TypeScript) in monorepo | TBD |
-| Markdown editor v1 | Plain textarea + preview tab | TBD |
+| Question | Decision |
+|----------|----------|
+| Keep name **Trakr**? | Yes |
+| Workflow states | Per-project with global template seed |
+| Comments storage | Single `activities` table with `kind: comment` |
+| Issue numbers | Per-project sequence (`TRK-142`) |
+| MCP server location | `packages/mcp` (TypeScript) in monorepo |
+| Markdown editor v1 | Plain textarea + preview tab |
+| Agent run metadata | `activities.metadata.run_id` optional |
 
-Record final decisions in [data-model.md](./data-model.md) and [pivot-outline.md](./pivot-outline.md) §13.
+### 0.2 Data model spec — Done
 
-### 0.2 Data model spec
+See [data-model.md](./data-model.md): ERD, tables, API endpoints, TS types, Rails migration sketch, seed sketch.
 
-- Entity-relationship diagram (mermaid or vuerd export)
-- Table definitions with indexes and foreign keys
-- API resource shapes (JSON examples)
-- TypeScript types mirroring API responses
-- Seed data sketch for demo mode
+### 0.3 Migration strategy — Done
 
-See [data-model.md](./data-model.md).
+See [migration-from-jobs.md](./migration-from-jobs.md): new tables + rake copy + drop; single API cutover; file checklists.
 
-### 0.3 Migration strategy
+### 0.4 MCP contract — Done
 
-- Rename vs new tables (`jobs` → `issues`)
-- Data backfill rules for existing demo users
-- Rollback plan for Fly production (likely greenfield reseed in demo mode)
-- API versioning: cut over in one release vs parallel routes
+See [mcp-contract.md](./mcp-contract.md): v1 tools, auth, errors, guard matrix, Cursor session example.
 
-See [migration-from-jobs.md](./migration-from-jobs.md).
+### 0.5 Screen map & IA — Done
 
-### 0.4 MCP contract
+See [screen-map.md](./screen-map.md): routes, layout, components, ASCII wireframes, keyboard stub.
 
-- Tool list with input/output JSON schemas
-- Auth model (personal access token)
-- Error codes and agent-facing messages
-- Example Cursor session (triage + implement flow)
-- Transition guard matrix by agent profile
+### 0.6 Design system pass — Done
 
-See [mcp-contract.md](./mcp-contract.md).
+See [design-system.md](./design-system.md). Tokens added to:
 
-### 0.5 Screen map & IA
+- `apps/web/src/tokens/tokens.css` — semantic + workflow CSS variables
+- `apps/web/src/tokens/index.ts` — `workflowColors`, `getWorkflowColor`, typography/spacing exports
 
-- Route tree (`/projects/:key/board`, etc.)
-- Component ownership (feature folders)
-- Keyboard shortcut inventory (stub for Phase 5)
-- Wireframe descriptions for: board, issue panel, queue, list
+Legacy job kanban tokens retained until Phase 1 removes them.
 
-See [screen-map.md](./screen-map.md).
+### 0.7 Positioning — Done
 
-### 0.6 Design system pass
-
-- Token audit in `apps/web/src/tokens/`
-- Linear-like density targets (spacing, type scale, radii)
-- Component inventory: existing vs new vs deprecate
-- Color semantics for status, priority, agent badges
-
-See [design-system.md](./design-system.md).
-
-### 0.7 Positioning doc (optional)
-
-Short “what we are / what we are not” for portfolio copy:
-
-- **Are:** planning & agent coordination layer for solo devs
-- **Are not:** IDE, team Linear clone, chat wrapper
-
-Can live as a section in [pivot-outline.md](./pivot-outline.md) §3 or standalone.
+Added to [pivot-outline.md](./pivot-outline.md) §3.5: what we are / what we are not.
 
 ---
 
 ## Acceptance criteria
 
-- [ ] All open questions in pivot-outline §13 have recorded decisions
-- [ ] `data-model.md` is complete enough to write Rails migrations
-- [ ] `migration-from-jobs.md` lists ordered steps with file touch list
-- [ ] `mcp-contract.md` defines all Phase 4 v1 tools
-- [ ] `screen-map.md` covers MVP routes and major components
-- [ ] `design-system.md` defines tokens + new component names
-- [ ] Phase 1 doc has no TBD blockers
+- [x] All open questions in pivot-outline §13 have recorded decisions
+- [x] `data-model.md` is complete enough to write Rails migrations
+- [x] `migration-from-jobs.md` lists ordered steps with file touch list
+- [x] `mcp-contract.md` defines all Phase 4 v1 tools
+- [x] `screen-map.md` covers MVP routes and major components
+- [x] `design-system.md` defines tokens + new component names
+- [x] Phase 1 doc has no TBD blockers
 
 ---
 
 ## Out of scope
 
-- Implementation code
-- Wireframe PNGs (optional; ASCII/wire descriptions sufficient for MVP)
+- Implementation code (except design tokens)
+- Wireframe PNGs
 - User research / external validation
 - Rebrand or marketing site
+
+---
+
+## Next
+
+Start [Phase 1 — Domain Pivot](./phase-1-domain-pivot.md): migrations, API, Redux rename, remove job UI.
 
 ---
 

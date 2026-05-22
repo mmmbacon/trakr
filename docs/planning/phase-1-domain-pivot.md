@@ -13,9 +13,10 @@ Rename and reshape the backend and frontend domain layer from **jobs/events** to
 
 ## Prerequisites
 
-- [ ] [data-model.md](./data-model.md) signed off
-- [ ] [migration-from-jobs.md](./migration-from-jobs.md) step order agreed
-- [ ] Workflow default states defined (e.g. Backlog → Triage → Ready → In Progress → Done)
+- [x] [decisions.md](./decisions.md) locked
+- [x] [data-model.md](./data-model.md) signed off
+- [x] [migration-from-jobs.md](./migration-from-jobs.md) step order agreed
+- [x] Workflow default states defined: Backlog → Triage → Ready → In Progress → Done
 
 ---
 

@@ -65,10 +65,21 @@ Capture → Triage (agent) → You prioritize → Implement (agent) → You ship
 - **Audience:** Solo builders who use Cursor/agents daily on personal and portfolio projects
 - **Portfolio story:** Custom design system + Rails API + MCP that agents use to manage *your* backlog
 
-### 3.4 Naming (TBD)
+### 3.4 Naming
 
-Working concepts: keep **Trakr** (pivot in place), or explore **Lone**, **Relay**, **Lane**, **Pack**.  
+**Decision:** Keep **Trakr** for v1 (repo, demo, UI). Rebrand optional later.  
 Tagline options: *Lone wolf. Agent pack. One board.* / *Your backlog, coordinated.*
+
+### 3.5 What we are / what we are not
+
+| We are | We are not |
+|--------|------------|
+| Planning & agent coordination for solo devs | An IDE or editor replacement |
+| System of record for issues, state, and handoffs | A team Linear clone with invites and seats |
+| Keyboard-first issue tracker with owned design system | A chat wrapper or ephemeral thread UI |
+| MCP-native backlog agents can read and write | Autonomous “AI runs the company” |
+
+The IDE is where code gets written. **Trakr is where work gets coordinated** — between you and your agents.
 
 ---
 
@@ -292,7 +303,7 @@ Detailed specs: [README](./README.md#phases)
 
 | Phase | Doc | Status |
 |-------|-----|--------|
-| 0 — Planning & design | [phase-0-planning-design.md](./phase-0-planning-design.md) | In progress |
+| 0 — Planning & design | [phase-0-planning-design.md](./phase-0-planning-design.md) | Complete |
 | 1 — Domain pivot | [phase-1-domain-pivot.md](./phase-1-domain-pivot.md) | Not started |
 | 2 — Core UX | [phase-2-core-ux.md](./phase-2-core-ux.md) | Not started |
 | 3 — Agent coordination | [phase-3-agent-coordination.md](./phase-3-agent-coordination.md) | Not started |
@@ -353,15 +364,19 @@ Detailed specs: [README](./README.md#phases)
 
 ---
 
-## 13. Open Questions
+## 13. Resolved Decisions (Phase 0)
 
-- [ ] Keep name **Trakr** or rebrand?
-- [ ] Global workflow states vs per-project states in v1?
-- [ ] Comments as separate table vs `activities` with `type: comment`?
-- [ ] MCP server language: TypeScript (monorepo `packages/mcp`) vs Ruby?
-- [ ] Issue numbers: global vs per-project (`TRK-142`)?
-- [ ] Markdown editor: plain textarea v1 vs full editor?
-- [ ] Where does agent “run” metadata live (link to Cursor transcript)?
+All decisions locked in [decisions.md](./decisions.md).
+
+| Question | Decision |
+|----------|----------|
+| Product name | Keep **Trakr** |
+| Workflow states | Per-project, seeded from template |
+| Comments | `activities` with `kind: comment` |
+| MCP server | TypeScript in `packages/mcp` |
+| Issue numbers | Per-project (`TRK-142`) |
+| Markdown editor v1 | Textarea + preview tab |
+| Agent run metadata | Optional `run_id` in activity `metadata` |
 
 ---
 

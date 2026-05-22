@@ -5,12 +5,13 @@ Product and technical planning for Trakr pivot: **solo issue tracker with agent 
 ## Master doc
 
 - [pivot-outline.md](./pivot-outline.md) — Vision, scope, MVP, risks
+- [decisions.md](./decisions.md) — Locked Phase 0 ADRs
 
 ## Phases
 
 | Phase | Document | Summary |
 |-------|----------|---------|
-| 0 | [phase-0-planning-design.md](./phase-0-planning-design.md) | Specs, decisions, design tokens |
+| 0 | [phase-0-planning-design.md](./phase-0-planning-design.md) | **Complete** — specs, decisions, tokens |
 | 1 | [phase-1-domain-pivot.md](./phase-1-domain-pivot.md) | Jobs → issues, projects, API + Redux |
 | 2 | [phase-2-core-ux.md](./phase-2-core-ux.md) | Issue panel, DnD, list, activity UI |
 | 3 | [phase-3-agent-coordination.md](./phase-3-agent-coordination.md) | Agent profiles, claims, queue view |

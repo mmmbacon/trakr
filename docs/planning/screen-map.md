@@ -1,8 +1,8 @@
 # Screen Map & Routes
 
-> **Status:** Draft  
+> **Status:** Approved (Phase 0)  
 > **Phase:** 0 → implements Phase 1–3  
-> **Related:** [phase-2-core-ux.md](./phase-2-core-ux.md), [design-system.md](./design-system.md)
+> **Related:** [decisions.md](./decisions.md), [phase-2-core-ux.md](./phase-2-core-ux.md), [design-system.md](./design-system.md)
 
 ## Route tree
 
@@ -192,3 +192,50 @@ See [phase-5-polish-portfolio.md](./phase-5-polish-portfolio.md). Stub in UI:
 ## Auth-gated routes
 
 All `/dashboard/*` behind `PrivateRoute` (unchanged). Demo mode auto-login preserved.
+
+---
+
+## Wireframes (ASCII)
+
+### Board + issue panel (desktop)
+
+```text
+┌──────────┬────────────────────────────────────────────┬─────────────┐
+│ TRK ▾    │  Trakr / Board                    [⌘K] [@]│ TRK-42   [×]│
+│          ├────────────────────────────────────────────┤─────────────│
+│ Board    │ [+ Issue]                                  │ Fix scroll  │
+│ List     │ ┌─────────┬─────────┬──────────┬──────────┐ │ [In Prog ▾] │
+│ Queue    │ │ Backlog │ Triage  │ Ready    │ In Prog  │ │ Implementer │
+│          │ │ TRK-40  │ TRK-41  │ TRK-43   │ TRK-42 ◀─┼─│─────────────│
+│ Settings │ │         │         │          │          │ │ Description │
+│          │ └─────────┴─────────┴──────────┴──────────┘ │ Activity... │
+└──────────┴────────────────────────────────────────────┴─────────────┘
+  240px                         flex                      480px panel
+```
+
+### List view
+
+```text
+┌──────────┬──────────────────────────────────────────────────────────┐
+│ (nav)    │  [Search...]  [Status ▾]  [Priority ▾]                   │
+│          ├────────┬───────────────────────────────┬────────┬────────┤
+│          │ ID     │ Title                         │ Status │ Updated│
+│          │ TRK-42 │ Fix kanban scroll             │ In Prog│ 2h ago │
+│          │ TRK-41 │ MCP token settings UI         │ Triage │ 1d ago │
+└──────────┴────────┴───────────────────────────────┴────────┴────────┘
+```
+
+### Queue view (Phase 3)
+
+```text
+┌──────────┬──────────────────────────────────────────────────────────┐
+│ (nav)    │  Queue — TRK                                             │
+│          ├──────────────────────────────────────────────────────────┤
+│          │  Ready for agents (2)                                    │
+│          │    TRK-43  Add list view filters        [Implementer]    │
+│          │  In flight (1)                                           │
+│          │    TRK-42  Fix scroll        claimed by Implementer      │
+│          │  Blocked on you (1)                                      │
+│          │    TRK-41  Needs priority call                         │
+└──────────┴──────────────────────────────────────────────────────────┘
+```

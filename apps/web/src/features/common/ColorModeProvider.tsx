@@ -60,6 +60,7 @@ export default function ColorModeProvider({ children }: ColorModeProviderProps) 
   const theme = useMemo(() => createAppTheme(mode), [mode]);
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-color-mode', mode);
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', mode === 'dark' ? '#121212' : '#577590');

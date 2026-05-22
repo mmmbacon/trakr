@@ -1,8 +1,8 @@
 # Migration from Jobs
 
-> **Status:** Draft  
+> **Status:** Approved (Phase 0)  
 > **Phase:** 0 spec → Phase 1 execution  
-> **Related:** [data-model.md](./data-model.md), [phase-1-domain-pivot.md](./phase-1-domain-pivot.md)
+> **Related:** [decisions.md](./decisions.md), [data-model.md](./data-model.md), [phase-1-domain-pivot.md](./phase-1-domain-pivot.md)
 
 ## Strategy
 
@@ -12,7 +12,7 @@ Rationale: column semantics diverge heavily (company → project_id, events → 
 
 **Production (Fly demo):** `db:seed` after migrate is acceptable; document in deploy checklist.
 
----
+**API versioning (decision A-2):** Single cutover — no `/api/v2`, no parallel job routes after release.
 
 ## Migration order
 

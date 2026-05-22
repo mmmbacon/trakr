@@ -1,8 +1,8 @@
 # Design System
 
-> **Status:** Draft  
+> **Status:** Approved (Phase 0)  
 > **Phase:** 0 spec → Phase 2–5 implementation  
-> **Related:** [phase-2-core-ux.md](./phase-2-core-ux.md), `apps/web/src/tokens/`
+> **Related:** [decisions.md](./decisions.md), [phase-2-core-ux.md](./phase-2-core-ux.md), `apps/web/src/tokens/`
 
 ## Direction
 
@@ -19,7 +19,9 @@ Goals:
 
 ## Tokens
 
-Extend `apps/web/src/tokens/tokens.css`:
+Extend `apps/web/src/tokens/tokens.css` (Phase 0 complete):
+
+Implemented variables:
 
 ### Typography
 

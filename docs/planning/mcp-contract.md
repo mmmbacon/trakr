@@ -1,8 +1,8 @@
 # MCP Tool Contract
 
-> **Status:** Draft  
+> **Status:** Approved (Phase 0)  
 > **Phase:** 0 spec → Phase 4 implementation  
-> **Related:** [phase-4-mcp-v1.md](./phase-4-mcp-v1.md), [phase-3-agent-coordination.md](./phase-3-agent-coordination.md)
+> **Related:** [decisions.md](./decisions.md), [phase-4-mcp-v1.md](./phase-4-mcp-v1.md), [phase-3-agent-coordination.md](./phase-3-agent-coordination.md)
 
 ## Overview
 
