@@ -1,4 +1,4 @@
-import type { Job } from '../../types';
+import type { Issue } from '../../types';
 import { Box, Grid } from '../../components/ui';
 import DashboardColumn from './DashboardColumn';
 import KanbanActionBar from './KanbanActionBar';
@@ -6,24 +6,29 @@ import KanbanActionBar from './KanbanActionBar';
 interface KanbanColumnConfig {
   title: string;
   color: string;
-  items: Job[];
+  items: Issue[];
 }
 
 interface KanbanBoardProps {
   columns: KanbanColumnConfig[];
-  onAddJobClick: () => void;
+  onAddIssueClick: () => void;
+  projectName?: string;
 }
 
-export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps) {
+export default function KanbanBoard({
+  columns,
+  onAddIssueClick,
+  projectName,
+}: KanbanBoardProps) {
   return (
     <Box display="flex" flexDirection="column" height="100%">
-      <KanbanActionBar onAddJobClick={onAddJobClick} />
+      <KanbanActionBar onAddIssueClick={onAddIssueClick} projectName={projectName} />
       <Box flex={1} minHeight={0} p={2} overflow="auto">
         <Grid
           container
           id="dashboard-columns"
           component="section"
-          aria-label="Job application board"
+          aria-label="Issue board"
           spacing={2}
           wrap="nowrap"
           className="kanban-columns"

@@ -5,10 +5,14 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 
 interface KanbanActionBarProps {
-  onAddJobClick: () => void;
+  onAddIssueClick: () => void;
+  projectName?: string;
 }
 
-export default function KanbanActionBar({ onAddJobClick }: KanbanActionBarProps) {
+export default function KanbanActionBar({
+  onAddIssueClick,
+  projectName,
+}: KanbanActionBarProps) {
   return (
     <Paper
       square
@@ -22,13 +26,13 @@ export default function KanbanActionBar({ onAddJobClick }: KanbanActionBarProps)
     >
       <Box display="flex" alignItems="center" justifyContent="space-between" gap={2}>
         <Typography variant="h6" component="h1">
-          Job Board
+          {projectName ? `${projectName} Board` : 'Board'}
         </Typography>
         <Button
           disableElevation
           variant="outlined"
           startIcon={<AddIcon />}
-          onClick={onAddJobClick}
+          onClick={onAddIssueClick}
           sx={{
             bgcolor: 'background.paper',
             color: 'text.primary',
@@ -41,7 +45,7 @@ export default function KanbanActionBar({ onAddJobClick }: KanbanActionBarProps)
             },
           }}
         >
-          Add New Job
+          New Issue
         </Button>
       </Box>
     </Paper>

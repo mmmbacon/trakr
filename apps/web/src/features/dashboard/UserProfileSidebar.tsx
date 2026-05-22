@@ -6,7 +6,7 @@ import { buildAvatarUrl } from '../../utils/url';
 
 interface UserProfileSidebarProps {
   user: User;
-  jobCount: number;
+  issueCount: number;
 }
 
 function formatDate(value: string) {
@@ -17,7 +17,7 @@ function formatDate(value: string) {
   return format(date, 'MMM d, yyyy');
 }
 
-export default function UserProfileSidebar({ user, jobCount }: UserProfileSidebarProps) {
+export default function UserProfileSidebar({ user, issueCount }: UserProfileSidebarProps) {
   return (
     <Box className="profile-sidebar">
       <Box
@@ -36,10 +36,10 @@ export default function UserProfileSidebar({ user, jobCount }: UserProfileSideba
         {formatDate(user.created_at ?? '')}
       </Typography>
       <Typography variant="h5" marginBottom={1.25} marginTop={1.25}>
-        Total Number of Jobs
+        Total Issues
       </Typography>
       <Typography variant="body1">
-        {jobCount}
+        {issueCount}
       </Typography>
     </Box>
   );

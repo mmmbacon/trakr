@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { authSelector, updateUser } from '../auth/authSlice';
-import { jobsSelector } from './jobs/jobsSlice';
+import { issuesSelector } from '../issues/issuesSlice';
 import { Container, Paper } from '../../components/ui';
 import UserProfileForm from './UserProfileForm';
 import UserProfileSidebar from './UserProfileSidebar';
@@ -8,7 +8,7 @@ import UserProfileSidebar from './UserProfileSidebar';
 const UserProfile = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(authSelector);
-  const { jobs } = useAppSelector(jobsSelector);
+  const { issues } = useAppSelector(issuesSelector);
 
   if (!user) {
     return null;
@@ -33,7 +33,7 @@ const UserProfile = () => {
     <Container maxWidth="md" className="profile-container">
       <Paper className="profile-paper">
         <div className="profile-layout">
-          <UserProfileSidebar user={user} jobCount={jobs.length} />
+          <UserProfileSidebar user={user} issueCount={issues.length} />
           <UserProfileForm user={user} onUpdate={handleUpdate} />
         </div>
       </Paper>

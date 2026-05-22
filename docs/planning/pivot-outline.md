@@ -304,7 +304,7 @@ Detailed specs: [README](./README.md#phases)
 | Phase | Doc | Status |
 |-------|-----|--------|
 | 0 — Planning & design | [phase-0-planning-design.md](./phase-0-planning-design.md) | Complete |
-| 1 — Domain pivot | [phase-1-domain-pivot.md](./phase-1-domain-pivot.md) | Not started |
+| 1 — Domain pivot | [phase-1-domain-pivot.md](./phase-1-domain-pivot.md) | Complete |
 | 2 — Core UX | [phase-2-core-ux.md](./phase-2-core-ux.md) | Not started |
 | 3 — Agent coordination | [phase-3-agent-coordination.md](./phase-3-agent-coordination.md) | Not started |
 | 4 — MCP v1 | [phase-4-mcp-v1.md](./phase-4-mcp-v1.md) | Not started |

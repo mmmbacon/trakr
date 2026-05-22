@@ -12,7 +12,7 @@ export { default as Grid } from '../../adapters/mui/Grid';
 export { default as GrowTransition } from '../../adapters/mui/GrowTransition';
 export { default as Icon } from '../../adapters/mui/Icon';
 export { default as JobItemActionsMenu } from '../../adapters/mui/JobItemActionsMenu';
-export { default as JobItemCard } from '../../adapters/mui/JobItemCard';
+export { default as IssueItemCard } from '../../adapters/mui/IssueItemCard';
 export { default as KanbanActionBar } from '../../adapters/mui/KanbanActionBar';
 export { default as IconButton } from '../../adapters/mui/IconButton';
 export { default as LinkInputField } from '../../adapters/mui/LinkInputField';

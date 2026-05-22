@@ -15,9 +15,10 @@ interface AppHeaderUserData {
 interface AppHeaderProps {
   userdata?: AppHeaderUserData;
   onLogout: () => void;
+  projectName?: string;
 }
 
-export default function AppHeader({ userdata, onLogout }: AppHeaderProps) {
+export default function AppHeader({ userdata, onLogout, projectName }: AppHeaderProps) {
   return (
     <AppBar position="static" color="default" elevation={1}>
       <Toolbar>
@@ -39,6 +40,11 @@ export default function AppHeader({ userdata, onLogout }: AppHeaderProps) {
           <Typography variant="h6" component="span" color="inherit">
             trakr.
           </Typography>
+          {projectName ? (
+            <Typography variant="body2" component="span" color="text.secondary" sx={{ ml: 1 }}>
+              / {projectName}
+            </Typography>
+          ) : null}
         </Box>
 
         <Box flexGrow={1} />

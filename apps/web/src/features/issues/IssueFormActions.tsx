@@ -2,9 +2,9 @@ import {
   Box,
   Button,
   Icon,
-} from '../../../components/ui';
+} from '../../components/ui';
 
-interface JobFormActionsProps {
+interface IssueFormActionsProps {
   isEditMode: boolean;
   onCancel: () => void;
   onSubmit: () => void;
@@ -12,13 +12,13 @@ interface JobFormActionsProps {
   onDeleteClick: () => void;
 }
 
-export default function JobFormActions({
+export default function IssueFormActions({
   isEditMode,
   onCancel,
   onSubmit,
   onReset,
   onDeleteClick,
-}: JobFormActionsProps) {
+}: IssueFormActionsProps) {
   return (
     <Box className="form-actions">
       <Box>

@@ -8,11 +8,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AssessmentIcon from '@mui/icons-material/Assessment';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import EventIcon from '@mui/icons-material/Event';
 import PersonIcon from '@mui/icons-material/Person';
-import SearchIcon from '@mui/icons-material/Search';
+import SettingsIcon from '@mui/icons-material/Settings';
+
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  projectsSelector,
+  setActiveProjectKey,
+} from '../../features/projects/projectsSlice';
 
 export const SIDEBAR_WIDTH = 240;
 
@@ -40,34 +46,26 @@ function isNavItemActive(pathname: string, item: NavItem): boolean {
 
 export default function SideNav() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const { projects, activeProjectKey } = useAppSelector(projectsSelector);
 
   const navItems: NavItem[] = [
     {
-      label: 'Job Board',
+      label: 'Board',
       icon: <DashboardIcon />,
       to: '/dashboard',
       matchPath: '/dashboard',
       end: true,
     },
     {
-      label: 'Search Jobs',
-      icon: <SearchIcon />,
-      to: '/dashboard/search',
-    },
-    {
-      label: 'Statistics',
-      icon: <AssessmentIcon />,
-      to: '/dashboard/job_stats',
-    },
-    {
-      label: 'User Profile',
+      label: 'Profile',
       icon: <PersonIcon />,
       to: '/dashboard/user_profile',
     },
     {
-      label: 'Calendar',
-      icon: <EventIcon />,
-      onClick: () => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); },
+      label: 'Settings',
+      icon: <SettingsIcon />,
+      to: '/dashboard/user_profile',
     },
   ];
 
@@ -88,6 +86,23 @@ export default function SideNav() {
       }}
     >
       <Box display="flex" flexDirection="column" height="100%">
+        {projects.length > 0 ? (
+          <Box px={2} pt={2} pb={1}>
+            <Select
+              fullWidth
+              size="small"
+              value={activeProjectKey ?? ''}
+              onChange={(event) => dispatch(setActiveProjectKey(event.target.value))}
+              aria-label="Project"
+            >
+              {projects.map((project) => (
+                <MenuItem key={project.id} value={project.key}>
+                  {project.key} — {project.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
+        ) : null}
         <List component="nav" sx={{ flexGrow: 1, px: 1, pt: 1 }}>
           {navItems.map((item) => {
             const selected = isNavItemActive(location.pathname, item);

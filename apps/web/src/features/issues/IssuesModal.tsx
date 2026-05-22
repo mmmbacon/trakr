@@ -1,30 +1,30 @@
 import { useState } from 'react';
 
-import ModalConfirm from '../../../components/ModalConfirm';
-import type { Job } from '../../../types';
-import { Alert, Grid, Modal, ModalContent } from '../../../components/ui';
-import JobFormActions from './JobFormActions';
-import JobFormContact from './JobFormContact';
-import JobFormEvents from './JobFormEvents';
-import JobFormHeader from './JobFormHeader';
-import JobFormLinks from './JobFormLinks';
-import { useJobForm } from './useJobForm';
+import ModalConfirm from '../../components/ModalConfirm';
+import type { Issue } from '../../types';
+import { Alert, Grid, Modal, ModalContent } from '../../components/ui';
+import { useAppSelector } from '../../app/hooks';
+import { projectsSelector } from '../projects/projectsSlice';
+import IssueFormActions from './IssueFormActions';
+import IssueFormFields from './IssueFormFields';
+import { useIssueForm } from './useIssueForm';
 
-export interface JobsModalProps {
+export interface IssuesModalProps {
   open?: boolean;
   onClose: () => void;
-  job?: Job;
+  issue?: Issue;
   mode?: 'create' | 'edit';
 }
 
-export const JobsModal = ({
+export const IssuesModal = ({
   onClose,
   open = false,
-  job,
-  mode = job ? 'edit' : 'create',
-}: JobsModalProps) => {
+  issue,
+  mode = issue ? 'edit' : 'create',
+}: IssuesModalProps) => {
   const isEditMode = mode === 'edit';
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const { workflowStates } = useAppSelector(projectsSelector);
   const {
     values,
     setField,
@@ -32,8 +32,8 @@ export const JobsModal = ({
     reset,
     handleSubmit,
     handleDelete,
-  } = useJobForm({
-    job,
+  } = useIssueForm({
+    issue,
     open,
     isEditMode,
     onClose,
@@ -53,7 +53,7 @@ export const JobsModal = ({
           onClick={(event) => {
             event.stopPropagation();
           }}
-          aria-labelledby="customized-dialog-title"
+          aria-labelledby="issue-dialog-title"
           open={open}
           fullWidth
           maxWidth="md"
@@ -65,12 +65,13 @@ export const JobsModal = ({
                   {error}
                 </Alert>
               )}
-              <JobFormHeader values={values} onFieldChange={setField} />
-              <JobFormEvents values={values} onFieldChange={setField} />
-              <JobFormContact values={values} onFieldChange={setField} />
-              <JobFormLinks values={values} onFieldChange={setField} />
+              <IssueFormFields
+                values={values}
+                workflowStates={workflowStates}
+                onFieldChange={setField}
+              />
             </ModalContent>
-            <JobFormActions
+            <IssueFormActions
               isEditMode={isEditMode}
               onCancel={onClose}
               onSubmit={handleSubmit}
@@ -81,7 +82,6 @@ export const JobsModal = ({
         </Modal>
       </Grid>
       <ModalConfirm
-        id="modal-confirm-delete"
         open={confirmModalOpen}
         onConfirm={onConfirmDelete}
         onDecline={() => setConfirmModalOpen(false)}
@@ -90,4 +90,4 @@ export const JobsModal = ({
   );
 };
 
-export default JobsModal;
+export default IssuesModal;

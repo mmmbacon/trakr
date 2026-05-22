@@ -1,12 +1,12 @@
-import type { Job } from '../../types';
-import JobItem from '../../components/JobItem';
+import type { Issue } from '../../types';
+import IssueItem from '../../components/IssueItem';
 import { Box } from '../../components/ui';
 import DashboardColumnHeading from './DashboardColumnHeading';
 
 export interface DashboardColumnProps {
   title?: string;
   color?: string;
-  items?: Job[];
+  items?: Issue[];
 }
 
 const DashboardColumn = ({
@@ -18,7 +18,7 @@ const DashboardColumn = ({
     <DashboardColumnHeading title={title} color={color} count={items.length} />
     <Box display="flex" flexDirection="column" gap={1}>
       {items.map((item) => (
-        <JobItem key={item.id} job={item} />
+        <IssueItem key={item.id} issue={item} />
       ))}
     </Box>
   </Box>

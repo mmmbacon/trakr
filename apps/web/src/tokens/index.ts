@@ -25,12 +25,13 @@ export const semanticColors = {
   agent: 'var(--color-agent)',
 } as const;
 
+/** Hex values for MUI (alpha(), palette). CSS vars live in tokens.css for stylesheets. */
 export const workflowColors = {
-  backlog: 'var(--workflow-backlog)',
-  triage: 'var(--workflow-triage)',
-  ready: 'var(--workflow-ready)',
-  inProgress: 'var(--workflow-in-progress)',
-  done: 'var(--workflow-done)',
+  backlog: '#a1a1aa',
+  triage: '#eab308',
+  ready: '#3b82f6',
+  inProgress: '#8b5cf6',
+  done: '#22c55e',
 } as const;
 
 const workflowSlugToColorKey = {

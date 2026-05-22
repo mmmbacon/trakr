@@ -2,25 +2,23 @@ import { useState } from 'react';
 
 import { useAppDispatch } from '../app/hooks';
 import ModalConfirm from './ModalConfirm';
-import JobItemCard from './JobItemCard';
-import { useJobItemState } from './useJobItemState';
-import { JobsModal } from '../features/dashboard/jobs/JobsModal';
-import { deleteJob } from '../features/dashboard/jobs/jobsSlice';
+import IssueItemCard from './IssueItemCard';
+import { IssuesModal } from '../features/issues/IssuesModal';
+import { deleteIssue } from '../features/issues/issuesSlice';
 import { Paper } from './ui';
-import type { Job } from '../types';
+import type { Issue } from '../types';
 
-export interface JobItemProps {
-  job: Job;
+export interface IssueItemProps {
+  issue: Issue;
 }
 
-const JobItem = ({ job }: JobItemProps) => {
+const IssueItem = ({ issue }: IssueItemProps) => {
   const dispatch = useAppDispatch();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const { logo, eventExpired } = useJobItemState(job);
 
   const handleConfirmDelete = () => {
-    dispatch(deleteJob({ jobId: job.id }));
+    dispatch(deleteIssue({ issueId: issue.id }));
     setModalOpen(false);
   };
 
@@ -29,19 +27,17 @@ const JobItem = ({ job }: JobItemProps) => {
       component="article"
       variant="outlined"
       elevation={0}
-      aria-label={`${job.company}, ${job.title}, ${job.location}`}
+      aria-label={`${issue.identifier}, ${issue.title}`}
     >
-      <JobItemCard
-        job={job}
-        logo={logo}
-        eventExpired={eventExpired}
+      <IssueItemCard
+        issue={issue}
         onEdit={() => setEditModalOpen(true)}
         onDelete={() => setModalOpen(true)}
       />
-      <JobsModal
+      <IssuesModal
         open={editModalOpen}
         onClose={() => setEditModalOpen(false)}
-        job={job}
+        issue={issue}
         mode="edit"
       />
       <ModalConfirm
@@ -53,4 +49,4 @@ const JobItem = ({ job }: JobItemProps) => {
   );
 };
 
-export default JobItem;
+export default IssueItem;

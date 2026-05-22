@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/mmmbacon/trakr/actions/workflows/ci.yml/badge.svg)](https://github.com/mmmbacon/trakr/actions/workflows/ci.yml)
 
-Trakr is a full-stack job application tracker. This repository is a monorepo with a React frontend, a Rails API, and deployment config for Vercel + Fly.io.
+Trakr is a solo issue tracker with agent coordination (pivot in progress). Monorepo: React frontend, Rails API, Vercel + Fly.io deploy.
 
 **Live app:** [trakr-lemon.vercel.app](https://trakr-lemon.vercel.app/login)
 
@@ -165,7 +165,7 @@ Use `.env.example` as the source of truth.
 **Smoke test**
 
 1. Open the Vercel URL — demo banner should appear when `VITE_DEMO_MODE=true`
-2. Dashboard loads sample jobs
+2. Dashboard loads sample projects and issues
 3. API calls succeed via same-origin `/api` proxy
 
 ### API: Fly.io + Fly Postgres

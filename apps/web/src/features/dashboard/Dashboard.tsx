@@ -1,27 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 
 import AppHeader from '../common/AppHeader';
-import Search from './Search';
 import UserProfile from './UserProfile';
-import JobStats from './JobStats';
 import SideBar from '../common/SideBar';
 import KanbanBoard from './KanbanBoard';
-import { getKanbanColumns } from '../../theme';
-import { JobsModal } from './jobs/JobsModal';
-import {
-  jobsSelector,
-  fetchJobs,
-  selectInterestedJobs,
-  selectAppliedJobs,
-  selectInterviewingJobs,
-  selectOfferJobs,
-  selectRejectedJobs,
-} from './jobs/jobsSlice';
-import { useJobStatusSnackbar } from './jobs/useJobStatusSnackbar';
+import { IssuesModal } from '../issues/IssuesModal';
+import { fetchIssues, issuesSelector } from '../issues/issuesSlice';
+import { useIssueStatusSnackbar } from '../issues/useIssueStatusSnackbar';
 import { authSelector, logout } from '../auth/authSlice';
 import isDemoMode from '../../config';
-import JobResources from './Drawer';
+import {
+  fetchProjects,
+  fetchWorkflowStates,
+  projectsSelector,
+  selectActiveProject,
+} from '../projects/projectsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   Alert,
@@ -29,49 +23,57 @@ import {
   LoadingOverlay,
   Paper,
   Snackbar,
-  useTheme,
 } from '../../components/ui';
+import { getKanbanColumnsFromStates } from '../board/kanbanColumns';
 
 const Dashboard = () => {
-  const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const kanbanColumns = getKanbanColumns(theme);
   const { user } = useAppSelector(authSelector);
-  const { status } = useAppSelector(jobsSelector);
-  const interestedJobs = useAppSelector(selectInterestedJobs);
-  const appliedJobs = useAppSelector(selectAppliedJobs);
-  const interviewingJobs = useAppSelector(selectInterviewingJobs);
-  const offerJobs = useAppSelector(selectOfferJobs);
-  const rejectedJobs = useAppSelector(selectRejectedJobs);
-  const { snack, handleSnackClose } = useJobStatusSnackbar();
-  const [addJobOpen, setAddJobOpen] = useState(false);
+  const { status: projectsStatus, workflowStates, activeProjectKey } =
+    useAppSelector(projectsSelector);
+  const { status: issuesStatus, issues } = useAppSelector(issuesSelector);
+  const activeProject = useAppSelector(selectActiveProject);
+  const { snack, handleSnackClose } = useIssueStatusSnackbar();
+  const [addIssueOpen, setAddIssueOpen] = useState(false);
 
-  const jobColumns = [
-    interestedJobs,
-    appliedJobs,
-    interviewingJobs,
-    offerJobs,
-    rejectedJobs,
-  ];
+  const isLoading =
+    projectsStatus === 'loading' ||
+    (issuesStatus === 'loading' && !activeProject);
 
   useEffect(() => {
-    dispatch(fetchJobs());
+    dispatch(fetchProjects());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (activeProjectKey) {
+      dispatch(fetchWorkflowStates(activeProjectKey));
+      dispatch(fetchIssues(activeProjectKey));
+    }
+  }, [dispatch, activeProjectKey]);
 
   const handleLogOut = async () => {
     await dispatch(logout());
     navigate('/login');
   };
 
-  if (status === 'loading') {
+  const kanbanColumns = getKanbanColumnsFromStates(workflowStates).map((column) => ({
+    ...column,
+    items: issues.filter((issue) => issue.workflow_state.id === column.stateId),
+  }));
+
+  if (isLoading) {
     return <LoadingOverlay open />;
   }
 
   return (
     <>
       <Box display="flex" flexDirection="column" height="100vh" overflow="hidden">
-        <AppHeader userdata={user ?? undefined} onLogout={handleLogOut} />
+        <AppHeader
+          userdata={user ?? undefined}
+          onLogout={handleLogOut}
+          projectName={activeProject?.name}
+        />
 
         <Box display="flex" flex={1} minHeight={0} overflow="hidden">
           <SideBar />
@@ -88,22 +90,21 @@ const Dashboard = () => {
               <Route
                 index
                 element={(
-                  status === 'failed' ? (
+                  projectsStatus === 'failed' || issuesStatus === 'failed' ? (
                     <Box p={2}>Something went wrong</Box>
-                  ) : (
+                  ) : activeProject ? (
                     <KanbanBoard
-                      columns={kanbanColumns.map((column, index) => ({
-                        ...column,
-                        items: jobColumns[index] ?? [],
-                      }))}
-                      onAddJobClick={() => setAddJobOpen(true)}
+                      columns={kanbanColumns}
+                      onAddIssueClick={() => setAddIssueOpen(true)}
+                      projectName={activeProject.name}
                     />
+                  ) : (
+                    <Box p={2}>No projects yet.</Box>
                   )
                 )}
               />
-              <Route path="search" element={<Search />} />
               <Route path="user_profile" element={<UserProfile />} />
-              <Route path="job_stats" element={<JobStats />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </Box>
         </Box>
@@ -112,13 +113,12 @@ const Dashboard = () => {
         <Box position="fixed" className="demo-mode-banner">
           <Paper elevation={6}>
             <Alert severity="info">
-              Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
+              Portfolio demo — sample issues and projects. Changes persist in your session.
             </Alert>
           </Paper>
         </Box>
       )}
-      <JobsModal open={addJobOpen} onClose={() => setAddJobOpen(false)} mode="create" />
-      <JobResources />
+      <IssuesModal open={addIssueOpen} onClose={() => setAddIssueOpen(false)} mode="create" />
       <Snackbar open={!!snack} autoHideDuration={6000} onClose={handleSnackClose}>
         <Alert onClose={handleSnackClose} severity="success">
           {snack}

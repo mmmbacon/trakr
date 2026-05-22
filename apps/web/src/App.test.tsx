@@ -5,8 +5,9 @@ import { describe, expect, it } from 'vitest';
 
 import App from './App';
 import authReducer from './features/auth/authSlice';
-import jobsReducer from './features/dashboard/jobs/jobsSlice';
-import type { AuthState, JobsState } from './types';
+import projectsReducer from './features/projects/projectsSlice';
+import issuesReducer from './features/issues/issuesSlice';
+import type { AuthState, IssuesState, ProjectsState } from './types';
 
 const idleAuthState: AuthState = {
   user: null,
@@ -16,23 +17,33 @@ const idleAuthState: AuthState = {
   updateStatus: 'idle',
 };
 
-const idleJobsState: JobsState = {
-  jobs: [],
+const idleProjectsState: ProjectsState = {
+  projects: [],
+  activeProjectKey: null,
+  workflowStates: [],
   status: 'idle',
-  addJobStatus: 'idle',
-  editJobStatus: 'idle',
-  deleteJobStatus: 'idle',
+  workflowStatus: 'idle',
+};
+
+const idleIssuesState: IssuesState = {
+  issues: [],
+  status: 'idle',
+  addIssueStatus: 'idle',
+  editIssueStatus: 'idle',
+  deleteIssueStatus: 'idle',
 };
 
 function renderApp() {
   const store = configureStore({
     reducer: {
       auth: authReducer,
-      jobs: jobsReducer,
+      projects: projectsReducer,
+      issues: issuesReducer,
     },
     preloadedState: {
       auth: idleAuthState,
-      jobs: idleJobsState,
+      projects: idleProjectsState,
+      issues: idleIssuesState,
     },
   });
 

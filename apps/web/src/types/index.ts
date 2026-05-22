@@ -1,5 +1,7 @@
 export type AsyncStatus = 'idle' | 'loading' | 'failed' | 'succeeded';
 
+export type Priority = 'none' | 'low' | 'medium' | 'high' | 'urgent';
+
 export interface User {
   id: number;
   first_name: string;
@@ -8,33 +10,52 @@ export interface User {
   created_at?: string;
 }
 
-export interface JobEvent {
-  id?: number;
-  job_id?: number;
-  title: string;
-  details: string;
-  date: string;
-  location: string;
-  expired?: boolean;
+export interface Project {
+  id: number;
+  key: string;
+  name: string;
+  color: string;
+  description?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
-export interface Job {
+export interface WorkflowState {
   id: number;
-  company: string;
+  name: string;
+  slug: string;
+  position: number;
+  category: 'backlog' | 'active' | 'done';
+}
+
+export interface ActivityActor {
+  type: 'human' | 'agent' | 'system';
+  id: number | null;
+  name: string;
+}
+
+export interface Activity {
+  id: number;
+  kind: string;
+  body: string | null;
+  actor: ActivityActor;
+  metadata: Record<string, unknown>;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface Issue {
+  id: number;
+  number: number;
+  identifier: string;
   title: string;
-  details: string;
-  location: string;
-  salary: number | null;
-  status: number;
-  url: string;
-  contact_name: string;
-  contact_phone: string;
-  contact_email: string;
-  contact_socialmedia: string;
-  resume_url: string;
-  coverletter_url: string;
-  extra_url: string;
-  events: JobEvent[];
+  description: string;
+  priority: Priority;
+  project: Project;
+  workflow_state: WorkflowState;
+  activities?: Activity[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface AuthSessionResponse {
@@ -66,9 +87,18 @@ export interface UpdateUserPayload {
   password_confirmation: string;
 }
 
-export interface JobPayload {
-  job: Partial<Job> & Pick<Job, 'company' | 'title' | 'status'>;
-  event?: Partial<JobEvent>;
+export interface IssuePayload {
+  issue: {
+    title: string;
+    description?: string;
+    priority?: Priority;
+    workflow_state_id?: number;
+    workflow_slug?: string;
+  };
+  activity?: {
+    body: string;
+    kind?: string;
+  };
 }
 
 export interface AuthState {
@@ -79,10 +109,18 @@ export interface AuthState {
   updateStatus: AsyncStatus;
 }
 
-export interface JobsState {
-  jobs: Job[];
+export interface ProjectsState {
+  projects: Project[];
+  activeProjectKey: string | null;
+  workflowStates: WorkflowState[];
   status: AsyncStatus;
-  addJobStatus: AsyncStatus;
-  editJobStatus: AsyncStatus;
-  deleteJobStatus: AsyncStatus;
+  workflowStatus: AsyncStatus;
+}
+
+export interface IssuesState {
+  issues: Issue[];
+  status: AsyncStatus;
+  addIssueStatus: AsyncStatus;
+  editIssueStatus: AsyncStatus;
+  deleteIssueStatus: AsyncStatus;
 }

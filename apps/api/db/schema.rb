@@ -10,42 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_01_172920) do
+ActiveRecord::Schema.define(version: 2026_05_22_120000) do
 
-  # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "events", force: :cascade do |t|
-    t.string "title", null: false
-    t.date "date", null: false
-    t.string "location"
-    t.text "details"
-    t.boolean "expired"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "job_id"
-    t.index ["job_id"], name: "index_events_on_job_id"
+  create_table "activities", force: :cascade do |t|
+    t.bigint "issue_id", null: false
+    t.string "kind", null: false
+    t.string "actor_type", default: "system", null: false
+    t.bigint "actor_id"
+    t.text "body"
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id", "created_at"], name: "index_activities_on_issue_id_and_created_at"
+    t.index ["issue_id"], name: "index_activities_on_issue_id"
   end
 
-  create_table "jobs", force: :cascade do |t|
+  create_table "issues", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "workflow_state_id", null: false
+    t.integer "number", null: false
     t.string "title", null: false
-    t.string "company", null: false
-    t.integer "status", null: false
-    t.integer "salary"
-    t.string "url"
-    t.string "location"
-    t.text "details"
-    t.string "contact_name"
-    t.string "contact_email"
-    t.string "contact_phone"
-    t.string "contact_socialmedia"
-    t.string "resume_url"
-    t.string "coverletter_url"
-    t.string "extra_url"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_jobs_on_user_id"
+    t.text "description"
+    t.string "priority", default: "none", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "number"], name: "index_issues_on_project_id_and_number", unique: true
+    t.index ["project_id"], name: "index_issues_on_project_id"
+    t.index ["user_id"], name: "index_issues_on_user_id"
+    t.index ["workflow_state_id"], name: "index_issues_on_workflow_state_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.string "key", null: false
+    t.string "color", default: "#5E6AD2", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "key"], name: "index_projects_on_user_id_and_key", unique: true
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,11 +60,27 @@ ActiveRecord::Schema.define(version: 2021_07_01_172920) do
     t.string "last_name", null: false
     t.string "email", null: false
     t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "middlename"
   end
 
-  add_foreign_key "events", "jobs"
-  add_foreign_key "jobs", "users"
+  create_table "workflow_states", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.integer "position", default: 0, null: false
+    t.string "category", default: "backlog", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "slug"], name: "index_workflow_states_on_project_id_and_slug", unique: true
+    t.index ["project_id"], name: "index_workflow_states_on_project_id"
+  end
+
+  add_foreign_key "activities", "issues"
+  add_foreign_key "issues", "projects"
+  add_foreign_key "issues", "users"
+  add_foreign_key "issues", "workflow_states"
+  add_foreign_key "projects", "users"
+  add_foreign_key "workflow_states", "projects"
 end
