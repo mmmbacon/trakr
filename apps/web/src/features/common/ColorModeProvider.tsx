@@ -24,9 +24,13 @@ function getInitialMode(): PaletteMode {
     // localStorage may be unavailable
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
+  if (typeof window.matchMedia === 'function') {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+
+  return 'light';
 }
 
 interface ColorModeProviderProps {
