@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently -n web,api -c blue,green \"npm run dev:web\" \"npm run dev:api\"",
-    "dev:web": "npm start --prefix apps/web",
+    "dev:web": "npm run dev --prefix apps/web",
     "dev:api": "cd apps/api && bundle exec rails server",
     "db:up": "docker compose up -d db",
     "db:setup": "docker compose up -d db && cd apps/api && bundle exec rails db:create db:schema:load db:seed",
@@ -17,8 +17,5 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
-  },
-  "dependencies": {
-    "vue-router": "^5.0.7"
   }
 }

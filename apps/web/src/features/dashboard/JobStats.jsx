@@ -46,13 +46,9 @@ const JobStats = () => {
     <Container
       maxWidth="md"
       style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '35px',
-        marginBottom: '35px',
+        width: '100%',
+        paddingTop: '25px',
+        paddingBottom: '25px',
       }}
     >
       <Paper style={{ width: '100%', padding: '25px' }}>

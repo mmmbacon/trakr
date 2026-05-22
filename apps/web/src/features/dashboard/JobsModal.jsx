@@ -113,7 +113,7 @@ export const JobsModal = (props) => {
   const [coverletter_url, setCoverletter_url] = useState(jobCoverletter_url || '');
   const [extra_url, setExtra_url] = useState(jobExtra_url || '');
   const [error, setError] = useState('');
-  const [logo, setLogo] = useState('../../img/Logo2.png');
+  const [logo, setLogo] = useState('/img/Logo2.png');
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   function reset() {
@@ -136,7 +136,7 @@ export const JobsModal = (props) => {
     setResume_url('');
     setCoverletter_url('');
     setExtra_url('');
-    setLogo('../../img/Logo2.png');
+    setLogo('/img/Logo2.png');
     setError('');
   }
 
@@ -240,17 +240,34 @@ export const JobsModal = (props) => {
     }
   }, [selectedDate]);
 
-  useEffect(async () => {
-    if (company.length > 0) {
+  useEffect(() => {
+    if (company.length === 0) {
+      return undefined;
+    }
+
+    let cancelled = false;
+
+    async function fetchCompanyLogo() {
       try {
         const result = await axios.get(
-          `https://autocomplete.clearbit.com/v1/companies/suggest?query=${company}`,
+          'https://autocomplete.clearbit.com/v1/companies/suggest',
+          { params: { query: company } },
         );
-        setLogo(result.data[0].logo);
+        if (!cancelled && result.data[0]?.logo) {
+          setLogo(result.data[0].logo);
+        }
       } catch (err) {
-        setLogo('../../img/Logo2.png');
+        if (!cancelled) {
+          setLogo('/img/Logo2.png');
+        }
       }
     }
+
+    fetchCompanyLogo();
+
+    return () => {
+      cancelled = true;
+    };
   }, [company]);
 
   const calendarEvent = {

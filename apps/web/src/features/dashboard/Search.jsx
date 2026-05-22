@@ -71,9 +71,8 @@ const Search = () => {
     <Container
       maxWidth="md"
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        paddingTop: '25px',
+        width: '100%',
+        padding: '25px 25px 0',
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'row' }}>
