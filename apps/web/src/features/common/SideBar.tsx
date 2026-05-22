@@ -97,7 +97,7 @@ const SideBar = ({
             <Link to="/dashboard">
               <Box
                 component="img"
-                src="../../img/Logo2-sm.png"
+                src="/img/Logo2-sm.png"
                 alt="logo"
                 width="45px"
                 sx={{ p: '10px', mt: '5px' }}

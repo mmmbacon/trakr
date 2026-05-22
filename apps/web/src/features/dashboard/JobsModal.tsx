@@ -39,7 +39,7 @@ import { authSelector } from '../auth/authSlice';
 import { addJob, editJob, deleteJob } from './jobs/jobsSlice';
 import type { JobEvent, JobPayload } from '../../types';
 
-const DEFAULT_LOGO = '../../img/Logo2.png';
+const DEFAULT_LOGO = '/img/Logo2.png';
 
 interface ClearbitSuggestion {
   logo?: string;

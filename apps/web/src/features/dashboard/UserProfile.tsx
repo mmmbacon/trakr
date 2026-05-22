@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { format, isValid, parseISO } from 'date-fns';
 import {
   Alert,
   Box,
@@ -78,11 +79,11 @@ const UserProfile = () => {
   };
 
   const formatDate = (string: string) => {
-    const date = new Date(string);
-    if (Number.isNaN(date.getTime())) {
+    const date = parseISO(string);
+    if (!isValid(date)) {
       return '';
     }
-    return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+    return format(date, 'MMM d, yyyy');
   };
 
   return (

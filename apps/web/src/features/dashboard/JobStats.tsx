@@ -30,9 +30,13 @@ const JobStats = () => {
     { status: 'Rejected Jobs', val: rejectedJobs.length },
   ];
 
+  const statusSummary = chartData
+    .map((item) => `${item.status}: ${item.val}`)
+    .join(', ');
+
   return (
     <Container
-      maxWidth="md"
+      maxWidth="lg"
       sx={{
         width: '100%',
         py: '25px',
@@ -47,11 +51,16 @@ const JobStats = () => {
             alignContent: 'center',
           }}
         >
-          <Typography sx={{ fontWeight: 600 }} variant="h4">
+          <Typography id="job-status-heading" sx={{ fontWeight: 600 }} variant="h4">
             Job Application Status
           </Typography>
         </Box>
-        <Box mb={5}>
+        <Box
+          mb={5}
+          role="img"
+          aria-labelledby="job-status-heading"
+          aria-label={`Job application status chart. ${statusSummary}`}
+        >
           <PieChart
             height={320}
             colors={jobPalette}
@@ -76,11 +85,11 @@ const JobStats = () => {
             alignContent: 'center',
           }}
         >
-          <Typography sx={{ fontWeight: 600 }} variant="h4">
+          <Typography id="salary-overview-heading" sx={{ fontWeight: 600 }} variant="h4">
             Salary Overview
           </Typography>
         </Box>
-        <Box>
+        <Box role="img" aria-labelledby="salary-overview-heading">
           <SalaryStats />
         </Box>
       </Paper>

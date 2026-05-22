@@ -37,7 +37,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard/*" element={<Dashboard />} />

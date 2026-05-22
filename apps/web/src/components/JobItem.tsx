@@ -4,6 +4,7 @@ import {
   Box,
   IconButton,
   Paper,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -14,6 +15,8 @@ import { useAppDispatch } from '../app/hooks';
 import ModalConfirm from './ModalConfirm';
 import { JobsModal } from '../features/dashboard/JobsModal';
 import { deleteJob } from '../features/dashboard/jobs/jobsSlice';
+
+const FALLBACK_LOGO = '/img/Logo2.png';
 
 export interface JobItemProps {
   id?: number;
@@ -66,7 +69,7 @@ const JobItem = ({
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [eventExpired, setEventExpired] = useState(false);
-  const [logo, setLogo] = useState('');
+  const [logo, setLogo] = useState(FALLBACK_LOGO);
 
   const openModal = () => {
     setEditModalOpen(true);
@@ -98,14 +101,18 @@ const JobItem = ({
   };
 
   useEffect(() => {
-    const expirydate = new Date(event_date);
-    const currentdate = Date.now();
-
-    setEventExpired(false);
-
-    if (expirydate.getTime() < currentdate) {
-      setEventExpired(true);
+    if (!event_date) {
+      setEventExpired(false);
+      return;
     }
+
+    const expirydate = new Date(event_date);
+    if (Number.isNaN(expirydate.getTime())) {
+      setEventExpired(false);
+      return;
+    }
+
+    setEventExpired(expirydate.getTime() < Date.now());
   }, [event_date]);
 
   useEffect(() => {
@@ -117,20 +124,30 @@ const JobItem = ({
 
     async function fetchCompanyLogo() {
       try {
-        const result = await axios.get<Array<{ logo?: string }>>(
+        const result = await axios.get<Array<{ logo?: string; domain?: string }>>(
           'https://autocomplete.clearbit.com/v1/companies/suggest',
           { params: { query: company } },
         );
-        if (!cancelled && result.data[0]?.logo) {
-          setLogo(result.data[0].logo);
+        if (cancelled) {
+          return;
+        }
+
+        const match = result.data[0];
+        if (match?.logo) {
+          setLogo(match.logo);
+        } else if (match?.domain) {
+          setLogo(`https://logo.clearbit.com/${match.domain}`);
+        } else {
+          setLogo(FALLBACK_LOGO);
         }
       } catch {
         if (!cancelled) {
-          setLogo('../img/Logo2.png');
+          setLogo(FALLBACK_LOGO);
         }
       }
     }
 
+    setLogo(FALLBACK_LOGO);
     fetchCompanyLogo();
 
     return () => {
@@ -139,11 +156,18 @@ const JobItem = ({
   }, [company]);
 
   const redirectUrl = handleRedirect();
+  const expiredEventLabel = event_title
+    ? `Scheduled event "${event_title}" has passed`
+    : 'Scheduled event has passed';
 
   return (
     <Paper
+      component="article"
+      aria-label={`${company}, ${title}, ${location}`}
       elevation={1}
       sx={{
+        position: 'relative',
+        overflow: 'hidden',
         backgroundColor: 'white',
         marginBottom: '5px',
         padding: '10px',
@@ -153,159 +177,161 @@ const JobItem = ({
       }}
     >
       {eventExpired ? (
-        <Box sx={{ position: 'absolute', marginTop: '-7px', marginLeft: '-7px' }}>
-          <NewReleasesIcon sx={{ color: '#f94144', fontSize: '1.5em' }} />
-        </Box>
+        <Tooltip title={expiredEventLabel} arrow>
+          <Box
+            component="span"
+            sx={{
+              position: 'absolute',
+              top: 4,
+              left: 4,
+              display: 'flex',
+              lineHeight: 0,
+            }}
+          >
+            <NewReleasesIcon sx={{ color: '#f94144', fontSize: '1.25rem' }} aria-hidden />
+          </Box>
+        </Tooltip>
       ) : null}
-      <Box display="flex" flexDirection="column" width="100%">
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        width="100%"
+        gap={0.5}
+      >
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            flexShrink: 0,
+            width: 44,
+            minWidth: 44,
+            height: 44,
+          }}
+        >
+          <Box
+            component="a"
+            href={redirectUrl ?? undefined}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={redirectUrl ? `Open ${company} job posting` : undefined}
+            sx={{ lineHeight: 0 }}
+          >
+            <Box
+              component="img"
+              src={logo}
+              alt=""
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          flex={1}
+          minWidth={0}
+          sx={{ overflow: 'hidden' }}
+        >
+          <Typography
+            variant="subtitle1"
+            align="left"
+            noWrap
+            sx={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontWeight: 600,
+              lineHeight: 1.2,
+            }}
+          >
+            {company}
+          </Typography>
+          <Typography
+            variant="body2"
+            align="left"
+            sx={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontWeight: 500,
+              lineHeight: 1.2,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            variant="caption"
+            align="left"
+            noWrap
+            sx={{
+              fontFamily: 'Source Sans Pro, sans-serif',
+              lineHeight: 1.2,
+              pt: 0.25,
+            }}
+          >
+            {location}
+          </Typography>
+        </Box>
         <Box
           display="flex"
           flexDirection="row"
+          flexShrink={0}
           alignItems="center"
-          width="100%"
         >
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              width: '75px',
-              minWidth: '75px',
-              height: '75px',
-              '@media (max-width:1550px)': {
-                width: '50px',
-                minWidth: '50px',
-                height: '50px',
-              },
-              fontSize: '0px',
-              paddingRight: '3px',
-            }}
+          <IconButton
+            aria-label={`Edit ${company} job`}
+            onClick={openModal}
+            size="small"
+            sx={{ color: '#d9d9d9' }}
           >
-            <a href={redirectUrl ?? undefined} target="_blank" rel="noreferrer">
-              <Box
-                component="img"
-                src={logo}
-                alt="logo"
-                sx={{
-                  width: '50px',
-                  minWidth: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  '@media (max-width:1550px)': {
-                    width: '35px',
-                    minWidth: '35px',
-                    height: '35px',
-                  },
-                }}
-              />
-            </a>
-          </Box>
-          <Box display="flex" flexDirection="column" flexGrow={1}>
-            <Typography
-              variant="h5"
-              align="left"
-              sx={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 600,
-                paddingTop: 0,
-                paddingBottom: '3px',
-                lineHeight: '1em',
-              }}
-            >
-              {company}
-            </Typography>
-            <Typography
-              variant="body1"
-              align="left"
-              sx={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 500,
-                paddingTop: 0,
-                paddingBottom: 0,
-                lineHeight: '1em',
-              }}
-            >
-              {title}
-            </Typography>
-            <Typography
-              variant="body2"
-              align="left"
-              sx={{
-                fontFamily: 'Source Sans Pro, sans-serif',
-                paddingTop: '3px',
-                paddingBottom: 0,
-                lineHeight: '1em',
-              }}
-            >
-              {location}
-            </Typography>
-          </Box>
-          <Box
-            display="flex"
-            sx={{
-              flexDirection: 'row',
-              '@media (max-width:1550px)': {
-                flexDirection: 'column',
-              },
-            }}
+            <EditIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            aria-label={`Delete ${company} job`}
+            onClick={() => { setModalOpen(true); }}
+            size="small"
+            sx={{ color: '#d9d9d9' }}
           >
-            <IconButton
-              id="icon-button"
-              aria-label="edit-item"
-              onClick={openModal}
-              sx={{
-                width: '1.5em',
-                height: '1.5em',
-                color: '#d9d9d9',
-              }}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              aria-label="delete"
-              onClick={() => { setModalOpen(true); }}
-              sx={{
-                width: '1.5em',
-                height: '1.5em',
-                color: '#d9d9d9',
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <JobsModal
-              open={editModalOpen}
-              onClose={closeModal}
-              id={id}
-              companyName={company}
-              jobTitle={title}
-              jobDetails={description}
-              jobLocation={location}
-              jobSalary={salary}
-              jobStatus={status}
-              jobUrl={url}
-              jobContact_name={contact_name}
-              jobContact_email={contact_email}
-              jobContact_phone={contact_phone}
-              jobContact_socialmedia={contact_socialmedia}
-              jobResume_url={resume_url}
-              jobCoverletter_url={coverletter_url}
-              jobExtra_url={extra_url}
-              event_title={event_title}
-              event_expired={event_expired}
-              event_details={event_details}
-              event_date={event_date}
-              event_location={event_location}
-              isEditModal
-            />
-          </Box>
-
-          <ModalConfirm
-            open={modalOpen}
-            onConfirm={handleConfirmDelete}
-            onDecline={handleDeclineDelete}
-          />
+            <DeleteIcon fontSize="small" />
+          </IconButton>
         </Box>
       </Box>
+      <JobsModal
+        open={editModalOpen}
+        onClose={closeModal}
+        id={id}
+        companyName={company}
+        jobTitle={title}
+        jobDetails={description}
+        jobLocation={location}
+        jobSalary={salary}
+        jobStatus={status}
+        jobUrl={url}
+        jobContact_name={contact_name}
+        jobContact_email={contact_email}
+        jobContact_phone={contact_phone}
+        jobContact_socialmedia={contact_socialmedia}
+        jobResume_url={resume_url}
+        jobCoverletter_url={coverletter_url}
+        jobExtra_url={extra_url}
+        event_title={event_title}
+        event_expired={event_expired}
+        event_details={event_details}
+        event_date={event_date}
+        event_location={event_location}
+        isEditModal
+      />
+      <ModalConfirm
+        open={modalOpen}
+        onConfirm={handleConfirmDelete}
+        onDecline={handleDeclineDelete}
+      />
     </Paper>
   );
 };

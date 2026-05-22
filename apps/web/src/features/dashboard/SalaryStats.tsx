@@ -15,55 +15,47 @@ interface ChartDatum {
   val: number;
 }
 
+const SALARY_BUCKETS: Array<{ label: string; min: number | null; max: number | null }> = [
+  { label: 'No Salary Data', min: null, max: null },
+  { label: '< $25k', min: 1, max: 25000 },
+  { label: '$25k - $50k', min: 25000, max: 50000 },
+  { label: '$50k - $75k', min: 50000, max: 75000 },
+  { label: '$75k - $100k', min: 75000, max: 100000 },
+  { label: '$100k - $125k', min: 100000, max: 125000 },
+  { label: '$125k - $150k', min: 125000, max: 150000 },
+  { label: '$150k - $175k', min: 150000, max: 175000 },
+  { label: '$175k+', min: 175000, max: null },
+];
+
 function countSalaryBuckets(categories: Job[][]): ChartDatum[] {
-  const salariesNone: (number | null)[] = [];
-  const salaries0: number[] = [];
-  const salaries1: number[] = [];
-  const salaries2: number[] = [];
-  const salaries3: number[] = [];
-  const salaries4: number[] = [];
-  const salaries5: number[] = [];
-  const salaries6: number[] = [];
-  const salaries7: number[] = [];
+  const counts = SALARY_BUCKETS.map(() => 0);
 
-  const salaryCount = (category: Job[]) => {
-    category.forEach((data) => {
-      const salary = data.salary;
-      if (salary === null || salary === 0) {
-        salariesNone.push(salary ?? 0);
-      } else if (salary < 25000) {
-        salaries0.push(salary);
-      } else if (salary < 50000) {
-        salaries1.push(salary);
-      } else if (salary < 75000) {
-        salaries2.push(salary);
-      } else if (salary < 100000) {
-        salaries3.push(salary);
-      } else if (salary < 125000) {
-        salaries4.push(salary);
-      } else if (salary < 150000) {
-        salaries5.push(salary);
-      } else if (salary < 175000) {
-        salaries6.push(salary);
-      } else {
-        salaries7.push(salary);
+  categories.flat().forEach((job) => {
+    const salary = job.salary;
+    const bucketIndex = SALARY_BUCKETS.findIndex(({ min, max }) => {
+      if (min === null && max === null) {
+        return salary === null || salary === 0;
       }
+      if (salary === null || salary === 0) {
+        return false;
+      }
+      if (max === null) {
+        return salary >= (min ?? 0);
+      }
+      return salary >= (min ?? 0) && salary < max;
     });
-  };
 
-  categories.forEach(salaryCount);
+    if (bucketIndex >= 0) {
+      counts[bucketIndex] += 1;
+    }
+  });
 
-  return [
-    { status: 'No Salary Data', val: salariesNone.length },
-    { status: '$0 - $25k', val: salaries0.length },
-    { status: '$25k - $50k', val: salaries1.length },
-    { status: '$50k - $75k', val: salaries2.length },
-    { status: '$75k - $100k', val: salaries3.length },
-    { status: '$100k - $125k', val: salaries4.length },
-    { status: '$125k - $150k', val: salaries5.length },
-    { status: '$150k - $175k', val: salaries6.length },
-    { status: '$175k+', val: salaries7.length },
-  ];
+  return SALARY_BUCKETS
+    .map((bucket, index) => ({
+      status: bucket.label,
+      val: counts[index],
+    }))
+    .filter((bucket) => bucket.val > 0);
 }
 
 const SalaryStats = () => {
@@ -84,12 +76,23 @@ const SalaryStats = () => {
     [interestedJobs, appliedJobs, interviewingJobs, offerJobs, rejectedJobs],
   );
 
+  if (chartData.length === 0) {
+    return null;
+  }
+
   return (
     <BarChart
-      height={350}
+      height={380}
+      margin={{ bottom: 80 }}
+      aria-label="Salary overview bar chart"
       xAxis={[{
         scaleType: 'band',
         data: chartData.map((d) => d.status),
+        tickLabelStyle: {
+          angle: -35,
+          textAnchor: 'end',
+          fontSize: 11,
+        },
       }]}
       series={[{
         data: chartData.map((d) => d.val),

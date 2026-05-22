@@ -63,9 +63,9 @@ const kanbanColumnsSx = {
 };
 
 const columnSx = {
-  minWidth: 200,
-  flex: '0 0 220px',
-  maxWidth: 280,
+  minWidth: 240,
+  flex: '0 0 240px',
+  maxWidth: 300,
 };
 
 const Dashboard = () => {
@@ -138,6 +138,8 @@ const Dashboard = () => {
                     <Grid
                       container
                       id="dashboard-columns"
+                      component="section"
+                      aria-label="Job application board"
                       sx={kanbanColumnsSx}
                       spacing={1}
                       wrap="nowrap"

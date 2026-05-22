@@ -49,7 +49,11 @@ const DashboardColumn = ({
   });
 
   return (
-    <Box sx={{ width: 1, height: '100%', p: '5px' }}>
+    <Box
+      component="section"
+      aria-label={`${title} jobs`}
+      sx={{ width: 1, height: '100%', p: '5px', minWidth: 0 }}
+    >
       <DashboardColumnHeading title={title} color={color} tickUrl={tickUrl} />
       {jobItems}
     </Box>
