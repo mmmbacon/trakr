@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import Paper from '@mui/material/Paper';
 import Snackbar from '@mui/material/Snackbar';
 
 import AppHeader from '../common/AppHeader';
@@ -31,7 +32,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { user } = useAppSelector(authSelector);
   const { status } = useAppSelector(jobsSelector);
   const interestedJobs = useAppSelector(selectInterestedJobs);
@@ -41,9 +41,6 @@ const Dashboard = () => {
   const rejectedJobs = useAppSelector(selectRejectedJobs);
   const { snack, handleSnackClose } = useJobStatusSnackbar();
   const [addJobOpen, setAddJobOpen] = useState(false);
-
-  const isDashboardHome = location.pathname === '/dashboard'
-    || location.pathname === '/dashboard/';
 
   const jobColumns = [
     interestedJobs,
@@ -75,17 +72,8 @@ const Dashboard = () => {
       <Box display="flex" flexDirection="column" height="100vh" overflow="hidden">
         <AppHeader userdata={user ?? undefined} onLogout={handleLogOut} />
 
-        {isDemoMode && (
-          <Alert severity="info" sx={{ borderRadius: 0 }}>
-            Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
-          </Alert>
-        )}
-
         <Box display="flex" flex={1} minHeight={0} overflow="hidden">
-          <SideBar
-            addButtonVisible={isDashboardHome}
-            onAddJobClick={() => setAddJobOpen(true)}
-          />
+          <SideBar />
           <Box component="main" flex={1} minWidth={0} overflow="auto">
             <Routes>
               <Route
@@ -99,6 +87,7 @@ const Dashboard = () => {
                         ...column,
                         items: jobColumns[index] ?? [],
                       }))}
+                      onAddJobClick={() => setAddJobOpen(true)}
                     />
                   )
                 )}
@@ -110,6 +99,22 @@ const Dashboard = () => {
           </Box>
         </Box>
       </Box>
+      {isDemoMode && (
+        <Paper
+          elevation={6}
+          sx={{
+            position: 'fixed',
+            bottom: 24,
+            left: 24,
+            zIndex: (theme) => theme.zIndex.snackbar,
+            maxWidth: 360,
+          }}
+        >
+          <Alert severity="info">
+            Portfolio demo — you&apos;re viewing sample data. Changes are saved locally only.
+          </Alert>
+        </Paper>
+      )}
       <JobsModal open={addJobOpen} onClose={() => setAddJobOpen(false)} mode="create" />
       <JobResources />
       <Snackbar open={!!snack} autoHideDuration={6000} onClose={handleSnackClose}>

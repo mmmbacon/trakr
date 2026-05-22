@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -9,7 +8,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AddIcon from '@mui/icons-material/Add';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventIcon from '@mui/icons-material/Event';
@@ -27,11 +25,6 @@ interface NavItem {
   end?: boolean;
 }
 
-interface SideBarProps {
-  addButtonVisible?: boolean;
-  onAddJobClick?: () => void;
-}
-
 function isNavItemActive(pathname: string, item: NavItem): boolean {
   const matchPath = item.matchPath ?? item.to;
   if (!matchPath) {
@@ -45,10 +38,7 @@ function isNavItemActive(pathname: string, item: NavItem): boolean {
   return pathname.startsWith(matchPath);
 }
 
-const SideBar = ({
-  addButtonVisible = false,
-  onAddJobClick,
-}: SideBarProps) => {
+const SideBar = () => {
   const location = useLocation();
 
   const navItems: NavItem[] = [
@@ -98,21 +88,7 @@ const SideBar = ({
       }}
     >
       <Box display="flex" flexDirection="column" height="100%">
-        {addButtonVisible ? (
-          <Box p={2}>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<AddIcon />}
-              onClick={onAddJobClick}
-              fullWidth
-            >
-              Add New Job
-            </Button>
-          </Box>
-        ) : null}
-
-        <List component="nav" sx={{ flexGrow: 1, px: 1 }}>
+        <List component="nav" sx={{ flexGrow: 1, px: 1, pt: 1 }}>
           {navItems.map((item) => {
             const selected = isNavItemActive(location.pathname, item);
 
