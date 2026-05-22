@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from '../../app/hooks';
-import { JOB_STATUS_COLORS } from '../../theme';
+import { getJobStatusColors } from '../../theme';
 import SalaryStats from './SalaryStats';
 import {
   selectInterestedJobs,
@@ -50,7 +50,7 @@ const JobStats = () => {
           >
             <PieChart
               height={320}
-              colors={[...JOB_STATUS_COLORS]}
+              colors={[...getJobStatusColors(theme)]}
               series={[
                 {
                   data: chartData.map((item, index) => ({

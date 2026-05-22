@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import type { Job } from '../../types';
-import theme from '../../theme';
 import DashboardColumn from './DashboardColumn';
 import KanbanActionBar from './KanbanActionBar';
 
@@ -50,10 +49,3 @@ export default function KanbanBoard({ columns, onAddJobClick }: KanbanBoardProps
   );
 }
 
-export const KANBAN_COLUMNS = [
-  { title: 'Interested', color: theme.palette.jobStatus.interested },
-  { title: 'Applied', color: theme.palette.jobStatus.applied },
-  { title: 'Interviewing', color: theme.palette.jobStatus.interviewing },
-  { title: 'Offer', color: theme.palette.jobStatus.offer },
-  { title: 'Rejected', color: theme.palette.jobStatus.rejected },
-] as const;

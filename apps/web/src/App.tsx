@@ -7,9 +7,6 @@ import {
 } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-
 import Dashboard from './features/dashboard/Dashboard';
 import Login from './features/auth/Login';
 import Signup from './features/auth/Signup';
@@ -18,7 +15,7 @@ import { fetchLoggedInStatus } from './features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { authSelector } from './features/auth/authSlice';
 import isDemoMode from './config';
-import theme from './theme';
+import ColorModeProvider from './features/common/ColorModeProvider';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -30,18 +27,16 @@ function App() {
 
   if (status === 'loading') {
     return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <ColorModeProvider>
         <Backdrop open>
           <CircularProgress color="inherit" />
         </Backdrop>
-      </ThemeProvider>
+      </ColorModeProvider>
     );
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ColorModeProvider>
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route element={<PrivateRoute />}>
@@ -55,7 +50,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
-    </ThemeProvider>
+    </ColorModeProvider>
   );
 }
 
