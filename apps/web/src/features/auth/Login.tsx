@@ -9,10 +9,14 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Alert from '@mui/material/Alert';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { authSelector, login } from './authSlice';
+import { demoPresets, type DemoPreset } from './demoPresets';
+import isDemoMode from '../../config';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 const Login = () => {
@@ -27,16 +31,22 @@ const Login = () => {
     return <Navigate to="/dashboard" replace />;
   }
 
-  const handleLogin = async () => {
-    if (!email || !password) {
+  const handleLogin = async (credentials?: Pick<DemoPreset, 'email' | 'password'>) => {
+    const loginEmail = credentials?.email ?? email;
+    const loginPassword = credentials?.password ?? password;
+
+    if (!loginEmail || !loginPassword) {
       setError('Must include Email and Password');
       return;
     }
 
-    const actionResult = await dispatch(login({ email, password }));
+    setError('');
+    const actionResult = await dispatch(login({ email: loginEmail, password: loginPassword }));
 
     if (login.rejected.match(actionResult)) {
-      setError('Email or Password are incorrect');
+      setError(
+        credentials ? 'Demo login failed. Please try again.' : 'Email or Password are incorrect',
+      );
     }
   };
 
@@ -53,7 +63,7 @@ const Login = () => {
         <Box display="flex" justifyContent="center" mt={5}>
           <img src="../../img/Logo2-lg.png" alt="logo" height="250px" />
         </Box>
-        <Box display="flex" flexDirection="column" justifyContent="center" p={5} width={300}>
+        <Box display="flex" flexDirection="column" justifyContent="center" p={5} width={340}>
           {error && (
             <Alert severity="error" sx={{ width: '100%', mb: 1.25 }}>
               {error}
@@ -94,16 +104,40 @@ const Login = () => {
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleLogin}
+              onClick={() => handleLogin()}
+              disabled={loggingInStatus === 'loading'}
               fullWidth
               sx={{ color: 'white' }}
             >
               Login
             </Button>
           </Box>
-          <Link to="/signup" style={{ textAlign: 'center', color: '#577590' }}>
-            Don&apos;t have an account? Sign Up!
-          </Link>
+          {isDemoMode && (
+            <>
+              <Divider sx={{ mb: 2 }}>or try a demo account</Divider>
+              {demoPresets.map((preset) => (
+                <Box key={preset.email} mb={1.5}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleLogin(preset)}
+                    disabled={loggingInStatus === 'loading'}
+                    fullWidth
+                  >
+                    {preset.label}
+                  </Button>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, textAlign: 'center' }}>
+                    {preset.description}
+                  </Typography>
+                </Box>
+              ))}
+            </>
+          )}
+          {!isDemoMode && (
+            <Link to="/signup" style={{ textAlign: 'center', color: '#577590' }}>
+              Don&apos;t have an account? Sign Up!
+            </Link>
+          )}
         </Box>
       </Paper>
     </Box>

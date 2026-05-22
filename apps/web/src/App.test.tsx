@@ -51,4 +51,11 @@ describe('App', () => {
     expect(await findByLabelText(/email/i)).toBeInTheDocument();
     expect(getByRole('button', { name: /login/i })).toBeInTheDocument();
   });
+
+  it('shows demo preset login buttons in demo mode', async () => {
+    window.history.pushState({}, '', '/login');
+    const { findByRole } = renderApp();
+
+    expect(await findByRole('button', { name: /sample dashboard/i })).toBeInTheDocument();
+  });
 });

@@ -1,10 +1,7 @@
 include Api::SessionsHelper
-include DemoAuthentication
 
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
-
-  before_action :ensure_demo_user_logged_in, if: :demo_mode?
 
   helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 

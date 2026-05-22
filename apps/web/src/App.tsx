@@ -21,7 +21,7 @@ import theme from './theme';
 
 function App() {
   const dispatch = useAppDispatch();
-  const { status, user } = useAppSelector(authSelector);
+  const { status } = useAppSelector(authSelector);
 
   useEffect(() => {
     dispatch(fetchLoggedInStatus());
@@ -42,19 +42,12 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard/*" element={<Dashboard />} />
           </Route>
-          <Route path="/signup" element={<Signup />} />
           <Route
-            path="/"
-            element={
-              isDemoMode && user ? <Navigate to="/dashboard" replace /> : <Login />
-            }
+            path="/signup"
+            element={isDemoMode ? <Navigate to="/login" replace /> : <Signup />}
           />
-          <Route
-            path="/login"
-            element={
-              isDemoMode && user ? <Navigate to="/dashboard" replace /> : <Login />
-            }
-          />
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </ThemeProvider>
