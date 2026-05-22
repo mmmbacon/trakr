@@ -159,6 +159,7 @@ export interface DividerProps {
 
 export interface IconButtonProps {
   'aria-label': string;
+  'aria-pressed'?: boolean;
   onClick?: () => void;
   href?: string;
   target?: string;

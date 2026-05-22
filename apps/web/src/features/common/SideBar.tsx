@@ -4,6 +4,7 @@ import { logout } from '../auth/authSlice';
 import SideBarNavItem from './SideBarNavItem';
 import { useAppDispatch } from '../../app/hooks';
 import { Box, Icon, Paper, Tooltip } from '../../components/ui';
+import { buildAvatarUrl, openUrl } from '../../utils/url';
 
 export const SIDEBAR_WIDTH = 52;
 
@@ -65,7 +66,7 @@ const SideBar = ({
               <SideBarNavItem title="User Profile" to="/dashboard/user_profile">
                 <Box
                   component="img"
-                  src={`https://ui-avatars.com/api/?name=${userdata.first_name}+${userdata.last_name}&background=3b3b3b&color=fff&size=${SIDEBAR_ICON_SIZE}`}
+                  src={buildAvatarUrl(`${userdata.first_name} ${userdata.last_name}`, SIDEBAR_ICON_SIZE)}
                   alt="initials"
                   className="dashboard-sidebar-avatar"
                 />
@@ -75,7 +76,7 @@ const SideBar = ({
               </SideBarNavItem>
               <SideBarNavItem
                 title="Open Calendar"
-                onClick={() => { window.open('https://calendar.google.com/calendar/u/0/r', '_blank'); }}
+                onClick={() => { openUrl('https://calendar.google.com/calendar/u/0/r'); }}
               >
                 <Icon name="event" className="sidebar-nav-icon" />
               </SideBarNavItem>

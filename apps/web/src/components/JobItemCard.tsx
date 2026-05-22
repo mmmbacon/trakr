@@ -63,7 +63,7 @@ export default function JobItemCard({
           component="a"
           href={redirectUrl ?? undefined}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label={redirectUrl ? `Open ${job.company} job posting` : undefined}
           className="job-item-logo-link"
         >

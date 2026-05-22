@@ -2,6 +2,7 @@ import { format, isValid, parseISO } from 'date-fns';
 
 import type { User } from '../../types';
 import { Box, Typography } from '../../components/ui';
+import { buildAvatarUrl } from '../../utils/url';
 
 interface UserProfileSidebarProps {
   user: User;
@@ -21,7 +22,7 @@ export default function UserProfileSidebar({ user, jobCount }: UserProfileSideba
     <Box className="profile-sidebar">
       <Box
         component="img"
-        src={`https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}&background=3b3b3b&color=fff&size=256`}
+        src={buildAvatarUrl(`${user.first_name} ${user.last_name}`, 256)}
         alt="user initials"
         className="profile-avatar"
       />

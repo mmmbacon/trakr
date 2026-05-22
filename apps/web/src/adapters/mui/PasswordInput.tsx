@@ -4,6 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
 import Icon from './Icon';
+import IconButton from './IconButton';
 
 interface PasswordInputProps {
   label: string;
@@ -34,20 +35,13 @@ export default function PasswordInput({
           input: {
             endAdornment: (
               <InputAdornment position="end">
-                <button
-                  type="button"
+                <IconButton
                   aria-label="toggle password visibility"
+                  aria-pressed={showPassword}
                   onClick={() => setShowPassword((prev) => !prev)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    padding: 0,
-                  }}
                 >
                   <Icon name={showPassword ? 'visibility' : 'visibility-off'} />
-                </button>
+                </IconButton>
               </InputAdornment>
             ),
           },

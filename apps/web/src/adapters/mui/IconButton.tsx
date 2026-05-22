@@ -4,6 +4,7 @@ import type { IconButtonProps } from '../../components/ui/types';
 
 export default function IconButton({
   'aria-label': ariaLabel,
+  'aria-pressed': ariaPressed,
   onClick,
   href,
   target,
@@ -14,6 +15,7 @@ export default function IconButton({
 }: IconButtonProps) {
   const sharedProps = {
     'aria-label': ariaLabel,
+    'aria-pressed': ariaPressed,
     className,
     edge,
     size: 'small' as const,

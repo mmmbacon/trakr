@@ -16,19 +16,23 @@ export default function SideBarNavItem({
   onClick,
   children,
 }: SideBarNavItemProps) {
-  const content = to ? (
-    <Link to={to} className="link">
-      {children}
-    </Link>
-  ) : (
-    children
+  const content = (
+    <Tooltip title={title}>
+      <span className="sidebar-nav-item">{children}</span>
+    </Tooltip>
   );
+
+  if (to) {
+    return (
+      <NavButton component={Link} to={to}>
+        {content}
+      </NavButton>
+    );
+  }
 
   return (
     <NavButton onClick={onClick}>
-      <Tooltip title={title}>
-        <span className="sidebar-nav-item">{content}</span>
-      </Tooltip>
+      {content}
     </NavButton>
   );
 }

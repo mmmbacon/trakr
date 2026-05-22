@@ -10,6 +10,7 @@ import {
   TextInput,
   Typography,
 } from '../../../components/ui';
+import { openUrl } from '../../../utils/url';
 import JobFormSectionHeading from './JobFormSectionHeading';
 import type { JobFormValues } from './useJobForm';
 
@@ -28,7 +29,7 @@ export default function JobFormEvents({ values, onFieldChange }: JobFormEventsPr
   };
 
   const handleCalendarClick = () => {
-    window.open(google(calendarEvent));
+    openUrl(google(calendarEvent));
   };
 
   const expiredBadge = values.eventExpired && values.selectedDate ? (

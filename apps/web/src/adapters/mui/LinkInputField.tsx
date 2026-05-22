@@ -3,7 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-import { isWebUrl, openUrl } from '../../utils/url';
+import { buildMailtoUrl, buildMapsUrl, isWebUrl, openUrl } from '../../utils/url';
 import Icon from './Icon';
 import IconButton from './IconButton';
 
@@ -34,7 +34,7 @@ function LinkInputAdornment({
   }
 
   if (action === 'mailto') {
-    const href = `mailto:${value}?subject=${mailtoSubject ?? ''}&body=${mailtoBody ?? ''}`;
+    const href = buildMailtoUrl(value, mailtoSubject, mailtoBody);
     return (
       <IconButton
         aria-label={ariaLabel ?? 'click contact email'}
@@ -59,7 +59,7 @@ function LinkInputAdornment({
     return (
       <IconButton
         aria-label={ariaLabel ?? 'open location in maps'}
-        href={`https://www.google.com/maps/place/${value}`}
+        href={buildMapsUrl(value)}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -83,7 +83,7 @@ function LinkInputAdornment({
     return (
       <IconButton
         aria-label={ariaLabel ?? 'click event location'}
-        href={`https://www.google.com/maps/place/${value}`}
+        href={buildMapsUrl(value)}
         target="_blank"
         rel="noopener noreferrer"
       >

@@ -15,7 +15,7 @@ export default function Container({
       className={className}
       sx={{
         width: '100%',
-        py: paddingTop,
+        pt: paddingTop,
         px: paddingX,
       }}
     >
