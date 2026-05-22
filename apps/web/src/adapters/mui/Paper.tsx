@@ -6,6 +6,7 @@ export default function Paper({
   children,
   className,
   elevation = 1,
+  variant,
   square,
   component,
   'aria-label': ariaLabel,
@@ -13,6 +14,7 @@ export default function Paper({
   const sharedProps = {
     className,
     elevation,
+    variant,
     square,
     'aria-label': ariaLabel,
   };

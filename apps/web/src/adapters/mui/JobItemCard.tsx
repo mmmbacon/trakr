@@ -33,63 +33,43 @@ export default function JobItemCard({
 
   return (
     <Box position="relative" width="100%">
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          zIndex: 1,
-        }}
-      >
-        <JobItemActionsMenu
-          ariaLabel={`Actions for ${job.company} job`}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
-      </Box>
-      <Stack direction="row" alignItems="center" spacing={1} width="100%" pr={3}>
-        {eventExpired ? (
+      {eventExpired ? (
+        <Box position="absolute" top={0.5} left={0.5} zIndex={1}>
           <Tooltip title={expiredEventLabel} arrow>
-            <NewReleasesIcon
-              color="error"
-              fontSize="small"
-              sx={{ position: 'absolute', top: 0, left: 0 }}
-              aria-hidden
-            />
+            <NewReleasesIcon color="error" fontSize="small" aria-hidden />
           </Tooltip>
-        ) : null}
-        <Avatar
-          component="a"
-          href={redirectUrl ?? undefined}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={redirectUrl ? `Open ${job.company} job posting` : undefined}
-          src={logo}
-          alt=""
-          variant="rounded"
-          sx={{ width: 36, height: 36 }}
-        />
-        <Box flex={1} minWidth={0}>
-          <Typography variant="subtitle2" noWrap>
-            {job.company}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-            }}
-          >
-            {job.title}
-          </Typography>
-          <Typography variant="caption" color="text.secondary" noWrap display="block">
-            {job.location}
-          </Typography>
         </Box>
-      </Stack>
+      ) : null}
+      <Box py={1} px={1.5}>
+        <Stack direction="row" alignItems="center" spacing={1} width="100%">
+          <Avatar
+            component="a"
+            href={redirectUrl ?? undefined}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={redirectUrl ? `Open ${job.company} job posting` : undefined}
+            src={logo}
+            alt=""
+            variant="rounded"
+          />
+          <Stack flex={1} minWidth={0} spacing={0.25}>
+            <Typography variant="subtitle2" noWrap>
+              {job.company}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" noWrap>
+              {job.title}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" noWrap display="block">
+              {job.location}
+            </Typography>
+          </Stack>
+          <JobItemActionsMenu
+            ariaLabel={`Actions for ${job.company} job`}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        </Stack>
+      </Box>
     </Box>
   );
 }

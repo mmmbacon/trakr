@@ -4,7 +4,7 @@ import type { Job } from '../../types';
 import { useAppSelector } from '../../app/hooks';
 import JobItem from '../../components/JobItem';
 import JobSearchBar from './JobSearchBar';
-import { Container, Typography } from '../../components/ui';
+import { Box, Container, Typography } from '../../components/ui';
 import {
   jobsSelector,
   selectInterestedJobs,
@@ -77,9 +77,11 @@ const Search = () => {
       />
 
       {filteredJobs.length > 0 ? (
-        filteredJobs.map((job) => (
-          <JobItem key={job.id} job={job} />
-        ))
+        <Box display="flex" flexDirection="column" gap={1}>
+          {filteredJobs.map((job) => (
+            <JobItem key={job.id} job={job} />
+          ))}
+        </Box>
       ) : (
         <Typography variant="h5" color="secondary" align="center" marginTop={4}>
           No Results Found

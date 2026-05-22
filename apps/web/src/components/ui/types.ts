@@ -146,6 +146,7 @@ export interface PaperProps {
   children: ReactNode;
   className?: string;
   elevation?: number;
+  variant?: 'elevation' | 'outlined';
   square?: boolean;
   component?: ElementType;
   'aria-label'?: string;

@@ -27,8 +27,9 @@ const JobItem = ({ job }: JobItemProps) => {
   return (
     <Paper
       component="article"
+      variant="outlined"
+      elevation={0}
       aria-label={`${job.company}, ${job.title}, ${job.location}`}
-      className="job-item-paper"
     >
       <JobItemCard
         job={job}
